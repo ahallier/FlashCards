@@ -1,0 +1,53 @@
+=begin rdoc
+
+This directory contains the basic Rotten Potatoes rails app that we will use
+and enhance througout the semester.
+
+You can copy this directory to your Cloud9 wokspace by first forking the SELT/RottenPotatoes
+GitHub repo to your GitHub account and then cloning it to your Cloud9 workspace.  You do NOT
+need to make your GitHub repo private.
+
+Before running the app, change into the top-level directory--i.e. the one 
+containing this README file--and enter the following commands to install gems
+and set up and initialize the database  (You only need to do this before running
+the app for the first time:
+
+bundle install
+
+rake db:create
+
+rake db:migrate
+
+rake db:seed
+
+Now you are ready to try out the app.  Enter the following
+command to start the rails server:
+
+rails server -p $PORT -b $IP
+
+(If you are running the app in an environment other than our class CLoud9 workspace,
+the command for starting the rails server might be slightly different)
+
+After the server has started, you should see a small window that says:
+
+"Your code is running at <some URL ending in C9>"
+
+You can either click on the URL to open a small browser within Cloud9, or
+type the supplied URL into your favorite browser.
+
+In either case, the browser should be directed to a rails "Welcome Aboard" page.
+Add:
+
+"/movies"  (without the quotes) 
+
+to the end of the URL and the browser should
+display the Rotten Potatoes homepage--i.e. the one that shows a table of all the
+movies.
+
+When you are done using the app, you can kill the rails server by typing:
+
+Ctrl-c
+
+Have fun.
+
+=end
