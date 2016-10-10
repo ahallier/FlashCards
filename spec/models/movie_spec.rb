@@ -9,9 +9,8 @@ describe Movie do
     end
     context 'with invalid key' do
       it 'should raise InvalidKeyError if key is missing or invalid' do
-        allow(Tmdb::Movie).to receive(:find).and_raise(NoMethodError)
-        allow(Tmdb::Api).to receive(:response).and_return({'code' => '401'})
-        expect { Movie.find_in_tmdb('Inception') }.to raise_error(Movie::InvalidKeyError)
+        allow(Tmdb::Movie).to receive(:find).and_raise(Tmdb::InvalidApiKeyError)
+        expect {Movie.find_in_tmdb('Inception') }.to raise_error(Movie::InvalidKeyError)
       end
     end
   end

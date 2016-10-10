@@ -8,12 +8,8 @@ class Movie < ActiveRecord::Base
 #  def self.find_in_tmdb(string)
 #    begin
 #      Tmdb::Movie.find(string)
-#    rescue NoMethodError => tmdb_gem_exception
-#      if Tmdb::Api.response['code'] == '401'
+#    rescue Tmdb::InvalidApiKeyError
 #        raise Movie::InvalidKeyError, 'Invalid API key'
-#      else
-#        raise tmdb_gem_exception
-#      end
 #    end
 #  end
 
