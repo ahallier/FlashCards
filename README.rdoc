@@ -50,4 +50,7 @@ Ctrl-c
 
 Have fun.
 
+Heroku Login: SELT.flashcards@gmail.com
+Heroku Password: seltteam11
+
 =end
