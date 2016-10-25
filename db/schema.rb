@@ -13,13 +13,61 @@
 
 ActiveRecord::Schema.define(version: 20150809022253) do
 
-  create_table "movies", force: :cascade do |t|
-    t.string   "title"
-    t.string   "rating"
-    t.text     "description"
-    t.datetime "release_date"
+  create_table "cards", force: :cascade do |t|
+    t.integer  "deck_id"
+    t.text     "front"
+    t.text     "back"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "cards", ["deck_id"], name: "index_cards_on_deck_id"
+
+  create_table "decks", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "score"
+    t.text     "catergory"
+    t.datetime "create_date"
+    t.integer  "public"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.text     "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "groups_decks", id: false, force: :cascade do |t|
+    t.integer "groups_id"
+    t.integer "decks_id"
+  end
+
+  add_index "groups_decks", ["decks_id"], name: "index_groups_decks_on_decks_id"
+  add_index "groups_decks", ["groups_id"], name: "index_groups_decks_on_groups_id"
+
+  create_table "users", force: :cascade do |t|
+    t.text     "email"
+    t.text     "password"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users_decks", id: false, force: :cascade do |t|
+    t.integer "users_id"
+    t.integer "decks_id"
+  end
+
+  add_index "users_decks", ["decks_id"], name: "index_users_decks_on_decks_id"
+  add_index "users_decks", ["users_id"], name: "index_users_decks_on_users_id"
+
+  create_table "users_groups", id: false, force: :cascade do |t|
+    t.integer "users_id"
+    t.integer "groups_id"
+  end
+
+  add_index "users_groups", ["groups_id"], name: "index_users_groups_on_groups_id"
+  add_index "users_groups", ["users_id"], name: "index_users_groups_on_users_id"
 
 end
