@@ -1,6 +1,10 @@
 class DecksController < ApplicationController
 
     def index
-        #default render decks index
+        @decks = Deck.all
+    end
+    
+    def new
+        #default render new template
     end
 end
