@@ -21,3 +21,19 @@
 #movies.each do |movie|
 #  Movie.create!(movie)
 #end
+    
+# Deck Schema    
+#t.string   "title"
+#t.integer  "score"
+#t.text     "category"
+#t.integer  "public"
+#t.datetime "created_at"
+#t.datetime "updated_at"
+decks = [
+    {:title => 'Albert\'s Deck', :score => 3, :category => 'chinese', :public => true, :created_at => DateTime.now, :updated_at => DateTime.now},
+    {:title => 'MyDeck', :score => 0, :category => 'spanish', :public => false, :created_at => DateTime.now, :updated_at => DateTime.now}
+]
+
+decks.each do |deck|
+    Deck.create!(deck)
+end
