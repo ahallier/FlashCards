@@ -2,3 +2,24 @@
 
 
 %h1 Decks
+
+%table#decks
+  %thead
+    %tr
+      %th Title
+      %th Score
+      %th Category
+      %th Public
+      %th Created At
+      %th Updated At
+  %tbody
+    - @decks.each do |deck|
+      %tr
+        %td= deck.title 
+        %td= deck.score
+        %td= deck.category
+        %td= deck.public
+        %td= deck.created_at
+        %td= deck.updated_at
+
+= link_to 'New Deck', new_deck_path
