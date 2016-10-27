@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150809022253) do
+ActiveRecord::Schema.define(version: 20161026153616) do
 
   create_table "cards", force: :cascade do |t|
     t.integer  "deck_id"
@@ -26,9 +26,8 @@ ActiveRecord::Schema.define(version: 20150809022253) do
   create_table "decks", force: :cascade do |t|
     t.string   "title"
     t.integer  "score"
-    t.text     "catergory"
-    t.datetime "create_date"
-    t.integer  "public"
+    t.text     "category"
+    t.boolean  "public"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
