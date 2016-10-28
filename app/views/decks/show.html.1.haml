@@ -1,0 +1,18 @@
+-#  This file is app/views/decks/index.html.haml
+
+
+%h1 Deck Content
+
+%table#decks
+  %thead
+    %tr
+      %th Front 
+      %th Back
+  %tbody
+    - @cards.each do |deck|
+      %tr
+        %td= card.front
+        %td= card.back
+        %td= link_to "Edit #{deck.title}", edit_deck_path(deck.id)
+
+= link_to 'Delete Deck', delete_deck_path

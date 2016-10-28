@@ -1,0 +1,13 @@
+
+%h1 Edit Existing Deck
+
+= form_tag deck_path(@deck), :method => :put do
+
+  = label :deck, :title, 'Title'
+  = text_field :deck, 'title'
+
+  = label :deck, :category, 'Category'
+  = text_field :deck, 'category'
+
+
+  = submit_tag 'Update Deck Info'
