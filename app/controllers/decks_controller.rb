@@ -22,4 +22,8 @@ class DecksController < ApplicationController
         flash[:notice] = "Successfully created deck."
         redirect_to decks_path
     end
+    
+    def edit
+        @deck = Deck.find params[:id]
+    end
 end
