@@ -1,5 +1,6 @@
 class DecksController < ApplicationController
     
+    
     def create_params
         params.require(:deck).permit(:title, :category, :public)
     end
@@ -22,6 +23,7 @@ class DecksController < ApplicationController
         deck_params[:score] = 0
         deck_params[:created_at] = DateTime.now
         deck_params[:updated_at] = DateTime.now
+        deck_params[:public] = deck_params[:public] == 'Yes'
         Deck.create!(deck_params)
         flash[:notice] = "Successfully created deck."
         redirect_to decks_path
