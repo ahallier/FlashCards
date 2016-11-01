@@ -3,6 +3,10 @@ class DecksController < ApplicationController
     def create_params
         params.require(:deck).permit(:title, :category, :public)
     end
+    
+    def update_params
+        params.require(:deck).permit(:id, :title, :category, :public)
+    end
 
     def index
         @decks = Deck.all
@@ -25,5 +29,15 @@ class DecksController < ApplicationController
     
     def edit
         @deck = Deck.find params[:id]
+    end
+    
+    def update
+        deck = Deck.find update_params[:id]
+        deck.title = update_params[:title]
+        deck.category = update_params[:category]
+        deck.public = update_params[:public] == 'Yes'
+        deck.save
+        
+        redirect_to decks_path
     end
 end
