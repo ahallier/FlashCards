@@ -37,3 +37,12 @@ decks = [
 decks.each do |deck|
     Deck.create!(deck)
 end
+
+cards = [
+    {:deck_id => 2, :front => "frontTest", :back => "backTest"},
+    {:deck_id => 1, :front => "Albert", :back => "Albert"}
+]
+
+cards.each do |card|
+    Card.create!(card)
+end

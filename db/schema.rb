@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161026153616) do
+ActiveRecord::Schema.define(version: 20161103151009) do
 
   create_table "cards", force: :cascade do |t|
     t.integer  "deck_id"

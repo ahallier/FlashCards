@@ -1,3 +1,24 @@
+-# This file is app/views/cards/index.html.haml
 
+%h1 Cards
 
+= form_tag card_display_path
 
+%table#cards#decks
+    %thead
+        %tr
+            %th Card ID
+            %th Deck ID
+            %th Front
+            %th Back
+            %th Edit
+    %tbody
+        - @cards.each do |card|
+            %tr
+                %td= card.id
+                %td= card.deck_id
+                %td= card.front
+                %td= card.back
+                %td= link_to 'Edit', edit_card_path(card.id)
+
+= link_to 'Back to Decks', decks_path
