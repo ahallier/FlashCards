@@ -19,7 +19,10 @@ Rails.application.routes.draw do
   root :to => redirect('/decks')
 
   resources :decks
-  
+  match '/decks/:id/edit/addCard', to: 'decks#addCard', via: :get, as: 'add_card'
+  match '/decks/:id/edit/writecard', to: 'decks#writecard', via: :get, as: 'write_card'
+  resources :cards
+  match '/cards/:id/display', to: 'cards#index', via: :get, as: 'card_display'
   # Example resource route with options:
   #   resources :products do
   #     member do

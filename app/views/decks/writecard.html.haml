@@ -1,0 +1,12 @@
+%h1 Add New Card
+
+= form_tag add_card_path, :method =>:get do
+
+
+  = label :card, :front, 'Front'
+  = text_field :card, 'front'
+
+  = label :card, :back, 'Back'
+  = text_field :card, 'back'
+
+  = submit_tag 'Save Changes'

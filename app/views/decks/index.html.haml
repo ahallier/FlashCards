@@ -3,7 +3,7 @@
 
 %h1 Decks
 
-%table#deck
+%table#decks
   %thead
     %tr
       %th Title
@@ -12,15 +12,18 @@
       %th Public
       %th Created At
       %th Updated At
+      %th Deck ID
+      %th Edit
   %tbody
     - @decks.each do |deck|
       %tr
-        %td= deck.title 
+        %td= link_to deck.title, card_display_path(deck.id)
         %td= deck.score
         %td= deck.category
         %td= deck.public
         %td= deck.created_at
         %td= deck.updated_at
-        %td= link_to "Edit #{deck.title}", edit_deck_path(deck.id)
+        %td= deck.id
+        %td= link_to 'Edit', edit_deck_path(deck.id)
 
 = link_to 'New Deck', new_deck_path

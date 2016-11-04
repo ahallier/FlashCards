@@ -2,12 +2,17 @@
 %h1 Edit Existing Deck
 
 = form_tag deck_path(@deck), :method => :put do
+  
+  = hidden_field :deck, :id
 
   = label :deck, :title, 'Title'
-  = text_field :deck, 'title'
+  = text_field :deck, :title
 
   = label :deck, :category, 'Category'
-  = text_field :deck, 'category'
-
+  = text_field :deck, :category
+  
+  = label :deck, :public, 'Make Public?'
+  = select :deck, :public, ['Yes', 'No']
 
   = submit_tag 'Update Deck Info'
+  = link_to 'Add Card To Deck', write_card_path
