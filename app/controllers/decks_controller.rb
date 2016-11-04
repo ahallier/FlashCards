@@ -29,6 +29,13 @@ class DecksController < ApplicationController
         redirect_to decks_path
     end
     
+    def destroy
+        @deck = Deck.find(params[:id])
+        @deck.destroy
+        flash[:notice] = "Deck '#{@deck.title}' was deleted."
+        redirect_to decks_path
+    end
+    
     def edit
         @deck = Deck.find params[:id]
     end

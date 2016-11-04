@@ -14,6 +14,7 @@
       %th Updated At
       %th Deck ID
       %th Edit
+      %th Delete
   %tbody
     - @decks.each do |deck|
       %tr
@@ -25,5 +26,6 @@
         %td= deck.updated_at
         %td= deck.id
         %td= link_to 'Edit', edit_deck_path(deck.id)
+        %td= button_to 'Delete', deck_path(deck), :method => :delete, :confirm => 'Are you sure?'
 
 = link_to 'New Deck', new_deck_path

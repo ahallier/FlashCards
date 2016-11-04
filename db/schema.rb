@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161103151009) do
+ActiveRecord::Schema.define(version: 20161103151014) do
 
   create_table "cards", force: :cascade do |t|
     t.integer  "deck_id"
@@ -32,19 +32,27 @@ ActiveRecord::Schema.define(version: 20161103151009) do
     t.datetime "updated_at"
   end
 
+  create_table "decks_groups", id: false, force: :cascade do |t|
+    t.integer "group_id"
+    t.integer "deck_id"
+  end
+
+  add_index "decks_groups", ["deck_id"], name: "index_decks_groups_on_deck_id"
+  add_index "decks_groups", ["group_id"], name: "index_decks_groups_on_group_id"
+
+  create_table "decks_users", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "deck_id"
+  end
+
+  add_index "decks_users", ["deck_id"], name: "index_decks_users_on_deck_id"
+  add_index "decks_users", ["user_id"], name: "index_decks_users_on_user_id"
+
   create_table "groups", force: :cascade do |t|
     t.text     "title"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "groups_decks", id: false, force: :cascade do |t|
-    t.integer "groups_id"
-    t.integer "decks_id"
-  end
-
-  add_index "groups_decks", ["decks_id"], name: "index_groups_decks_on_decks_id"
-  add_index "groups_decks", ["groups_id"], name: "index_groups_decks_on_groups_id"
 
   create_table "users", force: :cascade do |t|
     t.text     "email"
@@ -52,14 +60,6 @@ ActiveRecord::Schema.define(version: 20161103151009) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "users_decks", id: false, force: :cascade do |t|
-    t.integer "users_id"
-    t.integer "decks_id"
-  end
-
-  add_index "users_decks", ["decks_id"], name: "index_users_decks_on_decks_id"
-  add_index "users_decks", ["users_id"], name: "index_users_decks_on_users_id"
 
   create_table "users_groups", id: false, force: :cascade do |t|
     t.integer "users_id"
