@@ -16,4 +16,10 @@ describe DecksController do
             put :update, {:id=>1, :deck =>{:title => 'Test',  :category => 'TestCat', :public => true}}
         end
     end
+    describe 'deleteing deck' do
+        it 'should call the Deck.destroy method' do
+            expect(Deck).to receive(:destroy)
+            put :destroy, {:id=>1}
+        end
+    end
 end
