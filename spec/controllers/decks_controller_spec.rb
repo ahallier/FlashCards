@@ -2,6 +2,9 @@ require 'spec_helper'
 require 'rails_helper'
 
 describe DecksController do
+    before :each do
+      @deck = Deck.create!({:title => 'Test',  :category => 'TestCat', :public => true})
+    end
     describe 'Adding new deck' do
         it 'should call the Deck.create! method' do
             expect(Deck).to receive(:create!)
@@ -18,8 +21,10 @@ describe DecksController do
     end
     describe 'deleteing deck' do
         it 'should call the Deck.destroy method' do
-            expect(Deck).to receive(:destroy)
-            put :destroy, {:id=>1}
+            deck_spy = spy(Deck)
+            allow(Deck).to receive(:find).and_return deck_spy
+            expect(deck_spy).to receive(:destroy)
+            delete :destroy, {:id=>1}
         end
     end
 end
