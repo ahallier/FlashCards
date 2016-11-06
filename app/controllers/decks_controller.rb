@@ -48,10 +48,8 @@ class DecksController < ApplicationController
     end
     def addCard
         @deck = Deck.find params[:id]
-        puts "deck"+@deck.id.to_s
-        #puts "params"+card_params.to_s
         @card = @deck.cards.create(:front => params["card"]["front"], :back =>params["card"]["back"] )
-        redirect_to decks_path
+        redirect_to card_display_path
     end
     def writecard
         #default render writecard template
