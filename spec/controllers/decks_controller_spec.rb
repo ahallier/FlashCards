@@ -8,4 +8,12 @@ describe DecksController do
             post :create, {:deck =>{:title => 'Test',  :category => 'TestCat', :public => true}}
         end
     end
+    describe 'updating deck' do
+        it 'should call the Deck.save method' do
+            deck_spy = spy(Deck)
+            allow(Deck).to receive(:find).and_return deck_spy
+            expect(deck_spy).to receive(:save)
+            put :update, {:id=>1, :deck =>{:title => 'Test',  :category => 'TestCat', :public => true}}
+        end
+    end
 end
