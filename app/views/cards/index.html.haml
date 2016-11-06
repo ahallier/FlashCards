@@ -4,7 +4,7 @@
 
 = form_tag card_display_path
 
-%table#cards#decks
+%table#cards
     %thead
         %tr
             %th Card ID
@@ -21,6 +21,6 @@
                 %td= card.front
                 %td= card.back
                 %td= link_to 'Edit', edit_card_path(card.id)
-                %td= link_to 'Delete', card_path(card), :method => :delete, :confirm => 'Are you sure?'
-
+                %td= link_to 'Delete', card_path(card), :method => :delete
+                
 = link_to 'Back to Decks', decks_path
