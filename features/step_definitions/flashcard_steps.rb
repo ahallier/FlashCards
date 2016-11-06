@@ -1,5 +1,3 @@
-# Completed step definitions for basic features: AddMovie, ViewDetails, EditMovie 
-
 Given /^I am on the FlashCards home page$/ do
   visit decks_path
  end
