@@ -44,6 +44,7 @@ class DecksController < ApplicationController
         deck = Deck.find update_params[:id]
         deck.title = update_params[:title]
         deck.category = update_params[:category]
+        deck.updated_at = DateTime.now
         deck.public = update_params[:public] == 'Yes'
         deck.save
         
