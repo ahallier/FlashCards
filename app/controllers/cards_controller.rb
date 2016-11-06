@@ -40,4 +40,11 @@ class CardsController < ApplicationController
         redirect_to card_display_path(@card.deck_id)
     end
     
+    def destroy
+        @card = Card.find(params[:id])
+        @card.destroy
+        flash[:notice] = "Card was deleted."
+        redirect_to card_display_path(@card.deck_id)
+    end
+    
 end
