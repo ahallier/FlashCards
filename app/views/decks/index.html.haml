@@ -26,6 +26,6 @@
         %td= deck.updated_at
         %td= deck.id
         %td= link_to 'Edit', edit_deck_path(deck.id)
-        %td= button_to 'Delete', deck_path(deck), :method => :delete, :confirm => 'Are you sure?', :id => 'btn_delete'
+        %td= button_to 'Delete', deck_path(deck), :method => :delete, :id => 'btn_delete'
 
 = link_to 'New Deck', new_deck_path
