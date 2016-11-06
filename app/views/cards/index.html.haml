@@ -12,6 +12,7 @@
             %th Front
             %th Back
             %th Edit
+            %th Delete
     %tbody
         - @cards.each do |card|
             %tr
@@ -20,5 +21,6 @@
                 %td= card.front
                 %td= card.back
                 %td= link_to 'Edit', edit_card_path(card.id)
+                %td= link_to 'Delete', card_path(card), :method => :delete, :confirm => 'Are you sure?'
 
 = link_to 'Back to Decks', decks_path
