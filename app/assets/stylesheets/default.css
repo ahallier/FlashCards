@@ -33,18 +33,18 @@ h1.title {
   font-size: 2em;
   font-style: normal;
 }
-table#decks {
+table {
   margin: 10px;
   border-collapse: collapse;
   width: 100%;
   border-bottom: 2px solid black;
 }
-table#decks th {
+table th {
   border: 2px solid white;
   font-weight: bold;
   background-color: LightGray;
 }
-table#decks th, table#decks td {
+table th, table td {
   padding: 4px;
   text-align: left;
 }
