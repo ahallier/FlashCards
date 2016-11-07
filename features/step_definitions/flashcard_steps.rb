@@ -21,7 +21,6 @@ Given /^I am on the FlashCards home page$/ do
    fill_in('Title', :with => title)
    fill_in('Category', :with => cat)
  end
-
 When /^I have deleted a deck with title "(.*?)"/ do |deckTitle|
   page.all(:xpath, '//table/tr[.//td[contains("#{deckTitle}")]]').each do |tr|
     find("#btn_delete").click

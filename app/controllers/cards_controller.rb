@@ -44,7 +44,7 @@ class CardsController < ApplicationController
         @card = Card.find(params[:id])
         @card.destroy
         flash[:notice] = "Card was deleted."
-        redirect_to card_display_path(@card.deck_id)
+        redirect_to card_display_path(@card.deck_i)
     end
     
 end
