@@ -33,4 +33,10 @@ describe DecksController do
             delete :destroy, {:id=>1}
         end
     end
+    describe 'Editing deck' do 
+        it 'should call Deck.edit' do
+            expect(Deck).to receive(:find)
+            get :edit, {:id => 1}
+        end
+    end
 end

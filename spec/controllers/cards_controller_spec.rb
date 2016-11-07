@@ -36,8 +36,8 @@ describe CardsController do
     end
     describe 'editing cards' do
         it 'should call the Card.edit method' do
-            expect(Card).to receive(:where)
-            get :index, {:id => 1}
+            expect(Card).to receive(:find)
+            get :edit, {:id => 1}
         end
     end
 end
