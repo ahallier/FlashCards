@@ -10,21 +10,18 @@ Given /^I am on the FlashCards home page$/ do
    deck = Deck.find_by title: title
    visit edit_deck_path(id: deck.id)
  end
+ Given /^I am on the display deck page for deck with title "(.*?)"$/ do |title|
+   deck = Deck.find_by title: title
+   visit edit_deck_path(id: deck.id)
+ end
  Given /^I am on the display cards page for deck "(.*?)"$/ do |deck|
-   visit '/cards/'+deck+'/display' 
-end
+    visit '/cards/'+deck+'/display' 
+ end
  When /^I have set title to "(.*?)", category "(.*?)"$/ do |title, cat|
    fill_in('Title', :with => title)
    fill_in('Category', :with => cat)
  end
- When /^I have added a card with front "(.*?)" and back "(.*?)" to deck "(.*?)"$/ do |front,back,deck|
-  visit '/decks/'+deck+'/edit/writecard'
-  fill_in 'Front', :with => front
-  fill_in 'Back', :with => back
 
-  click_button 'Save Changes'     
- end     
- 
 When /^I have deleted a deck with title "(.*?)"/ do |deckTitle|
   page.all(:xpath, '//table/tr[.//td[contains("#{deckTitle}")]]').each do |tr|
     find("#btn_delete").click
@@ -35,7 +32,13 @@ end
 When /^I have clicked button "(.*?)"$/ do |button_name|
      click_button(button_name)
 end
+When /^I have added a card with front "(.*?)" and back "(.*?)" to deck "(.*?)"$/ do |front,back,deck|
+  visit '/decks/'+deck+'/edit/writecard'
+  fill_in 'Front', :with => front
+  fill_in 'Back', :with => back
 
+  click_button 'Save Changes'     
+ end   
  Given /the following decks have been added to FlashCards:/ do |decks_table|
   decks_table.hashes.each do |deck|
     Deck.create!(deck)
@@ -61,4 +64,5 @@ end
    end  
   expect(result).to be_truthy
  end 
+
 
