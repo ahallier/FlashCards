@@ -5,6 +5,12 @@ describe DecksController do
     before :each do
       @deck = Deck.create!({:title => 'Test',  :category => 'TestCat', :public => true})
     end
+    describe 'Visiting index' do 
+        it 'should call Deck.all' do
+            expect(Deck).to receive(:all)
+            get :index
+        end
+    end
     describe 'Adding new deck' do
         it 'should call the Deck.create! method' do
             expect(Deck).to receive(:create!)
