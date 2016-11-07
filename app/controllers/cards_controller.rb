@@ -10,7 +10,7 @@ class CardsController < ApplicationController
 
     def index
         @deck = Deck.find params[:id]
-        puts "deck"+@deck.id.to_s
+        #puts "deck"+@deck.id.to_s
         @cards = Card.where(deck_id: @deck)
     end
     
