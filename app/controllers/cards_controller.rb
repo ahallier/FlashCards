@@ -27,7 +27,6 @@ class CardsController < ApplicationController
     end
     
     def edit
-         @card = Card.find params[:id]
     end
     
     def update

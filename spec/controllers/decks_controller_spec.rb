@@ -19,7 +19,7 @@ describe DecksController do
             put :update, {:id=>1, :deck =>{:title => 'Test',  :category => 'TestCat', :public => true}}
         end
     end
-    describe 'deleteing deck' do
+    describe 'deleting deck' do
         it 'should call the Deck.destroy method' do
             deck_spy = spy(Deck)
             allow(Deck).to receive(:find).and_return deck_spy
