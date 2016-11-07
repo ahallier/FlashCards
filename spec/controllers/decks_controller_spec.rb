@@ -39,4 +39,13 @@ describe DecksController do
             get :edit, {:id => 1}
         end
     end
+    describe 'Adding Card to Deck' do
+        it 'should call the Deck.addCard method' do
+            deck_spy = spy(Deck)
+            allow(Deck).to receive(:find).and_return deck_spy
+            expect(deck_spy.CardsController).to receive(:create)
+            get :addCard, {"card"=>{"front"=>"frontofcard", "back"=>"backofcard"}, "id"=>"1"}
+            expect(response).to redirect_to('/cards/1/display')
+        end
+    end
 end
