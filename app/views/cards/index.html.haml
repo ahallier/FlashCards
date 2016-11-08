@@ -1,8 +1,16 @@
 -# This file is app/views/cards/index.html.haml
 
+= javascript_include_tag 'app/assets/javascripts/jquery.flip' 
 %h1 Cards
+.flip
+    .front
+        .h1
+            word
+    .back
+        .h1
+            definition
 
-= form_tag card_display_path
+
 
 %table#cards
     %thead

@@ -59,3 +59,34 @@ form label {
   font-weight: bold;
   color: purple;
 }
+.flip {
+    height: 199px;
+    width: 300px;
+    margin: 0 auto;
+    
+}
+.flip img {
+    width: 300px;
+    height: auto;
+}
+.flip .front{
+    background-image: url("http://www.clipartkid.com/images/309/index-card-clipart-best-bsDqyO-clipart.png");
+    text-align: center;
+    background-repeat: no-repeat;
+    position: relative
+    
+}
+.flip .h1{
+    text-align: center;
+    position: absolute;               
+    top: 50%;                 
+    left: 50%;
+    transform: translate(-75%, -75%);    
+    font-size: 150%;
+}
+.flip .back {
+    background-image: url("http://www.clipartkid.com/images/309/index-card-clipart-best-bsDqyO-clipart.png");
+    text-align: center;
+    background-repeat: no-repeat;
+    
+}
