@@ -1,6 +1,10 @@
 class DecksController < ApplicationController
     
     
+    def index_params
+        params.permit(:sort, :random)
+    end
+    
     def create_params
         params.require(:deck).permit(:title, :category, :public)
     end
@@ -8,9 +12,37 @@ class DecksController < ApplicationController
     def update_params
         params.require(:deck).permit(:id, :title, :category, :public)
     end
+    
 
     def index
-        @decks = Deck.all
+        sort = index_params[:sort] || session[:sort]
+        
+        if sort == nil
+            render 'index' and return
+        end
+        
+        if index_params[:sort] != session[:sort]
+            # switch ascending and descending if the user clicks on the header multiple times
+            session[:ascending] = true
+            session[:sort] = sort
+            #redirect_to :sort => sort and return
+        elsif index_params[:random] == session[:random]
+            # if the random token is new and the sort parameter is the same as the sort session token
+            # that means that the user clicked on the same header they did last time so we reverse the
+            # ordering. If the random token is different, that means the user just refreshed the page and
+            # we don't want to reverse the ordering.
+            session[:ascending] = !session[:ascending]
+        end
+        
+        asc_or_desc = session[:ascending] ? 'asc' : 'desc'
+        
+        # the call to lower() make the search case insensitive
+        ordering = 'lower('+sort+') '+ asc_or_desc
+
+        @decks = Deck.all.order(ordering)
+        # the random token is used to ensure that the ordering doesn't get reversed on page refresh.
+        @random = SecureRandom.uuid
+        session[:random] = @random
     end
     
     def new
