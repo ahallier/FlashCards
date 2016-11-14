@@ -1,0 +1,14 @@
+
+%h1 Edit Group
+
+= form_tag card_path(@card), :method => :put do
+
+  = hidden_field :card, :id
+
+  = label :card, :front, 'Front'
+  = text_field :card, 'front'
+
+  = label :card, :back, 'Back'
+  = text_field :card, 'back'
+
+  = submit_tag 'Update Card Info'

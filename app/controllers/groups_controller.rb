@@ -1,4 +1,4 @@
-class DecksController < ApplicationController
+class GroupsController < ApplicationController
     
     
     def index_params
@@ -6,11 +6,11 @@ class DecksController < ApplicationController
     end
     
     def create_params
-        params.require(:deck).permit(:title, :category, :public)
+        params.require(:group).permit(:title, :public)
     end
     
     def update_params
-        params.require(:deck).permit(:id, :title, :category, :public)
+        params.require(:group).permit(:title, :updated_at, :public)
     end
     
 
@@ -18,7 +18,7 @@ class DecksController < ApplicationController
         sort = index_params[:sort] || session[:sort]
         
         if sort == nil
-            @decks = Deck.all
+            @groups = Group.all
             render 'index' and return
         end
         
@@ -40,7 +40,7 @@ class DecksController < ApplicationController
         # the call to lower() make the search case insensitive
         ordering = 'lower('+sort+') '+ asc_or_desc
 
-        @decks = Deck.where(public: true).order(ordering)
+        @groups = Group.where(public: true).order(ordering)
         # the random token is used to ensure that the ordering doesn't get reversed on page refresh.
         @random = SecureRandom.uuid
         session[:random] = @random
@@ -51,44 +51,39 @@ class DecksController < ApplicationController
     end
     
     def create
-        deck_params = create_params
+        group_params = create_params
         # TODO: Make constants somewhere (config/constanst file?) that represent default deck values.
-        deck_params[:score] = 0
-        deck_params[:created_at] = DateTime.now
-        deck_params[:updated_at] = DateTime.now
-        deck_params[:public] = deck_params[:public] == 'Yes'
-        Deck.create!(deck_params)
-        flash[:notice] = "Successfully created deck."
-        redirect_to decks_path
+        group_params[:created_at] = DateTime.now
+        group_params[:updated_at] = DateTime.now
+        group_params[:public] = group_params[:public]
+        Group.create!(group_params)
+        flash[:notice] = "Successfully created group."
+        redirect_to groups_path
     end
     
     def destroy
-        @deck = Deck.find(params[:id])
-        @deck.destroy
-        flash[:notice] = "Deck '#{@deck.title}' was deleted."
-        redirect_to decks_path
+        @group = Group.find(params[:id])
+        @group.destroy
+        flash[:notice] = "Group '#{@group.title}' was deleted."
+        redirect_to groups_path
     end
     
     def edit
-        @deck = Deck.find params[:id]
+        @group = Group.find params[:id]
     end
     
     def update
-        deck = Deck.find update_params[:id]
-        deck.title = update_params[:title]
-        deck.category = update_params[:category]
-        deck.updated_at = DateTime.now
-        deck.public = update_params[:public] == 'Yes'
-        deck.save
+        group = Group.find update_params[:id]
+        group.title = update_params[:title]
+        group.updated_at = DateTime.now
+        group.public = update_params[:public] == 'Yes'
+        group.save
         
-        redirect_to decks_path
+        redirect_to groups_path
     end
-    def addCard
-        @deck = Deck.find params[:id]
-        @card = @deck.cards.create(:front => params["card"]["front"], :back =>params["card"]["back"] )
-        redirect_to card_display_path
-    end
-    def writecard
-        #default render writecard template
+    def addUser
+        #@deck = Deck.find params[:id]
+        #@card = @deck.cards.create(:front => params["card"]["front"], :back =>params["card"]["back"] )
+        redirect_to groups_path
     end
 end

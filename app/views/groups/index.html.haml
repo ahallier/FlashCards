@@ -1,0 +1,19 @@
+-# This file is app/views/groups/index.html.haml
+
+%h1 Public Groups
+
+
+%table#groups
+    %thead
+        %tr
+            %th Group Name
+            %th Join
+    %tbody
+        - @groups.each do |group|
+            %tr
+                %td= group.title
+                %td= link_to 'Join', edit_card_path(card.id)
+                
+= link_to 'Back to Decks', decks_path
+%br
+= link_to 'Create New Group', new_group_path
