@@ -39,7 +39,7 @@ class DecksController < ApplicationController
         # the call to lower() make the search case insensitive
         ordering = 'lower('+sort+') '+ asc_or_desc
 
-        @decks = Deck.all.order(ordering)
+        @decks = Deck.where(public: true).order(ordering)
         # the random token is used to ensure that the ordering doesn't get reversed on page refresh.
         @random = SecureRandom.uuid
         session[:random] = @random
