@@ -3,10 +3,10 @@
 = form_tag add_group_path, :method =>:get do
 
 
-  = label :deck, :title, 'Title'
-  = text_field :deck, 'title'
+  = label :group, :title, 'Title'
+  = text_field :group, 'title'
 
-  = label :deck, :category, 'Invite Users'
+  = label :group, :users, 'Invite Users'
   = f.select :user_name, Users.all.collect {|p| [ p.name ] } %>
   
   = label :deck, :public, 'Make Public?'

@@ -1,27 +1,18 @@
--# This file is app/views/cards/index.html.haml
+-# This file is app/views/groups/index.html.haml
 
-%h1 My Groups
+%h1 Public Groups
 
-= form_tag card_display_path
 
-%table#cards
+%table#groups
     %thead
         %tr
-            %th Card ID
-            %th Deck ID
-            %th Front
-            %th Back
-            %th Edit
-            %th Delete
+            %th Group Name
+            %th Join
     %tbody
-        - @cards.each do |card|
+        - @groups.each do |group|
             %tr
-                %td= card.id
-                %td= card.deck_id
-                %td= card.front
-                %td= card.back
-                %td= link_to 'Edit', edit_card_path(card.id)
-                %td= link_to 'Delete', card_path(card), :method => :delete
+                %td= group.title
+                %td= link_to 'Join', edit_card_path(card.id)
                 
 = link_to 'Back to Decks', decks_path
 %br
