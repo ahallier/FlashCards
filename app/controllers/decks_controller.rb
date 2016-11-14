@@ -18,6 +18,7 @@ class DecksController < ApplicationController
         sort = index_params[:sort] || session[:sort]
         
         if sort == nil
+            @decks = Deck.all
             render 'index' and return
         end
         
