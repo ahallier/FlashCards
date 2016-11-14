@@ -365,10 +365,7 @@
 
     return this;
   };
-  $(function(){
-    $(".flip").flip({
-        trigger: 'click'
-    });
-});
+  
 
 }( jQuery ));
+ 

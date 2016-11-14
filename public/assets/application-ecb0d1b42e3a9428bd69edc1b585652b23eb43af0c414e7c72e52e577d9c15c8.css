@@ -9,7 +9,6 @@ html, body {
 div#main {
   margin: 0;
   padding: 0 20px 20px;
-  
 }
 a {
   background: transparent;
@@ -69,7 +68,6 @@ form label {
 .flip img {
     width: 300px;
     height: auto;
-    
 }
 .flip .front{
     background-image: url("index-card-clipart-best-bsDqyO-clipart.png");
@@ -85,7 +83,6 @@ form label {
     left: 50%;
     transform: translate(-75%, -75%);    
     font-size: 150%;
-    
 }
 .flip .back {
     background-image: url("index-card-clipart-best-bsDqyO-clipart.png");
@@ -93,12 +90,19 @@ form label {
     background-repeat: no-repeat;
     position: relative;
 }
-.floatingBox{
-    display: inline-block; 
-}
-.centerBox{
-  margin:auto;
-  width:33%;
-}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
 
+
+ */
 

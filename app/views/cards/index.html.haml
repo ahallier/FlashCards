@@ -1,16 +1,19 @@
 -# This file is app/views/cards/index.html.haml
-
+= javascript_include_tag "practiceCards"
 %h1 Cards
-
-.flip
-    .front
-        .h1{:id => "frontCard"}
-            word
-    .back
-        .h1{:id => "backCard"}
-            definition
-%button{:onclick => "PC.nextCard", :id => "nextButton"} Next
-
+.centerBox
+    .floatingBox
+        %button{ :id => "lastButton"} Last
+    .floatingBox
+        .flip
+            .front
+                .h1{:id => "frontCard"}
+                    click on card to flip  
+            .back
+                .h1{:id => "backCard"}
+                    use buttons or arrow keys to navigate
+    .floatingBox
+        %button{ :id => "nextButton"} Next
 %table#cards
     %thead
         %tr
