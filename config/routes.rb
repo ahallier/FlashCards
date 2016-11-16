@@ -24,6 +24,9 @@ Rails.application.routes.draw do
   resources :cards
   match '/cards/:id/display', to: 'cards#index', via: :get, as: 'card_display'
   resources :groups
+  
+  match '/groups/:id/add-deck', to: 'groups#show_add_deck_to_group', via: :get, as: 'show_add_deck_to_group'
+  match '/groups/:id/add-deck', to: 'groups#add_deck_to_group', via: :post, as: 'add_deck_to_group'
   # Example resource route with options:
   #   resources :products do
   #     member do

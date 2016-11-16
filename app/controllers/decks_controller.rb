@@ -22,6 +22,11 @@ class DecksController < ApplicationController
             render 'index' and return
         end
         
+        puts index_params[:sort]
+        puts session[:sort]
+        puts index_params[:random]
+        puts session[:random]
+        puts "\n\n"
         if index_params[:sort] != session[:sort]
             # switch ascending and descending if the user clicks on the header multiple times
             session[:ascending] = true

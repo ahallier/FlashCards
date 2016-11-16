@@ -46,3 +46,12 @@ cards = [
 cards.each do |card|
     Card.create!(card)
 end
+
+groups = [
+    {:title => "My Group", :created_at => DateTime.now, :updated_at => DateTime.now},
+    {:title => "Your Group", :created_at => DateTime.now, :updated_at => DateTime.now}
+]
+
+groups.each do |g|
+    Group.create!(g)
+end

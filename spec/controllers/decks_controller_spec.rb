@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'rails_helper'
 
-describe DecksController do
+describe DecksController, :type => :controller do
     before :each do
       @deck = Deck.create!({:title => 'Test',  :category => 'TestCat', :public => true})
     end
@@ -46,6 +46,22 @@ describe DecksController do
             expect(deck_spy.CardsController).to receive(:create)
             get :addCard, {"card"=>{"front"=>"frontofcard", "back"=>"backofcard"}, "id"=>"1"}
             expect(response).to redirect_to('/cards/1/display')
+        end
+    end
+    describe 'Sorting By Field Once' do
+        it 'should sort ascending' do
+            get :index, {:sort => :score}
+            
+            expect(@request.session[:ascending]).to be true
+        end
+    end
+    describe 'Sorting By Same Field Twice' do
+        it 'should sort descending' do
+            get :index, {:sort => :score, :random => :abc}
+            get :index, {:sort => :score, :random => @request.session[:random]}
+
+            expect(@request.session[:ascending]).to be false
+
         end
     end
 end

@@ -5,6 +5,14 @@ class GroupsController < ApplicationController
         params.permit(:sort, :random)
     end
     
+    def show_add_deck_to_group_params
+        params.require(:id)
+    end
+    
+    def add_deck_to_group_params
+        params.require(:decks, :id)
+    end
+    
     def create_params
         params.require(:group).permit(:title, :public)
     end
@@ -13,6 +21,37 @@ class GroupsController < ApplicationController
         params.require(:group).permit(:title, :updated_at, :public)
     end
     
+    def show_add_deck_to_group
+        group_id = params[:id]
+        
+        # TODO: This will need to be changed to decks for logged in user that
+        # are not already in the group.
+        @decks = Deck.all
+        @group_id = group_id
+        render 'add-deck' and return
+    end
+    
+    def add_deck_to_group
+        puts "Got request to add deck to group"
+        group_id = params[:id]
+        
+
+        deck_ids = params[:decks].keys
+        
+        puts "Got group id: #{group_id}"
+        
+        group = Group.find_by_id(group_id)
+        deck_ids.each do |d_id|
+            # Add any decks to the group that were not already in the group
+            unless group.decks.any? { |d| d.id == d_id } 
+                group.decks << Deck.find_by_id(d_id)
+            end
+        end
+        group.save
+        
+        # Maybe we should redirect to groups_path here.
+        redirect_to decks_path
+    end
 
     def index
         sort = index_params[:sort] || session[:sort]
