@@ -1,26 +1,5 @@
 class GroupsController < ApplicationController
     
-    
-    def index_params
-        params.permit(:sort, :random)
-    end
-    
-    def show_add_deck_to_group_params
-        params.require(:id)
-    end
-    
-    def add_deck_to_group_params
-        params.require(:decks, :id)
-    end
-    
-    def create_params
-        params.require(:group).permit(:title, :public)
-    end
-    
-    def update_params
-        params.require(:group).permit(:title, :updated_at, :public)
-    end
-    
     def show_add_deck_to_group
         group_id = params[:id]
         group = Group.find_by_id(group_id)
