@@ -48,8 +48,8 @@ cards.each do |card|
 end
 
 groups = [
-    {:title => "My Group", :created_at => DateTime.now, :updated_at => DateTime.now},
-    {:title => "Your Group", :created_at => DateTime.now, :updated_at => DateTime.now}
+    {:title => "My Group", :created_at => DateTime.now, :updated_at => DateTime.now, :public => true},
+    {:title => "Your Group", :created_at => DateTime.now, :updated_at => DateTime.now, :public => false}
 ]
 
 groups.each do |g|
