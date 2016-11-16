@@ -23,6 +23,19 @@ class GroupsController < ApplicationController
     
     def show_add_deck_to_group
         group_id = params[:id]
+        group = Group.find_by_id(group_id)
+        
+        if group == nil
+            flash[:notice] = "Group does not exist."
+            redirect_to decks_path and return
+        end
+        
+        unless group.public
+            # this will need to take into account users that have access
+            # to private groups later.
+            flash[:notice] = "Group is private!"
+            redirect_to decks_path and return
+        end
         
         # TODO: This will need to be changed to decks for logged in user that
         # are not already in the group.
@@ -35,12 +48,23 @@ class GroupsController < ApplicationController
         puts "Got request to add deck to group"
         group_id = params[:id]
         
+        group = Group.find_by_id(group_id)
+        if group == nil
+            flash[:notice] = "Group does not exist."
+            redirect_to decks_path and return
+        end
+        unless group.public
+            # this will need to take into account users that have access
+            # to private groups later.
+            flash[:notice] = "Group is private!"
+            redirect_to decks_path and return
+        end
+        
 
         deck_ids = params[:decks].keys
         
         puts "Got group id: #{group_id}"
         
-        group = Group.find_by_id(group_id)
         deck_ids.each do |d_id|
             # Add any decks to the group that were not already in the group
             unless group.decks.any? { |d| d.id == d_id } 
