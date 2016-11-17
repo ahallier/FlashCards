@@ -27,6 +27,13 @@ Rails.application.routes.draw do
   
   match '/groups/:id/add-deck', to: 'groups#show_add_deck_to_group', via: :get, as: 'show_add_deck_to_group'
   match '/groups/:id/add-deck', to: 'groups#add_deck_to_group', via: :post, as: 'add_deck_to_group'
+  
+  
+  
+  resources :users
+  match '/login', to: 'sessions#new', via: :get
+  match '/login_create', to: 'sessions#create', via: :post
+  match '/logout', to: 'sessions#destroy', via: :delete
   # Example resource route with options:
   #   resources :products do
   #     member do
