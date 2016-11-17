@@ -47,7 +47,7 @@ class DecksController < ApplicationController
         ordering = 'lower('+sort+') '+ asc_or_desc
 
         @decks = Deck.search(params[:search]).where(public: true).order(ordering)
-        @decks = @decks.paginate(:per_page => 5, :page => params[:page])
+        @decks = @decks.paginate(:page => params[:page], :per_page => 5)
         
         # the random token is used to ensure that the ordering doesn't get reversed on page refresh.
         @random = SecureRandom.uuid
