@@ -1,5 +1,6 @@
 class DecksController < ApplicationController
     
+    require 'will_paginate/array' 
     
     def index_params
         params.permit(:sort, :random)
