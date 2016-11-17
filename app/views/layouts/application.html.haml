@@ -10,6 +10,7 @@
     %h1.title FlashCards
     
     #main
+     
       
       -if !@current_user
         = button_to 'Sign up/Login', login_path, {method: :get, :id=>'signuplogin'}

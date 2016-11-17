@@ -20,7 +20,7 @@ class UsersController < ApplicationController
       flash[:notice] = "Account was created sucessfully "
        redirect_to login_path
     end
-    
+   
    
    end
  
