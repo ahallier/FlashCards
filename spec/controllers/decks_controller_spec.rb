@@ -64,4 +64,11 @@ describe DecksController, :type => :controller do
 
         end
     end
+    describe '#search' do
+        it 'should return results' do
+        get :search, "search" => "test"
+        response.should be_ok
+        @decks.map(&:name).should == ['expected1']
+    end
+  end
 end
