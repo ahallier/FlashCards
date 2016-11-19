@@ -1,15 +1,11 @@
 %h1 Create New Group
 
-= form_tag add_group_path, :method =>:get do
+= form_tag groups_path do
 
 
   = label :group, :title, 'Title'
   = text_field :group, 'title'
 
-  = label :group, :users, 'Invite Users'
-  = f.select :user_name, Users.all.collect {|p| [ p.name ] } %>
-  
-  = label :deck, :public, 'Make Public?'
-  = select :deck, :public, ['Yes', 'No']
-
   = submit_tag 'Save Changes'
+  
+  = link_to 'Back to Groups', groups_path

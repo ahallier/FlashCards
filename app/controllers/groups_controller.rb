@@ -1,5 +1,17 @@
 class GroupsController < ApplicationController
     
+    def index_params
+        params.permit(:sort, :random)
+    end
+    
+    def create_params
+        params.require(:group).permit(:title)
+    end
+    
+    def update_params
+        params.permit(:title, :updated_at, :id)
+    end
+
     def show_add_deck_to_group
         group_id = params[:id]
         group = Group.find_by_id(group_id)
@@ -88,6 +100,14 @@ class GroupsController < ApplicationController
         session[:random] = @random
     end
     
+    def display
+        id = update_params[:id]
+        #deck_ids = GroupsDecks.where(group_id: id).take
+        #@decks = Deck.where(id: deck_ids.deck_id).take 
+        @group = Group.find(id)
+        @group_decks = @group.decks
+    end
+    
     def new
         #default render new template
     end
@@ -97,7 +117,6 @@ class GroupsController < ApplicationController
         # TODO: Make constants somewhere (config/constanst file?) that represent default deck values.
         group_params[:created_at] = DateTime.now
         group_params[:updated_at] = DateTime.now
-        group_params[:public] = group_params[:public]
         Group.create!(group_params)
         flash[:notice] = "Successfully created group."
         redirect_to groups_path
