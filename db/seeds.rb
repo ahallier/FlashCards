@@ -40,9 +40,23 @@ end
 
 cards = [
     {:deck_id => 2, :front => "frontTest", :back => "backTest"},
-    {:deck_id => 1, :front => "Albert", :back => "Albert"}
+    {:deck_id => 1, :front => "Albert", :back => "Albert"},
+    {:deck_id => 2, :front => "Lucas", :back => "Bombal"},
+    {:deck_id => 2, :front => "Sydney", :back => "Garcia"},
+    {:deck_id => 2, :front => "Ryan", :back => "Kuemmel"},
+    {:deck_id => 2, :front => "Andrea", :back => "Hallier"},
+    {:deck_id => 2, :front => "Albert", :back => "Geigrich"}
 ]
 
 cards.each do |card|
     Card.create!(card)
+end
+
+groups = [
+    {:title => "My Group", :created_at => DateTime.now, :updated_at => DateTime.now, :public => true},
+    {:title => "Your Group", :created_at => DateTime.now, :updated_at => DateTime.now, :public => false}
+]
+
+groups.each do |g|
+    Group.create!(g)
 end

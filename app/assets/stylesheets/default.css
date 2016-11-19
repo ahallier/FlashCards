@@ -96,9 +96,11 @@ form label {
 .floatingBox{
     display: inline-block; 
 }
-.centerBox{
+.Box{
+  display: inline-block; 
   margin:auto;
   width:33%;
+  margin:auto;
 }
 
 

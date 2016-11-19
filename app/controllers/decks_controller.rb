@@ -1,5 +1,6 @@
 class DecksController < ApplicationController
     
+    require 'will_paginate/array' 
     
     def index_params
         params.permit(:sort, :random)
@@ -22,6 +23,11 @@ class DecksController < ApplicationController
             render 'index' and return
         end
         
+        puts index_params[:sort]
+        puts session[:sort]
+        puts index_params[:random]
+        puts session[:random]
+        puts "\n\n"
         if index_params[:sort] != session[:sort]
             # switch ascending and descending if the user clicks on the header multiple times
             session[:ascending] = true
@@ -40,7 +46,9 @@ class DecksController < ApplicationController
         # the call to lower() make the search case insensitive
         ordering = 'lower('+sort+') '+ asc_or_desc
 
-        @decks = Deck.where(public: true).order(ordering)
+        @decks = Deck.search(params[:search]).where(public: true).order(ordering)
+        #@decks = @decks.paginate(:page => params[:page], :per_page => 5)
+        
         # the random token is used to ensure that the ordering doesn't get reversed on page refresh.
         @random = SecureRandom.uuid
         session[:random] = @random

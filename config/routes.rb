@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-
+  
   resources :movies
   # map '/' to be a redirect to 'decks'
   root :to => redirect('/decks')
@@ -25,6 +25,16 @@ Rails.application.routes.draw do
   match '/cards/:id/display', to: 'cards#index', via: :get, as: 'card_display'
   resources :groups
   match '/groups/:id/display', to: 'groups#display', via: :get, as: 'group_display'
+  
+  match '/groups/:id/add-deck', to: 'groups#show_add_deck_to_group', via: :get, as: 'show_add_deck_to_group'
+  match '/groups/:id/add-deck', to: 'groups#add_deck_to_group', via: :post, as: 'add_deck_to_group'
+  
+  
+  
+  resources :users
+  match '/login', to: 'sessions#new', via: :get
+  match '/login_create', to: 'sessions#create', via: :post
+  match '/logout', to: 'sessions#destroy', via: :delete
   # Example resource route with options:
   #   resources :products do
   #     member do

@@ -1,7 +1,8 @@
 -# This file is app/views/cards/index.html.haml
 = javascript_include_tag "practiceCards"
 %h1 Cards
-.centerBox
+.Box
+.Box
     .floatingBox
         %button{ :id => "lastButton"} Last
     .floatingBox
@@ -11,9 +12,23 @@
                     click on card to flip  
             .back
                 .h1{:id => "backCard"}
-                    use buttons or arrow keys to navigate
+                    use buttons or arrow keys to navigate\
     .floatingBox
         %button{ :id => "nextButton"} Next
+    
+.Box{:id => "scores"}
+    %h2 Score:
+    %h2#currentscore
+        0/0
+    .floatingBox
+        %h1 did you get it right?
+    %div
+    .floatingBox{ :id => "correctButton"}    
+        = image_tag("yes.png")
+    .floatingBox{ :id => "incorrectButton"}
+        = image_tag("no.png")
+    %div
+        %button{ :id => "resetScore"} Start Again?
 %table#cards
     %thead
         %tr
