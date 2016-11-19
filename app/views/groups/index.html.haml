@@ -11,8 +11,8 @@
     %tbody
         - @groups.each do |group|
             %tr
-                %td= group.title
-                %td= link_to 'Join', edit_card_path(card.id)
+                %td= link_to group.title , group_display_path(group.id)
+                %td= link_to 'Join'
                 
 = link_to 'Back to Decks', decks_path
 %br
