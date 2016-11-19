@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161116022537) do
+ActiveRecord::Schema.define(version: 20161119232728) do
 
   create_table "cards", force: :cascade do |t|
     t.integer  "deck_id"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20161116022537) do
     t.text     "password"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "session_token"
   end
 
   create_table "users_fav_decks", id: false, force: :cascade do |t|
