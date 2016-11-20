@@ -1,0 +1,20 @@
+-# This file is app/views/groups/index.html.haml
+
+%h1 Add Deck to Group
+
+= form_tag add_deck_to_group_path(@group_id) do
+    %table#decks
+        %thead
+            %tr
+                %th Title
+                %th Category
+                %th Deck ID
+                %th Add To Group
+        %tbody
+            - @decks.each do |deck|
+                %tr
+                    %td= deck.title
+                    %td= deck.category
+                    %td= deck.id
+                    %td= check_box_tag("decks[#{deck.id}]")
+    = submit_tag 'Add Decks to Group'

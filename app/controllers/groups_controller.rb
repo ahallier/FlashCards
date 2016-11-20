@@ -56,16 +56,18 @@ class GroupsController < ApplicationController
         
         puts "Got group id: #{group_id}"
         
+
+        
         deck_ids.each do |d_id|
             # Add any decks to the group that were not already in the group
-            unless group.decks.any? { |d| d.id == d_id } 
+            unless group.decks.any? { |d| d.id == d_id.to_i }
                 group.decks << Deck.find_by_id(d_id)
             end
         end
         group.save
         
         # Maybe we should redirect to groups_path here.
-        redirect_to decks_path
+        redirect_to group_display_path(group_id)
     end
 
     def index
