@@ -8,10 +8,6 @@ class GroupsController < ApplicationController
         params.require(:group).permit(:title, :public)
     end
     
-    def update_params
-        params.permit(:title, :updated_at, :id)
-    end
-    
     def remove_deck_from_group
         puts 'Got call to remove deck from group.'
         user = User.find_by_session_token(session[:session_token])
@@ -106,7 +102,7 @@ class GroupsController < ApplicationController
         sort = index_params[:sort] || session[:sort]
         
         if sort == nil
-            @groups = Group.all
+            @groups = Group.where(public: true)
             render 'index' and return
         end
         
@@ -136,8 +132,6 @@ class GroupsController < ApplicationController
     
     def display
         id = update_params[:id]
-        #deck_ids = GroupsDecks.where(group_id: id).take
-        #@decks = Deck.where(id: deck_ids.deck_id).take 
         @group = Group.find(id)
         @group_decks = @group.decks
     end
@@ -160,27 +154,7 @@ class GroupsController < ApplicationController
         flash[:notice] = "Successfully created group."
         redirect_to groups_path
     end
-    
-    def destroy
-        @group = Group.find(params[:id])
-        @group.destroy
-        flash[:notice] = "Group '#{@group.title}' was deleted."
-        redirect_to groups_path
-    end
-    
-    def edit
-        @group = Group.find params[:id]
-    end
-    
-    def update
-        group = Group.find update_params[:id]
-        group.title = update_params[:title]
-        group.updated_at = DateTime.now
-        group.public = update_params[:public] == 'Yes'
-        group.save
-        
-        redirect_to groups_path
-    end
+
     def addUser
         @group = Group.find params[:id]
         user = User.find_by_session_token(session[:session_token])
