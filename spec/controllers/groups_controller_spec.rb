@@ -110,14 +110,20 @@ describe GroupsController, :type => :controller do
     end
     describe 'Adding User to Group' do
         it 'should call the Group.addUser method' do
-            deck_spy = spy(Group)
+            group_spy = spy(Group)
+            @request.session[:session_token] = @user.session_token
             allow(Group).to receive(:find).and_return deck_spy
-            expect(deck_spy.UserController).to receive(:create)
-            get :group_addUser, {:id => 1}
+            expect(group_spy.UserController).to receive(:create)
+            get :addUser, {:id => 1}
             expect(response).to redirect_to('/groups')
         end
+        it 'when user is not logged in' do
+            expect(User).to receive(:find_by_session_token)
+            get :addUser, {:id => 1}
+            expect(response).to redirect_to('/decks')
+        end
     end
-    
+
     describe "Removing decks from a group" do
         it 'should redirect to decks path if not logged in' do
             post :remove_deck_from_group, {:group_id => @pub_group.id, :deck_id => @deck.id}
@@ -134,6 +140,24 @@ describe GroupsController, :type => :controller do
             @request.session[:session_token] = @user.session_token
             post :remove_deck_from_group, {:group_id => @pub_group.id, :deck_id => @deck.id}
             expect(@request).to redirect_to(group_display_path(@pub_group.id))
+        end
+    end
+    describe 'Adding new public group' do
+        it 'should call the Group.create! method' do
+            expect(Group).to receive(:create!)
+            post :create, {:group =>{:title => 'Test', :public => 'Yes'}}
+        end
+    end
+    describe 'Adding new private group' do
+        it 'should call the Group.create! method' do
+            expect(Group).to receive(:create!)
+            post :create, {:group =>{:title => 'Test', :public => 'No'}}
+        end
+    end
+    describe 'Visiting Group Page' do
+        it 'should call Group.find' do
+            expect(Group).to receive(:find).and_return(spy(Group))
+            get :display, {:id => 1}
         end
     end
 end
