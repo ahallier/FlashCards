@@ -103,7 +103,7 @@ class GroupsController < ApplicationController
     end
 
     def index
-        sort = index_params[:sort] || session[:sort]
+        sort = params[:sort] || session[:sort]
         
         if sort == nil
             @groups = Group.all
