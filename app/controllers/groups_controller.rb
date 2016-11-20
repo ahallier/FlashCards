@@ -5,7 +5,7 @@ class GroupsController < ApplicationController
     end
     
     def create_params
-        params.require(:group).permit(:title)
+        params.require(:group).permit(:title, :public)
     end
     
     def update_params
@@ -151,6 +151,11 @@ class GroupsController < ApplicationController
         # TODO: Make constants somewhere (config/constanst file?) that represent default deck values.
         group_params[:created_at] = DateTime.now
         group_params[:updated_at] = DateTime.now
+        if group_params[:public] == 'Yes'
+            group_params[:public]=true
+        else
+            group_params[:public]=false
+        end
         Group.create!(group_params)
         flash[:notice] = "Successfully created group."
         redirect_to groups_path
@@ -177,8 +182,14 @@ class GroupsController < ApplicationController
         redirect_to groups_path
     end
     def addUser
-        #@deck = Deck.find params[:id]
-        #@card = @deck.cards.create(:front => params["card"]["front"], :back =>params["card"]["back"] )
-        redirect_to groups_path
+        @group = Group.find params[:id]
+        user = User.find_by_session_token(session[:session_token])
+        if user == nil
+            flash[:notice] = "You must be logged in to add decks to a group."
+            redirect_to decks_path and return
+        end
+        @group.users << user
+        flash[:notice] = "#{user.email} joined #{@group.title}."
+        redirect_to groups_path and return
     end
 end
