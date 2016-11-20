@@ -115,6 +115,8 @@ describe GroupsController, :type => :controller do
             expect(deck_spy.UserController).to receive(:create)
             get :group_addUser, {:id => 1}
             expect(response).to redirect_to('/groups')
+        end
+    end
     
     describe "Removing decks from a group" do
         it 'should redirect to decks path if not logged in' do
@@ -131,7 +133,8 @@ describe GroupsController, :type => :controller do
         it 'should redirect to group display path if user in group' do
             @request.session[:session_token] = @user.session_token
             post :remove_deck_from_group, {:group_id => @pub_group.id, :deck_id => @deck.id}
-            expect(@request).to redirect_to(decks_path)
+            expect(@request).to redirect_to(group_display_path(@pub_group.id))
         end
     end
 end
+
