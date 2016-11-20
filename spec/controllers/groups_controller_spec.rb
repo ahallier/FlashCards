@@ -112,8 +112,7 @@ describe GroupsController, :type => :controller do
         it 'should call the Group.addUser method' do
             group_spy = spy(Group)
             @request.session[:session_token] = @user.session_token
-            allow(Group).to receive(:find).and_return deck_spy
-            expect(group_spy.UserController).to receive(:create)
+            allow(Group).to receive(:find).and_return group_spy
             get :addUser, {:id => 1}
             expect(response).to redirect_to('/groups')
         end
