@@ -5,7 +5,7 @@ class GroupsController < ApplicationController
     end
     
     def create_params
-        params.require(:group).permit(:title)
+        params.require(:group).permit(:title, :public)
     end
     
     def update_params
@@ -151,6 +151,11 @@ class GroupsController < ApplicationController
         # TODO: Make constants somewhere (config/constanst file?) that represent default deck values.
         group_params[:created_at] = DateTime.now
         group_params[:updated_at] = DateTime.now
+        if group_params[:public] == 'Yes'
+            group_params[:public]=true
+        else
+            group_params[:public]=false
+        end
         Group.create!(group_params)
         flash[:notice] = "Successfully created group."
         redirect_to groups_path

@@ -5,6 +5,8 @@
 
   = label :group, :title, 'Title'
   = text_field :group, 'title'
+  = label :group, :public, 'Make Public?'
+  = select :group, :public, ['Yes', 'No']
 
   = submit_tag 'Save Changes'
   
