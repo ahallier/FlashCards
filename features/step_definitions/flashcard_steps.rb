@@ -6,6 +6,29 @@ Given /^I am on the FlashCards home page$/ do
    visit new_deck_path
  end
  
+ Given /^I am on the new group page$/ do
+   visit new_group_path
+ end
+ 
+ Given /^I am on the group page$/ do
+   visit groups_path
+ end
+ 
+ When /^I have set title to "(.*?)", public to "(.*?)"$/ do |title, pub|
+   fill_in('Title', :with => title)
+   select "Yes", :from => "public_select"
+ end
+ 
+ Then /^The group with title "(.*?)" should be in the groups table$/ do |title|
+     visit groups_path
+     page.should have_content(title)
+ end
+  
+ Then /^I should see join group "(.*?)" success message on group page$/ do |title|
+     page.should have_content("joined #{title}")
+ end
+ 
+ 
  Given /^I am on the add deck to group page for group id "(.*?")$/ do |group_id|
      visit add_deck_to_group_path(group_id)
  end
@@ -98,6 +121,10 @@ end
 
 When /^I have clicked the delete button for deck with id "(.*?)"$/ do |did|
       find("#delete_deck_from_group_#{did}").click
+end
+
+When /^I have clicked the link to join group with title "(.*?)"$/ do |title|
+      find(:xpath, "//tr[contains(.,'#{title}')]/td/a", :text => 'Join').click
 end
 
  Given /the following groups have been added to FlashCards:/ do |groups_table|

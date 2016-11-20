@@ -12,7 +12,7 @@
         - @groups.each do |group|
             %tr
                 %td= link_to group.title , group_display_path(group.id)
-                %td= link_to 'Join', group_addUser_path(group.id)
+                %td= link_to 'Join', group_addUser_path(group.id), :id => 'joinlink'
                 
 = link_to 'Back to Decks', decks_path
 %br
