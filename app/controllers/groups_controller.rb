@@ -4,6 +4,10 @@ class GroupsController < ApplicationController
         params.permit(:sort, :random)
     end
     
+    def update_params
+        params.permit(:id)
+    end
+    
     def create_params
         params.require(:group).permit(:title, :public)
     end
