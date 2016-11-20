@@ -145,8 +145,8 @@ class GroupsController < ApplicationController
         redirect_to groups_path
     end
     def addUser
-        #@deck = Deck.find params[:id]
-        #@card = @deck.cards.create(:front => params["card"]["front"], :back =>params["card"]["back"] )
+        @group = Group.find params[:id]
+        @user = @group.users.create(:user_id = User.find_by_session)
         redirect_to groups_path
     end
 end
