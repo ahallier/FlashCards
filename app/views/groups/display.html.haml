@@ -26,7 +26,7 @@
         %td= deck.updated_at
         %td= deck.id
         %td= link_to 'Edit', edit_deck_path(deck.id)
-        %td= button_to 'Delete', remove_deck_from_group_path(@group.id, deck.id), :method => :post, :id => 'btn_delete'
+        %td= button_to 'Delete', remove_deck_from_group_path(@group.id, deck.id), :method => :post, :id => "delete_deck_from_group_#{deck.id}"
 
 = link_to 'New Group Deck', new_deck_path
 = link_to 'Add Existing Decks to Group', add_deck_to_group_path(@group.id)

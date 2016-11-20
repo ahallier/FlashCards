@@ -2,10 +2,10 @@
 
 = form_tag login_create_path do
 
-  = label :session, :user_id, 'Email'
+  = label_tag 'login_user', 'Email'
   = text_field :session, :email, :id=> 'login_user'
 
-  = label :session, :email, 'Password'
+  = label_tag 'login_password', 'Password'
   = text_field :session, :password, :id=> 'login_password'
   
 

@@ -13,7 +13,14 @@ Given /^I am on the FlashCards home page$/ do
  Given /^I am on the edit deck page for deck with title "(.*?)"$/ do |title|
    deck = Deck.find_by title: title
    visit edit_deck_path(id: deck.id)
+ 
+ 
  end
+ 
+ Given /^I am on the group page for group id "(.*?")$/ do |group_id|
+     visit group_display_path(group_id.to_i)
+ end
+ 
  Given /^I am on the display deck page for deck with title "(.*?)"$/ do |title|
    deck = Deck.find_by title: title
    visit edit_deck_path(id: deck.id)
@@ -31,6 +38,8 @@ When /^I have deleted a deck with title "(.*?)"/ do |deckTitle|
   end
   find("#btn_delete").click
 end
+
+
 
 When /^I have clicked button "(.*?)"$/ do |button_name|
      click_button(button_name)
@@ -57,6 +66,40 @@ When /^I have added a card with front "(.*?)" and back "(.*?)" to deck "(.*?)"$/
   end
 end
 
+Given /^I have logged in as user with email "(.*?)" and password "(.*?)"$/ do |email, password|
+    visit login_path
+    fill_in 'Email', :with => email
+    fill_in 'Password', :with => password
+    click_button 'Login to my account'
+end
+
+Given /^user exists with email "(.*?)", password "(.*?)", session token, "(.*?)"$/ do |email, password, st|
+    user_params = {
+        :email => email,
+        :password => password,
+        :session_token => st
+    }
+    User.create!(user_params)
+end
+
+Given /^the deck with id "(.*?)" is in the group with id "(.*?)"$/ do |did, gid|
+    d = Deck.find_by_id(did)
+    g = Group.find_by_id(gid)
+    g.decks << d
+    g.save
+end
+
+Given /^user with email "(.*?)" is in group with id "(.*?)"$/ do |email, gid|
+    g = Group.find_by_id(gid)
+    u = User.find_by_email(email)
+    g.users << u
+    g.save
+end
+
+When /^I have clicked the delete button for deck with id "(.*?)"$/ do |did|
+      find("#delete_deck_from_group_#{did}").click
+end
+
  Given /the following groups have been added to FlashCards:/ do |groups_table|
   groups_table.hashes.each do |group|
     Group.create!(group)
@@ -75,9 +118,14 @@ end
 
   end
   
-  Then /^The deck with title "(.*?)" should be in group with id (.*?)$/ do |deck_title, group_id|
+  Then /^The deck with title "(.*?)" should be in group with id "(.*?)"$/ do |deck_title, group_id|
       visit group_display_path(group_id)
       page.should have_content(deck_title)
+  end
+  
+  Then /^the deck with title "(.*?)" should not appear on the groups page for group with id "(.*?)"$/ do |deck_title, group_id|
+      visit group_display_path(group_id)
+      page.should_not have_content(deck_title)
   end
 
   
