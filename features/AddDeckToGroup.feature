@@ -7,8 +7,9 @@ Background:
   And the following decks have been added to FlashCards:
   |id| title                 | score | public |
   |1 | TestDeck              | 5     | true   |
-  And I am on the add deck to group page 
+  And I am on the add deck to group page for group id "1" 
 
   Scenario: Add a deck to a group
-    When I have checked box with id '#decks_1'
+    When I have checked box with id "#decks_1"
     And I have clicked button "Add Decks to Group"
+    Then The deck with title "TestDeck" should be in group with id 1 
