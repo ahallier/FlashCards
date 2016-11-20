@@ -10,5 +10,5 @@ Background:
   And I am on the add deck to group page 
 
   Scenario: Add a deck to a group
-    When I have checked box with id '#decks_1' 
+    When I have checked box with id '#decks_1'
     And I have clicked button "Add Decks to Group"
