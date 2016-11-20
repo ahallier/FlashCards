@@ -29,6 +29,13 @@ describe GroupsController, :type => :controller do
 ###############################^ Do not change these! Use them as they are or add your own. ^ #####################################
 ############################## | ########################################################## | #####################################
     end
+    describe 'Visiting index' do 
+        it 'should call Group.where' do
+            expect(Group).to receive(:where)
+            get :index
+        end
+    end
+    
     describe 'Visit add deck page' do 
         
         it 'should redirect to decks page if not logged in' do
@@ -84,6 +91,30 @@ describe GroupsController, :type => :controller do
             expect(g.decks.any? {|d| d.id == @deck.id}).to be true
         end
     end
+    
+    describe 'Sorting By Field Once' do
+        it 'should sort ascending' do
+            get :index, {:sort => :score}
+            
+            expect(@request.session[:ascending]).to be true
+        end
+    end
+    describe 'Sorting By Same Field Twice' do
+        it 'should sort descending' do
+            get :index, {:sort => :score, :random => :abc}
+            get :index, {:sort => :score, :random => @request.session[:random]}
+
+            expect(@request.session[:ascending]).to be false
+
+        end
+    end
+    describe 'Adding User to Group' do
+        it 'should call the Group.addUser method' do
+            deck_spy = spy(Group)
+            allow(Group).to receive(:find).and_return deck_spy
+            expect(deck_spy.UserController).to receive(:create)
+            get :group_addUser, {:id => 1}
+            expect(response).to redirect_to('/groups')
     
     describe "Removing decks from a group" do
         it 'should redirect to decks path if not logged in' do
