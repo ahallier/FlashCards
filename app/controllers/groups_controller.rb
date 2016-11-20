@@ -163,7 +163,7 @@ class GroupsController < ApplicationController
         @group = Group.find params[:id]
         user = User.find_by_session_token(session[:session_token])
         if user == nil
-            flash[:notice] = "You must be logged in to add decks to a group."
+            flash[:notice] = "You must be logged in to join a group."
             redirect_to decks_path and return
         end
         @group.users << user
