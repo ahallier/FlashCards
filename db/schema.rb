@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161119232728) do
+ActiveRecord::Schema.define(version: 20161120043753) do
 
   create_table "cards", force: :cascade do |t|
     t.integer  "deck_id"
@@ -48,6 +48,14 @@ ActiveRecord::Schema.define(version: 20161119232728) do
     t.boolean  "public"
   end
 
+  create_table "groups_users", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "group_id"
+  end
+
+  add_index "groups_users", ["group_id"], name: "index_groups_users_on_group_id"
+  add_index "groups_users", ["user_id"], name: "index_groups_users_on_user_id"
+
   create_table "users", force: :cascade do |t|
     t.text     "email"
     t.text     "password"
@@ -63,13 +71,5 @@ ActiveRecord::Schema.define(version: 20161119232728) do
 
   add_index "users_fav_decks", ["deck_id"], name: "index_users_fav_decks_on_deck_id"
   add_index "users_fav_decks", ["user_id"], name: "index_users_fav_decks_on_user_id"
-
-  create_table "users_groups", id: false, force: :cascade do |t|
-    t.integer "users_id"
-    t.integer "groups_id"
-  end
-
-  add_index "users_groups", ["groups_id"], name: "index_users_groups_on_groups_id"
-  add_index "users_groups", ["users_id"], name: "index_users_groups_on_users_id"
 
 end

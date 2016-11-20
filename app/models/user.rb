@@ -15,5 +15,9 @@ class User < ActiveRecord::Base
             return user.email
         end
     end
+    
+    def is_in_group(group_id)
+        self.groups.map { |g| g.id }.include? group_id
+    end
   
 end
