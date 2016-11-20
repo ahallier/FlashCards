@@ -1,5 +1,5 @@
 class DecksController < ApplicationController
-    
+    before_filter :set_current_user
     require 'will_paginate/array' 
     
     def index_params
@@ -19,15 +19,10 @@ class DecksController < ApplicationController
         sort = index_params[:sort] || session[:sort]
         
         if sort == nil
-            @decks = Deck.all
+            @decks = Deck.all.where(public: true)
             render 'index' and return
         end
         
-        puts index_params[:sort]
-        puts session[:sort]
-        puts index_params[:random]
-        puts session[:random]
-        puts "\n\n"
         if index_params[:sort] != session[:sort]
             # switch ascending and descending if the user clicks on the header multiple times
             session[:ascending] = true
@@ -61,6 +56,7 @@ class DecksController < ApplicationController
     def create
         deck_params = create_params
         # TODO: Make constants somewhere (config/constanst file?) that represent default deck values.
+        user = User.find_by_session_token(session[:session_token])
         deck_params[:score] = 0
         deck_params[:created_at] = DateTime.now
         deck_params[:updated_at] = DateTime.now

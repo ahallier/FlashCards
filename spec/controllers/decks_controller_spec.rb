@@ -7,7 +7,7 @@ describe DecksController, :type => :controller do
     end
     describe 'Visiting index' do 
         it 'should call Deck.all' do
-            expect(Deck).to receive(:all)
+            expect(Deck).to receive(:all).and_return(spy(Deck))
             get :index
         end
     end

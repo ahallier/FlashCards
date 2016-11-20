@@ -1,6 +1,7 @@
 -#  This file is app/views/decks/index.html.haml
 
-%h1 Decks
+
+%h1 Group Decks
 
 %table#decks
   %thead
@@ -15,7 +16,7 @@
       %th Edit
       %th Delete
   %tbody
-    - @decks.each do |deck|
+    - @group_decks.each do |deck|
       %tr
         %td= link_to deck.title, card_display_path(deck.id)
         %td= deck.score
@@ -25,13 +26,6 @@
         %td= deck.updated_at
         %td= deck.id
         %td= link_to 'Edit', edit_deck_path(deck.id)
-        %td= button_to 'Delete', deck_path(deck), :method => :delete, :id => 'btn_delete'
-        
--#= will_paginate @decks        
-= form_tag decks_path, method: 'get' do
-  = text_field_tag :search, params[:search], placeholder: "search"
-  = submit_tag "Search", :name => nil
+        %td= button_to 'Delete', remove_deck_from_group_path(@group.id, deck.id), :method => :post, :id => "delete_deck_from_group_#{deck.id}"
 
-= link_to 'New Deck', new_deck_path
-= link_to 'Groups', groups_path
-<br />
+= link_to 'Add Existing Decks to Group', add_deck_to_group_path(@group.id)

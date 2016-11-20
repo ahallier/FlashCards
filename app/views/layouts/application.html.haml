@@ -8,10 +8,19 @@
 
   %body
     %h1.title FlashCards
+    
     #main
+     
+      
+      -if !@current_user
+        = button_to 'Sign up/Login', login_path, {method: :get, :id=>'signuplogin'}
+      -else
+        you are logged in as #{@current_user[:email]}
+        = button_to 'Logout', logout_path, {method: :delete,:id=> 'logout'}
+        
       - if flash[:notice]
-        #notice.message= flash[:notice]
+        #notice.flash_message= flash[:notice]
       - elsif flash[:warning]
-        #warning.message= flash[:warning]
+        #warning.flash_message= flash[:warning]
 
       = yield
