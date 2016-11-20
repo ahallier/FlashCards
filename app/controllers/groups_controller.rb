@@ -178,7 +178,13 @@ class GroupsController < ApplicationController
     end
     def addUser
         @group = Group.find params[:id]
-        @user = @group.users.create(:user_id = User.find_by_session)
-        redirect_to groups_path
+        user = User.find_by_session_token(session[:session_token])
+        if user == nil
+            flash[:notice] = "You must be logged in to add decks to a group."
+            redirect_to decks_path and return
+        end
+        @group.users << user
+        flash[:notice] = "#{user.email} joined #{@group.title}."
+        redirect_to groups_path and return
     end
 end

@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   match '/cards/:id/display', to: 'cards#index', via: :get, as: 'card_display'
   resources :groups
   match '/groups/:id/display', to: 'groups#display', via: :get, as: 'group_display'
-  
+  match '/groups/:id/addUser', to: 'groups#addUser', via: :get, as: 'group_addUser'
   match '/groups/:id/add-deck', to: 'groups#show_add_deck_to_group', via: :get, as: 'show_add_deck_to_group'
   match '/groups/:id/add-deck', to: 'groups#add_deck_to_group', via: :post, as: 'add_deck_to_group'
   
