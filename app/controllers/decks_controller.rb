@@ -1,5 +1,5 @@
 class DecksController < ApplicationController
-    
+    before_filter :set_current_user
     require 'will_paginate/array' 
     
     def index_params
