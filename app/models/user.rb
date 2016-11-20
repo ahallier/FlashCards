@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   has_and_belongs_to_many :groups
-  has_and_belongs_to_many :decks
+  has_many :decks
   
    def self.create_user!(parameters)
         hash = parameters["user"]
@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
         
             return user.email
         end
+    end
+    
+    def is_in_group(group_id)
+        self.groups.map { |g| g.id }.include? group_id
     end
   
 end

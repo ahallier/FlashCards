@@ -11,8 +11,37 @@ class GroupsController < ApplicationController
     def update_params
         params.permit(:title, :updated_at, :id)
     end
+    
+    def remove_deck_from_group
+        puts 'Got call to remove deck from group.'
+        user = User.find_by_session_token(session[:session_token])
+        if user == nil
+            flash[:notice] = "You must be logged in to remove decks from a group."
+            redirect_to decks_path and return
+        end
+        
+        group_id = params[:group_id].to_i
+        
+        if !user.is_in_group(group_id)
+            flash[:notice] = "You must be in a group to delete decks from it."
+            redirect_to decks_path and return
+        end
+        
+        deck_id = params[:deck_id].to_i
+        group = Group.find_by_id(group_id)
+        group.decks = group.decks.select { |d| d.id != deck_id }
+        group.decks
+        
+        redirect_to group_display_path(group_id)
+    end
 
     def show_add_deck_to_group
+        user = User.find_by_session_token(session[:session_token])
+        if user == nil
+            flash[:notice] = "You must be logged in to add decks to a group."
+            redirect_to decks_path and return
+        end
+        
         group_id = params[:id]
         group = Group.find_by_id(group_id)
         
@@ -27,10 +56,13 @@ class GroupsController < ApplicationController
             flash[:notice] = "Group is private!"
             redirect_to decks_path and return
         end
-        
-        # TODO: This will need to be changed to decks for logged in user that
-        # are not already in the group.
-        @decks = Deck.all
+        decks_to_display = Deck.where(:public => true, :user_id =>[nil, user.id])
+        group = Group.find_by_id group_id
+        @decks = decks_to_display.select { |d| group.decks.all? { |gd| gd.id != d.id } }
+        if @decks == nil or @decks.length == 0
+            flash[:notice] = "No decks to add."
+            redirect_to group_display_path(group_id) and return
+        end
         @group_id = group_id
         render 'add-deck' and return
     end
