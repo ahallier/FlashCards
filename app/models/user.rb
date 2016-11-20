@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   has_and_belongs_to_many :groups
-  has_and_belongs_to_many :decks
+  has_many :decks
   
    def self.create_user!(parameters)
         hash = parameters["user"]

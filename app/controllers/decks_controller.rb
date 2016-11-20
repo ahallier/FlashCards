@@ -56,6 +56,7 @@ class DecksController < ApplicationController
     def create
         deck_params = create_params
         # TODO: Make constants somewhere (config/constanst file?) that represent default deck values.
+        user = User.find_by_session_token(session[:session_token])
         deck_params[:score] = 0
         deck_params[:created_at] = DateTime.now
         deck_params[:updated_at] = DateTime.now
