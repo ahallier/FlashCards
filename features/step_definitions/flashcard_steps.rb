@@ -36,6 +36,10 @@ When /^I have clicked button "(.*?)"$/ do |button_name|
      click_button(button_name)
 end
 
+When /^I have clicked the Title header$/ do
+    click('Title')
+end
+
 When /^I have checked box with id "(.*?)"$/ do |id|
     find(:css, id).set(true)
 end
@@ -65,6 +69,9 @@ end
       page.should have_content(cat)
   end
   
+  Then /^The deck with title "(.*?)" should appear before "(.*?)"$/ do |d1, d2|
+      
+  end
 
   
   Then /^(?:|I )should notsee "([^"]*)"$/ do |text|
