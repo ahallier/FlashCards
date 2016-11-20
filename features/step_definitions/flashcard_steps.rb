@@ -37,7 +37,7 @@ When /^I have clicked button "(.*?)"$/ do |button_name|
 end
 
 When /^I have clicked the Title header$/ do
-    click('Title')
+    click_on('Title')
 end
 
 When /^I have checked box with id "(.*?)"$/ do |id|
@@ -70,7 +70,14 @@ end
   end
   
   Then /^The deck with title "(.*?)" should appear before "(.*?)"$/ do |d1, d2|
-      
+    titles = all(:css, '#decks td:nth-child(1)').map {|x| x.text}
+    expect(titles.find_index(d1) < titles.find_index(d2)).to be true
+
+  end
+  
+  Then /^The deck with title "(.*?)" should be in group with id (.*?)$/ do |deck_title, group_id|
+      visit group_display_path(group_id)
+      page.should have_content(deck_title)
   end
 
   

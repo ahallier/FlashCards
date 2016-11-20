@@ -1,5 +1,5 @@
 class CardsController < ApplicationController
-    
+    before_filter :set_current_user
     def create_params
         params.require(:card).permit(:deck_id, :front, :back)
     end
