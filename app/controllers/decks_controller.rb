@@ -20,6 +20,7 @@ class DecksController < ApplicationController
         
         if sort == nil
             @decks = Deck.all.where(public: true)
+            @decks = Deck.search(params[:search]).where(public: true).order(ordering)
             render 'index' and return
         end
         
