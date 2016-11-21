@@ -1,6 +1,37 @@
 -#  This file is app/views/decks/index.html.haml
 
-%h1 Decks
+%h1 Public Decks
+%table#decks
+  %thead
+    %tr
+      %th= link_to 'Title', decks_path(:sort => 'title', :random => @random)
+      %th= link_to 'Score', decks_path(:sort => 'score', :random => @random)
+      %th= link_to 'Category', decks_path(:sort => 'category', :random => @random)
+      %th Public
+      %th= link_to 'Created At', decks_path(:sort => 'created_at', :random => @random)
+      %th= link_to 'Updated At', decks_path(:sort => 'updated_at', :random => @random)
+      %th= link_to 'Deck ID', decks_path(:sort => 'id', :random => @random)
+      %th Edit
+      %th Delete
+  %tbody
+    - @decks.each do |deck|
+      %tr
+        %td= link_to deck.title, card_display_path(deck.id)
+        %td= deck.score
+        %td= deck.category
+        %td= deck.public
+        %td= deck.created_at
+        %td= deck.updated_at
+        %td= deck.id
+        %td= link_to 'Edit', edit_deck_path(deck.id)
+        %td= button_to 'Delete', deck_path(deck), :method => :delete, :id => 'btn_delete'
+        
+-#= will_paginate @decks        
+= form_tag decks_path, method: 'get' do
+  = text_field_tag :search, params[:search], placeholder: "search"
+  = submit_tag "Search", :name => nil
+
+%h1 Public Decks
 
 %table#decks
   %thead
@@ -31,6 +62,8 @@
 = form_tag decks_path, method: 'get' do
   = text_field_tag :search, params[:search], placeholder: "search"
   = submit_tag "Search", :name => nil
+  
+  
 
 = link_to 'New Deck', new_deck_path
 = link_to 'Groups', groups_path
