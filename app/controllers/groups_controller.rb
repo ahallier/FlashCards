@@ -1,9 +1,5 @@
 class GroupsController < ApplicationController
     
-    def index_params
-        params.permit(:sort, :random)
-    end
-    
     def update_params
         params.permit(:id)
     end

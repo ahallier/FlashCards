@@ -19,7 +19,9 @@ class DecksController < ApplicationController
         sort = index_params[:sort] || session[:sort]
         
         if sort == nil
-            @decks = Deck.all.where(public: true)
+            asc_or_desc = session[:ascending] ? 'asc' : 'desc'
+            ordering = 'lower('+sort+') '+ asc_or_desc
+            @decks = Deck.search(params[:search]).where(public: true).order(ordering)
             render 'index' and return
         end
         
@@ -39,9 +41,9 @@ class DecksController < ApplicationController
         asc_or_desc = session[:ascending] ? 'asc' : 'desc'
         
         # the call to lower() make the search case insensitive
-        ordering = 'lower('+sort+') '+ asc_or_desc
+        #ordering = 'lower('+sort+') '+ asc_or_desc
 
-        @decks = Deck.search(params[:search]).where(public: true).order(ordering)
+        @decks = Deck.search(params[:search]).where(public: true).order('lower('+sort+') '+ asc_or_desc)
         #@decks = @decks.paginate(:page => params[:page], :per_page => 5)
         
         # the random token is used to ensure that the ordering doesn't get reversed on page refresh.

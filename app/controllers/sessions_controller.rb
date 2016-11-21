@@ -9,7 +9,6 @@ class SessionsController < ApplicationController
     session[:session_token] = user.session_token
     if user && params[:session][:email] == user.email && params[:session][:password] == user.password
         redirect_to decks_path
-    end
     else 
       flash[:warning] = "incorrect Email / Password"
       redirect_to login_path
@@ -19,4 +18,4 @@ class SessionsController < ApplicationController
     reset_session
     redirect_to decks_path
   end
-    
+end
