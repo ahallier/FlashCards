@@ -19,9 +19,10 @@ class DecksController < ApplicationController
         sort = index_params[:sort] || session[:sort]
         
         if sort == nil
-            asc_or_desc = session[:ascending] ? 'asc' : 'desc'
-            ordering = 'lower('+sort+') '+ asc_or_desc
-            @decks = Deck.search(params[:search]).where(public: true).order(ordering)
+            #asc_or_desc = session[:ascending] ? 'asc' : 'desc'
+            #ordering = 'lower('+sort+') '+ asc_or_desc
+            #@decks = Deck.search(params[:search]).where(public: true).order(ordering)
+            @decks = Deck.search(params[:search]).where(public: true)
             render 'index' and return
         end
         
