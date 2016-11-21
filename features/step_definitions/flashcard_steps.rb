@@ -13,6 +13,9 @@ Given /^I am on the FlashCards home page$/ do
  Given /^I am on the group page$/ do
    visit groups_path
  end
+ Given /^I am viewing card with id "(.*?)"$/ do |id|
+    page.execute_script("PC.currentCard = '#{id}'"); 
+ end
  
  When /^I have set title to "(.*?)", public to "(.*?)"$/ do |title, pub|
    fill_in('Title', :with => title)
@@ -62,7 +65,9 @@ When /^I have deleted a deck with title "(.*?)"/ do |deckTitle|
   find("#btn_delete").click
 end
 
-
+When /^I have clicked on the card$/ do
+   click_link('#flip') 
+end
 
 When /^I have clicked button "(.*?)"$/ do |button_name|
      click_button(button_name)
@@ -86,6 +91,11 @@ When /^I have added a card with front "(.*?)" and back "(.*?)" to deck "(.*?)"$/
  Given /the following decks have been added to FlashCards:/ do |decks_table|
   decks_table.hashes.each do |deck|
     Deck.create!(deck)
+  end
+end
+Given /the following cards have been added to FlashCards:/ do |cards_table|
+  cards_table.hashes.each do |card|
+    Card.create!(card)
   end
 end
 
@@ -177,5 +187,10 @@ end
    end  
   expect(result).to be_truthy
  end 
+ Then /^I should see the "(.*?)" of the card with id "(.*?)"$/ do |side,id|
+
+       
+ 
+ end
 
 

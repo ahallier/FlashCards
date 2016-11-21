@@ -5,8 +5,8 @@
 #  | 1        | Front2 | Back2  |
 #  | 1        | Front3 | Back3  |
 #  And I am on the display cards page for deck_id "1" 
-#  And I am viewing the card with front "Front2"
-  
+#  And I am viewing card with id "2"
+#  
 #Scenario: get a card correct
 #  When I have indicated that I got a card correct
 #  Then The score displayed on the page should increase
