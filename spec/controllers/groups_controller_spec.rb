@@ -91,23 +91,7 @@ describe GroupsController, :type => :controller do
             expect(g.decks.any? {|d| d.id == @deck.id}).to be true
         end
     end
-    
-    describe 'Sorting By Field Once' do
-        it 'should sort ascending' do
-            get :index, {:sort => :score}
-            
-            expect(@request.session[:ascending]).to be true
-        end
-    end
-    describe 'Sorting By Same Field Twice' do
-        it 'should sort descending' do
-            get :index, {:sort => :score, :random => :abc}
-            get :index, {:sort => :score, :random => @request.session[:random]}
 
-            expect(@request.session[:ascending]).to be false
-
-        end
-    end
     describe 'Adding User to Group' do
         it 'should call the Group.addUser method' do
             group_spy = spy(Group)
