@@ -18,5 +18,12 @@ describe UsersController, :type => :controller do
     expect(u).to have(1).errors_on(:name)
   end
 
+describe 'Adding new user' do
+        it 'should call the User.create! method' do
+            expect(User).to receive(:create!)
+            post :create, {:user =>{:email => 'rkuemmel@email1.com',  :password => 'Test'}}
+        end
+    end
+
 end
 end
