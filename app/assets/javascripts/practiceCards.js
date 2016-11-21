@@ -6,7 +6,7 @@ PC = {
         $(".flip").flip({
             trigger: 'click'
         });
-    
+     
         $("table tbody").find('tr').each(function (i, el) {
             var hash = {};
             var $tds = $(this).find('td');

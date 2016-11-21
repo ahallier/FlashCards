@@ -1,20 +1,24 @@
-#Background: cards are added to a deck
-#  Given the following cards have been added to FlashCards:
-#  | deck_id  | front  | back   |
-#  | 1        | Front1 | Back1  |
-#  | 1        | Front2 | Back2  |
-#  | 1        | Front3 | Back3  |
-#  And I am on the display cards page for deck_id "1" 
-#  And I am viewing the card with front "Front2"
+Feature: Allow FlashCards user to practice a deck
 
-#Scenario: switch to next card
-#  When I click on the next button
-#  Then I should see the front of the card with front "Front3"
-#Scenario: switch to previous card
-#  When I click on the last button
-#  Then I should see the front of the card with front "Front1"
-#Scenario: flip over a card
-#  When I click on the card in the top of the screen
-#  Then I should see the back of the card with back "Back2"
+Background: cards are added to a deck
+  Given the following decks have been added to FlashCards:
+  |id|
+  |1 |
+  And the following cards have been added to FlashCards:
+  |id| deck_id  | front  | back   |
+  |1 | 1        | Front1 | Back1  |
+  |2 | 1        | Front2 | Back2  |
+  |3 | 1        | Front3 | Back3  |
+  And I am on the display cards page for deck "1" 
+  And I am viewing card with id "2"
   
-  
+#failing because uses javascript
+Scenario: switch to forward through cards
+  When I have clicked button "Next"
+  Then I should see the "front" of the card with id "3"
+Scenario: switch to previous card
+ When I have clicked button "Next"
+ Then I should see the "front" of the card with id "1"
+Scenario: flip over a card
+  When I click on the card in the top of the screen
+  Then I should see the "front" of the card with id "2"
