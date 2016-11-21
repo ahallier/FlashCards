@@ -155,6 +155,14 @@ end
       page.should_not have_content(deck_title)
   end
 
+Given /^a valid user$/ do
+  @user = User.create!({
+             :email => "rkuemmel@hotmail.com",
+             :password => "password",
+           })
+end
+
+
   
   Then /^(?:|I )should notsee "([^"]*)"$/ do |text|
     page.should have_no_content(text)

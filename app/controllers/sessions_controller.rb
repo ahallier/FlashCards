@@ -8,8 +8,8 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:email])
     session[:session_token] = user.session_token
     if user && params[:session][:email] == user.email && params[:session][:password] == user.password
-      @current_user ||=	session[:session_token] && User.find_by_session_token(session[:session_token])
-      redirect_to decks_path
+        redirect_to decks_path
+    end
     else 
       flash[:warning] = "incorrect Email / Password"
       redirect_to login_path
@@ -20,4 +20,3 @@ class SessionsController < ApplicationController
     redirect_to decks_path
   end
     
-end
