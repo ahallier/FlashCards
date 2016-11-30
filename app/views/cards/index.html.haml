@@ -1,5 +1,6 @@
 -# This file is app/views/cards/index.html.haml
 = javascript_include_tag "practiceCards"
+= javascript_include_tag "jquery.crossorigin"
 %h1 Cards
 .Box
 .Box
@@ -51,3 +52,6 @@
 = link_to 'Back to Decks', decks_path
 %br
 = link_to 'Add Card To Deck', write_card_path
+.definition-dialog
+    %span
+    %button Close

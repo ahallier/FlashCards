@@ -2,18 +2,68 @@ PC = {
     currentCard: -1,
     cards: {},
     setup: (function(){
+        $.support.cors = true;
         console.log("in setup");
         $(".flip").flip({
             trigger: 'click'
         });
+        
+        $('.definition-dialog').hide(); 
+        $('.definition-dialog button').click(function() {
+            $('.definition-dialog').hide(); 
+        });
+        
+        var surroundWord = function(word) {
+            return '<span class="card-word">'+word+'</span>';
+        };
      
         $("table tbody").find('tr').each(function (i, el) {
             var hash = {};
             var $tds = $(this).find('td');
-                hash["front"] = $tds.eq(2).text();
-                hash["back"] = $tds.eq(3).text();
-                PC.cards[i] = hash;
             
+
+            hash["front"] = $tds.eq(2).text().trim().split(/\s+/).map(surroundWord).join(' ');
+            hash["back"] =  $tds.eq(3).text().trim().split(/\s+/).map(surroundWord).join(' ');
+            PC.cards[i] = hash;
+            
+        });
+        
+        
+        
+        $('.front, .back').on('click', '.card-word', function(event) {
+            var word = $(this).text();
+            console.log('card word clicked: '+word);
+            /*
+            $.get({
+                url: 'https://od-api.oxforddictionaries.com:443/api/v1/entries/en/'+word,
+                headers: {
+                    app_id: '42e69aa5',
+                    app_key: 'adfd2ac26b504ef517e97bb6fe0ad798'
+                },
+                crossOrigin: true,
+                dataType: 'application/jsonp',
+                success: function(data) {
+                    console.log(data);
+                }
+            });*/
+            $('.definition-dialog span').text('Loading definition for '+word+'...')
+            $('.definition-dialog').show();
+            $.get({
+                url: 'https://owlbot.info/api/v1/dictionary/'+word+'?format=json',
+                dataType: 'application/json',
+                crossOrigin: true,
+                success: function(data) {
+                    try {
+                        var json = $.parseJSON(data);
+                        console.log(json);
+                        // Owlbot misspelled definition.
+                        $('.definition-dialog span').text('Definition for '+word+': '+json[0].defenition);
+                    } catch (e) {
+                        $('.definition-dialog span').text("Definition not found.");
+                    }
+                }
+            })
+            event.stopPropagation();
         });
         
         console.log(PC.cards);

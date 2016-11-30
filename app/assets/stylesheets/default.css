@@ -103,4 +103,26 @@ form label {
   margin:auto;
 }
 
+.definition-dialog {
+  position: absolute;
+  top: 200px;
+  left: 600px;
+  width: 400px;
+  height: 200px;
+  border-color: black;
+  border-style: solid;
+  background-color: DarkSlateGrey;
+}
+
+.definition-dialog span {
+  position: relative;
+  top: 40px;
+  left: 20px;
+  font-size: 16px;
+  color: white;
+}
+.definition-dialog button {
+  float: right;
+}
+
 
