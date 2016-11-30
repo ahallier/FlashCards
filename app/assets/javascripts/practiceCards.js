@@ -1,6 +1,6 @@
 PC = {
     currentCard: -1,
-    cards: {},
+    cards: [],
     setup: (function(){
         $.support.cors = true;
         console.log("in setup");
@@ -68,11 +68,12 @@ PC = {
         
         console.log(PC.cards);
         $( "#resetScore" ).hide();
-        $(document.getElementById("nextButton")).click(PC.nextCard);
-        $(document.getElementById("lastButton")).click(PC.lastCard);
-        $(document.getElementById("correctButton")).click(PC.addToScore);
-        $(document.getElementById("incorrectButton")).click(PC.addToScore);
+        $("#nextButton").click(PC.nextCard);
+        $("#lastButton").click(PC.lastCard);
+        $("#correctButton").click(PC.addToScore);
+        $("#incorrectButton").click(PC.addToScore);
         $( "#resetScore" ).click(PC.resetScore);
+        $( "#randomButton" ).click(PC.randomPracticeOrder);
         document.onkeydown = function() {
             switch (window.event.keyCode) {
                 case 37:
@@ -138,6 +139,11 @@ PC = {
         $("#frontCard").html(PC.cards[PC.currentCard]["front"]);
         $("#backCard").html(PC.cards[PC.currentCard]["back"]);
         $( "#resetScore" ).hide();
+    },
+    randomPracticeOrder: function(){
+       PC.currentCard = -1;
+       PC.cards.sort(function(a, b){return 0.5 - Math.random()});
+       PC.resetScore();
     }
    
 };
