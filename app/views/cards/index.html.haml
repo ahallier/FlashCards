@@ -1,11 +1,13 @@
 -# This file is app/views/cards/index.html.haml
 = javascript_include_tag "practiceCards"
 = javascript_include_tag "jquery.crossorigin"
+= javascript_include_tag "https://code.responsivevoice.org/responsivevoice.js"
 %h1 Cards
 .Box
     %input{:type => "checkbox", :id =>"sideButton"} show back first
     %br/
     %button{ :id => "randomButton"} randomize practice order
+    
 .Box
     .floatingBox
         
@@ -13,11 +15,17 @@
     .floatingBox
         .flip
             .front
-                .h1{:id => "frontCard"}
-                    click on card to flip  
+                .h1
+                    .p{:id => "frontCard"}
+                        click on card to flip  
+                    .br
+                        %button{:id => 'speakFront', :value => 'sayFront' } speak
             .back
-                .h1{:id => "backCard"}
-                    use buttons or arrow keys to navigate\
+                .h1
+                    .p{:id => "backCard"}
+                        use buttons or arrow keys to navigate
+                    .br
+                        %button{:id => 'speakBack', :value => 'sayBack' } speak
     .floatingBox
         %button{ :id => "nextButton"} Next
     
