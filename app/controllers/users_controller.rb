@@ -23,5 +23,17 @@ class UsersController < ApplicationController
    
    
    end
+   
+  def edit
+    @user = User.find(params[:id])
+  end
+ 
+ def update
+   @user = User.find_by_id(params[:id])
+   @user.update_attributes(users_params)
+   flash[:notice] = "Account was edited sucessfully "
+   redirect_to decks_path
+end
+ 
  
 end

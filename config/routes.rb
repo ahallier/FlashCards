@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   match '/login', to: 'sessions#new', via: :get
   match '/login_create', to: 'sessions#create', via: :post
   match '/logout', to: 'sessions#destroy', via: :delete
+  match '/update', to: 'users#update', via: :post
   # Example resource route with options:
   #   resources :products do
   #     member do
