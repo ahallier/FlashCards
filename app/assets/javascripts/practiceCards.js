@@ -15,7 +15,7 @@ PC = {
         });
         
         var surroundWord = function(word) {
-            return '<span class="card-word">'+word+'</span>';
+            return '<span id = "word", class="card-word">'+word+'</span>';
         };
      
         $("table tbody").find('tr').each(function (i, el) {
@@ -74,6 +74,8 @@ PC = {
         $( "#resetScore" ).click(PC.resetScore);
         $( "#randomButton" ).click(PC.randomPracticeOrder);
         $( "#sideButton" ).click(PC.backFirst);
+        $( "#speakFront" ).click(PC.sayWord);
+        $( "#speakBack" ).click(PC.sayWord);
         document.onkeydown = function() {
             switch (window.event.keyCode) {
                 case 37:
@@ -150,6 +152,15 @@ PC = {
        PC.currentCard = -1;
        PC.cards.sort(function(a, b){return 0.5 - Math.random()});
        PC.resetScore();
+    },
+    sayWord: function(){
+        if($(this).val() == "sayFront"){
+            responsiveVoice.speak($(word).html());
+        }
+        else if($(this).val() == "sayBack"){
+            responsiveVoice.speak($(word).html());
+        }
+        
     }
    
 };
