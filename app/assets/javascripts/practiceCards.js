@@ -15,7 +15,7 @@ PC = {
         });
         
         var surroundWord = function(word) {
-            return '<span class="card-word">'+word+'</span>';
+            return '<span id = "word", class="card-word">'+word+'</span>';
         };
      
         $("table tbody").find('tr').each(function (i, el) {
@@ -155,10 +155,10 @@ PC = {
     },
     sayWord: function(){
         if($(this).val() == "sayFront"){
-            responsiveVoice.speak($(frontCard).html());
+            responsiveVoice.speak($(word).html());
         }
         else if($(this).val() == "sayBack"){
-            responsiveVoice.speak($(backCard).html());
+            responsiveVoice.speak($(word).html());
         }
         
     }
