@@ -1,6 +1,7 @@
 PC = {
     currentCard: -1,
     cards: [],
+    frontfirst: true,
     setup: (function(){
         $.support.cors = true;
         console.log("in setup");
@@ -27,8 +28,6 @@ PC = {
             PC.cards[i] = hash;
             
         });
-        
-        
         
         $('.front, .back').on('click', '.card-word', function(event) {
             var word = $(this).text();
@@ -74,6 +73,7 @@ PC = {
         $("#incorrectButton").click(PC.addToScore);
         $( "#resetScore" ).click(PC.resetScore);
         $( "#randomButton" ).click(PC.randomPracticeOrder);
+        $( "#sideButton" ).click(PC.backFirst);
         document.onkeydown = function() {
             switch (window.event.keyCode) {
                 case 37:
@@ -84,6 +84,10 @@ PC = {
             }
         };
     }),
+    backFirst: function(){
+      PC.frontfirst = !$("#sideButton").is(':checked');  
+      console.log($("#sideButton").checked);
+    },
     nextCard: function() {
         if(typeof PC.cards[PC.currentCard+1] != "undefined"){
             PC.currentCard++;
@@ -92,10 +96,8 @@ PC = {
            
             $( "#resetScore" ).show();
         }
+        PC.showCard();
         
-        $("#frontCard").html(PC.cards[PC.currentCard]["front"]);
-        $("#backCard").html(PC.cards[PC.currentCard]["back"]);
-        $(".flip").flip(false);
         
     },
     lastCard: function() {
@@ -105,15 +107,20 @@ PC = {
         if(typeof PC.cards[PC.currentCard-1] != "undefined"){
             PC.currentCard--;
         }
-        //else{
-        //    PC.currentCard = Object.keys(PC.cards).length-1; 
-        //}
-        
-        
-        $("#frontCard").html(PC.cards[PC.currentCard]["front"]);
-        $("#backCard").html(PC.cards[PC.currentCard]["back"]);
+        PC.showCard();
+    },
+    showCard: function(){
+        console.log(PC.frontfirst);
+        if(PC.frontfirst){
+            $("#frontCard").html(PC.cards[PC.currentCard]["front"]);
+            $("#backCard").html(PC.cards[PC.currentCard]["back"]);
+        }
+        else{
+            $("#frontCard").html(PC.cards[PC.currentCard]["back"]);
+            $("#backCard").html(PC.cards[PC.currentCard]["front"]);
+        }
         $(".flip").flip(false);
-    
+        
     },
     addToScore: function(){
         console.log("adding to score");
@@ -136,8 +143,7 @@ PC = {
     resetScore: function(){
         $("#currentscore").html("0/0");
         PC.currentCard = 0;
-        $("#frontCard").html(PC.cards[PC.currentCard]["front"]);
-        $("#backCard").html(PC.cards[PC.currentCard]["back"]);
+        PC.showCard();
         $( "#resetScore" ).hide();
     },
     randomPracticeOrder: function(){

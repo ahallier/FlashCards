@@ -3,9 +3,12 @@
 = javascript_include_tag "jquery.crossorigin"
 %h1 Cards
 .Box
+    %input{:type => "checkbox", :id =>"sideButton"} show back first
+    %br/
     %button{ :id => "randomButton"} randomize practice order
 .Box
     .floatingBox
+        
         %button{ :id => "lastButton"} Last
     .floatingBox
         .flip
