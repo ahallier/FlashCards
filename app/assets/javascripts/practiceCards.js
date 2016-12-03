@@ -65,7 +65,6 @@ PC = {
             event.stopPropagation();
         });
         
-        console.log(PC.cards);
         $( "#resetScore" ).hide();
         $("#nextButton").click(PC.nextCard);
         $("#lastButton").click(PC.lastCard);
@@ -104,8 +103,6 @@ PC = {
     },
     lastCard: function() {
         
-        console.log(PC.currentCard);
-        console.log(Object.keys(PC.cards).length);
         if(typeof PC.cards[PC.currentCard-1] != "undefined"){
             PC.currentCard--;
         }
@@ -154,11 +151,18 @@ PC = {
        PC.resetScore();
     },
     sayWord: function(){
+        
         if($(this).val() == "sayFront"){
-            responsiveVoice.speak($(word).html());
+            var front = $("#frontCard").html();
+            front = front.replace(/<span id="word" ,="" class="card-word">/g, " ");
+            front = front.replace(/<\/span>/g," ");
+            responsiveVoice.speak(front);
         }
         else if($(this).val() == "sayBack"){
-            responsiveVoice.speak($(word).html());
+            var back = $("#backCard").html();
+            back = back.replace(/<span id="word" ,="" class="card-word">/g, " ");
+            back = back.replace(/<\/span>/g," ");
+            responsiveVoice.speak(back);
         }
         
     }
@@ -166,5 +170,3 @@ PC = {
 };
 console.log("running js");
 $(PC.setup);
-
-
