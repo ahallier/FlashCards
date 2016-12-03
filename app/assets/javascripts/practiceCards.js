@@ -151,19 +151,17 @@ PC = {
        PC.resetScore();
     },
     sayWord: function(){
-        
+        var words = "";
         if($(this).val() == "sayFront"){
-            var front = $("#frontCard").html();
-            front = front.replace(/<span id="word" ,="" class="card-word">/g, " ");
-            front = front.replace(/<\/span>/g," ");
-            responsiveVoice.speak(front);
+            words = $("#frontCard").html();
         }
         else if($(this).val() == "sayBack"){
-            var back = $("#backCard").html();
-            back = back.replace(/<span id="word" ,="" class="card-word">/g, " ");
-            back = back.replace(/<\/span>/g," ");
-            responsiveVoice.speak(back);
+            words = $("#backCard").html();
         }
+        words = words.replace(/<span id="word" ,="" class="card-word">/g, "");
+        words = words.replace(/<\/span>/g," ");
+        words = words.replace(/ x /gi," times ");
+        responsiveVoice.speak(words);
         
     }
    
