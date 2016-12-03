@@ -14,6 +14,5 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require jquery.flip
-//= require "https://code.responsivevoice.org/responsivevoice.js"
-//= require jquery.crossorigin
+
 
