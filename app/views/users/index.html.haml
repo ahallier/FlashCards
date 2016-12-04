@@ -3,13 +3,13 @@
 %table#decks
   %thead
     %tr
-      %th= link_to 'Title', decks_path(:sort => 'title', :random => @random)
-      %th= link_to 'Score', decks_path(:sort => 'score', :random => @random)
-      %th= link_to 'Category', decks_path(:sort => 'category', :random => @random)
+      %th= link_to 'Title', users_path(:sort => 'title', :random => @random)
+      %th= link_to 'Score', users_path(:sort => 'score', :random => @random)
+      %th= link_to 'Category', users_path(:sort => 'category', :random => @random)
       %th Public
-      %th= link_to 'Created At', decks_path(:sort => 'created_at', :random => @random)
-      %th= link_to 'Updated At', decks_path(:sort => 'updated_at', :random => @random)
-      %th= link_to 'Deck ID', decks_path(:sort => 'id', :random => @random)
+      %th= link_to 'Created At', users_path(:sort => 'created_at', :random => @random)
+      %th= link_to 'Updated At', users_path(:sort => 'updated_at', :random => @random)
+      %th= link_to 'Deck ID', users_path(:sort => 'id', :random => @random)
       %th Edit
       %th Delete
   %tbody
