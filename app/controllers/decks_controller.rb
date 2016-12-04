@@ -64,7 +64,6 @@ class DecksController < ApplicationController
         deck_params[:created_at] = DateTime.now
         deck_params[:updated_at] = DateTime.now
         deck_params[:public] = deck_params[:public] == 'Yes'
-        deck_params[:user_email] = @current_user[:email]
         Deck.create!(deck_params)
         flash[:notice] = "Successfully created deck."
         redirect_to decks_path
