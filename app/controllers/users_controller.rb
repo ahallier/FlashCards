@@ -1,10 +1,15 @@
 class UsersController < ApplicationController
-
+    before_filter :set_current_user
+    
   def users_params
    
-    params.require(:user).permit(:email, :password,:session_token)
+    params.require(:user).permit(:email, :password, :session_token, :user_id)
   end
 
+  def index
+      @email = @current_user[:email]
+      @decks = Deck.where(user_email: @email)
+  end
   
   def new
     # default: render 'new' template
