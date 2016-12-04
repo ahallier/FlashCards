@@ -57,6 +57,10 @@ class DecksController < ApplicationController
     end
     
     def create
+        if @current_user == nil
+            flash[:notice] = "You must be logged in to create a deck."
+            redirect_to decks_path
+        end
         deck_params = create_params
         # TODO: Make constants somewhere (config/constanst file?) that represent default deck values.
         user = User.find_by_session_token(session[:session_token])
@@ -64,8 +68,13 @@ class DecksController < ApplicationController
         deck_params[:created_at] = DateTime.now
         deck_params[:updated_at] = DateTime.now
         deck_params[:public] = deck_params[:public] == 'Yes'
-        deck_params[:user_email] = @current_user[:email]
-        Deck.create!(deck_params)
+    
+        #deck_params[:user_email] = @current_user[:email]
+        
+        d= Deck.create!(deck_params)
+        d.user = @current_user
+        d.save
+        
         flash[:notice] = "Successfully created deck."
         redirect_to decks_path
     end
