@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20161120043753) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.string   "user_email"
   end
 
   create_table "decks_groups", id: false, force: :cascade do |t|

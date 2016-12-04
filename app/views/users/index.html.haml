@@ -1,6 +1,4 @@
--#  This file is app/views/decks/index.html.haml
 
-%h1 Decks
 
 %table#decks
   %thead
@@ -28,9 +26,6 @@
         %td= deck.user_email
         %td= link_to 'Edit', edit_deck_path(deck.id)
         %td= button_to 'Delete', deck_path(deck), :method => :delete, :id => 'btn_delete'
-     
-        
-        
         
 -#= will_paginate @decks        
 = form_tag decks_path, method: 'get' do
@@ -40,4 +35,3 @@
 = link_to 'New Deck', new_deck_path
 = link_to 'Groups', groups_path
 = link_to 'Users', users_path
-
