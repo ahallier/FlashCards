@@ -1,6 +1,4 @@
-/* global $ */
-/* global responsiveVoice */
-var PC = {
+PC = {
     currentCard: -1,
     cards: [],
     frontfirst: true,
@@ -32,7 +30,7 @@ var PC = {
         });
         
         $('.front, .back').on('click', '.card-word', function(event) {
-            var word = $(this).text().toLowerCase();
+            var word = $(this).text();
             console.log('card word clicked: '+word);
             /*
             $.get({
@@ -47,7 +45,7 @@ var PC = {
                     console.log(data);
                 }
             });*/
-            $('.definition-dialog span').text('Loading definition for '+word+'...');
+            $('.definition-dialog span').text('Loading definition for '+word+'...')
             $('.definition-dialog').show();
             $.get({
                 url: 'https://owlbot.info/api/v1/dictionary/'+word+'?format=json',
@@ -58,7 +56,7 @@ var PC = {
                         var json = $.parseJSON(data);
                         console.log(json);
                         // Owlbot misspelled definition.
-                        $('.definition-dialog span').text(word+' - '+json[0].defenition);
+                        $('.definition-dialog span').text('Definition for '+word+': '+json[0].defenition);
                     } catch (e) {
                         $('.definition-dialog span').text("Definition not found.");
                     }
