@@ -7,8 +7,7 @@ class UsersController < ApplicationController
   end
 
   def index
-      @email = @current_user[:email]
-      @decks = Deck.where(user_email: @email)
+      @decks = @current_user.decks
   end
   
   def new
