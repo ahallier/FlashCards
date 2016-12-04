@@ -32,6 +32,5 @@
   = text_field_tag :search, params[:search], placeholder: "search"
   = submit_tag "Search", :name => nil
 
-= link_to 'New Deck', new_deck_path
+= link_to 'Public Decks', decks_path
 = link_to 'Groups', groups_path
-= link_to 'Users', users_path

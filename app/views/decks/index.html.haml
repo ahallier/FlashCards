@@ -1,6 +1,7 @@
 -#  This file is app/views/decks/index.html.haml
 
-= link_to 'User Page', users_path
+-if @current_user
+  = link_to 'User Page', users_path
 
 %h1 Decks
 
