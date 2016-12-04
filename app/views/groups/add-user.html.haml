@@ -1,0 +1,14 @@
+
+%h1 Add User to Group
+
+= form_tag add_user_to_group_path(@group_id) do
+    %table#users
+        %thead
+            %tr
+                %th User
+        %tbody
+            - @users.each do |user|
+                %tr
+                    %td= user.email.title
+                    %td= check_box_tag("users[#{user.id}]")
+    = submit_tag 'Add Users to Group'
