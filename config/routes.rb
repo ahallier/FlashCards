@@ -28,6 +28,8 @@ Rails.application.routes.draw do
   match '/groups/:id/addUser', to: 'groups#addUser', via: :get, as: 'group_addUser'
   match '/groups/:id/add-deck', to: 'groups#show_add_deck_to_group', via: :get, as: 'show_add_deck_to_group'
   match '/groups/:id/add-deck', to: 'groups#add_deck_to_group', via: :post, as: 'add_deck_to_group'
+  match '/groups/:id/add-user', to: 'groups#show_add_user_to_group', via: :get, as: 'show_add_user_to_group'
+  match '/groups/:id/add-user', to: 'groups#add_user_to_group', via: :post, as: 'add_user_to_group'
   
   match '/groups/:group_id/removedeck/:deck_id', to: 'groups#remove_deck_from_group', via: :post, as: 'remove_deck_from_group'
   

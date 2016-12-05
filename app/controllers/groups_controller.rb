@@ -120,18 +120,53 @@ class GroupsController < ApplicationController
             redirect_to decks_path and return
         end
         
-        users_to_display = User.fin
+        users_to_display = User.all
         group = Group.find_by_id group_id
-        @users = users_to_display.select { |d| group.users.all? { |gu| gu.id != u.id } }
+        @users = users_to_display.select { |u| group.users.all? { |gu| gu.id != u.id } }
         if @users == nil or @users.length == 0
-            flash[:notice] = "No decks to add."
+            flash[:notice] = "No users to add."
             redirect_to group_display_path(group_id) and return
         end
         @group_id = group_id
-        render 'add-deck' and return
+        render 'add-user' and return
     end
     
-    def is_public?
+    def add_user_to_group
+        puts "Got request to add user to group"
+        group_id = params[:id]
+        
+        group = Group.find_by_id(group_id)
+        if group == nil
+            flash[:notice] = "Group does not exist."
+            redirect_to decks_path and return
+        end
+        unless group.public
+            # this will need to take into account users that have access
+            # to private groups later.
+            flash[:notice] = "Group is private!"
+            redirect_to decks_path and return
+        end
+        
+
+        user_ids = params[:users].keys
+        
+        puts "Got group id: #{group_id}"
+        
+
+        
+        user_ids.each do |u_id|
+            # Add any decks to the group that were not already in the group
+            unless group.users.any? { |u| u.id == u_id.to_i }
+                group.users << User.find_by_id(u_id)
+            end
+        end
+        group.save
+        
+        # Maybe we should redirect to groups_path here.
+        redirect_to group_display_path(group_id)
+    end
+    
+    def is_public?(group)
         return true if group.public == true
     end
 

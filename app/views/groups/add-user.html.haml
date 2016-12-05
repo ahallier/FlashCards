@@ -9,6 +9,6 @@
         %tbody
             - @users.each do |user|
                 %tr
-                    %td= user.email.title
+                    %td= user.email
                     %td= check_box_tag("users[#{user.id}]")
     = submit_tag 'Add Users to Group'

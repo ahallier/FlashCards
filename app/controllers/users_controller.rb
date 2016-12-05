@@ -71,5 +71,9 @@ class UsersController < ApplicationController
   def is_group_member?(group)
     User.find_by_session_token(session[:session_token])
   end
+  
+  def is_group_owner(group)
+    User.find_by_session_token(session[:session_token])
+  end
  
 end
