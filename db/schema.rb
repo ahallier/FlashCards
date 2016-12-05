@@ -41,11 +41,6 @@ ActiveRecord::Schema.define(version: 20161120043753) do
   add_index "decks_groups", ["deck_id"], name: "index_decks_groups_on_deck_id"
   add_index "decks_groups", ["group_id"], name: "index_decks_groups_on_group_id"
 
-  create_table "favorites", id: false, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "deck_id"
-  end
-
   create_table "groups", force: :cascade do |t|
     t.text     "title"
     t.datetime "created_at"

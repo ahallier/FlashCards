@@ -1,0 +1,34 @@
+%h1 User Page
+
+%table#decks
+  %thead
+    %tr
+      %th= link_to 'Title', users_path(:sort => 'title', :random => @random)
+      %th= link_to 'Score', users_path(:sort => 'score', :random => @random)
+      %th= link_to 'Category', users_path(:sort => 'category', :random => @random)
+      %th Public
+      %th= link_to 'Created At', users_path(:sort => 'created_at', :random => @random)
+      %th= link_to 'Updated At', users_path(:sort => 'updated_at', :random => @random)
+      %th= link_to 'Deck ID', users_path(:sort => 'id', :random => @random)
+      %th Edit
+      %th Delete
+  %tbody
+    - @decks.each do |deck|
+      %tr
+        %td= link_to deck.title, card_display_path(deck.id)
+        %td= deck.score
+        %td= deck.category
+        %td= deck.public
+        %td= deck.created_at
+        %td= deck.updated_at
+        %td= deck.id
+        %td= link_to 'Edit', edit_deck_path(deck.id)
+        %td= button_to 'Delete', deck_path(deck), :method => :delete, :id => 'btn_delete'
+        
+-#= will_paginate @decks        
+= form_tag users_path, method: 'get' do
+  = text_field_tag :search, params[:search], placeholder: "search"
+  = submit_tag "Search", :name => nil
+
+= link_to 'Public Decks', decks_path
+= link_to 'Groups', groups_path
