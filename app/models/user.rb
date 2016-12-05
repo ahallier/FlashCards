@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :groups
   has_many :decks
   
-   def self.create_user!(parameters)
+    def self.create_user!(parameters)
         hash = parameters["user"]
         hash[:session_token] =SecureRandom.base64
         

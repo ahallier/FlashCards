@@ -29,6 +29,16 @@
 = form_tag users_path, method: 'get' do
   = text_field_tag :search, params[:search], placeholder: "search"
   = submit_tag "Search", :name => nil
+  
+  
+-#%table#groups
+-#  %thead
+-#    %tr
+-#      %th Group Name
+-#  %tbody
+-#    - @groups.each do |group|
+-#      %tr
+-#        %td= link_to group.title , group_display_path(group.id)
 
 = link_to 'Public Decks', decks_path
 = link_to 'Groups', groups_path

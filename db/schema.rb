@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161120043753) do
+ActiveRecord::Schema.define(version: 20161200000000) do
 
   create_table "cards", force: :cascade do |t|
     t.integer  "deck_id"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20161120043753) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "public"
+    t.integer  "owner_id"
   end
 
   create_table "groups_users", id: false, force: :cascade do |t|

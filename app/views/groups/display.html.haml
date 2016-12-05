@@ -29,6 +29,6 @@
         %td= button_to 'Delete', remove_deck_from_group_path(@group.id, deck.id), :method => :post, :id => "delete_deck_from_group_#{deck.id}"
   
 = link_to 'Add Existing Decks to Group', add_deck_to_group_path(@group.id)
-= link_to 'Add Existing Users to Group', add_user_to_group_path(@group.id)
--# -if @group.is_public? || @current_user.is_group_member?
-  
+
+-if is_public?(@group) || is_group_owner?(@group, @current_user)
+  = link_to 'Add Existing Users to Group', add_user_to_group_path(@group.id)  

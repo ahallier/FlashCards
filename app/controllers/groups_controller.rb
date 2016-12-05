@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-    
+    before_filter :set_current_user
     def update_params
         params.permit(:id)
     end
@@ -152,8 +152,6 @@ class GroupsController < ApplicationController
         
         puts "Got group id: #{group_id}"
         
-
-        
         user_ids.each do |u_id|
             # Add any decks to the group that were not already in the group
             unless group.users.any? { |u| u.id == u_id.to_i }
@@ -164,10 +162,6 @@ class GroupsController < ApplicationController
         
         # Maybe we should redirect to groups_path here.
         redirect_to group_display_path(group_id)
-    end
-    
-    def is_public?(group)
-        return true if group.public == true
     end
 
     def index
@@ -194,6 +188,7 @@ class GroupsController < ApplicationController
         else
             group_params[:public]=false
         end
+        group_params[:owner_id]=@current_user.id
         Group.create!(group_params)
         flash[:notice] = "Successfully created group."
         redirect_to groups_path
