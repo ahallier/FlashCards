@@ -1,5 +1,7 @@
 %h1 Edit User Information
-
+-if !@current_user
+        You must be logged in to view this page.
+        
 = form_tag user_path(@user), :method => :put do
 
   = label :user, :email, 'New Email'

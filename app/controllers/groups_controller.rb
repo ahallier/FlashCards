@@ -132,12 +132,11 @@ class GroupsController < ApplicationController
     end
     
     def is_public?
-        
+        return true if group.public == true
     end
 
     def index
         @groups = Group.where(public: true)
-
     end
     
     def display
