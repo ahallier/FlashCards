@@ -12,6 +12,7 @@ class UsersController < ApplicationController
       #ordering = 'lower('+sort+') '+ asc_or_desc
       #@decks = Deck.search(params[:search]).where(public: true).order(ordering)
       @decks = @current_user.decks
+      @groups = @current_user.groups
       render 'index' and return
     end
         
@@ -35,7 +36,10 @@ class UsersController < ApplicationController
 
     @decks = @current_user.decks.search(params[:search]).order('lower('+sort+') '+ asc_or_desc)
     #@decks = @decks.paginate(:page => params[:page], :per_page => 5)
-        
+    
+    puts 'SPAGETT'
+    puts @current_user.groups
+    
     @groups = @current_user.groups
         
     # the random token is used to ensure that the ordering doesn't get reversed on page refresh.
@@ -72,7 +76,5 @@ class UsersController < ApplicationController
   def is_group_member?(group)
     User.find_by_session_token(session[:session_token])
   end
-  
-
  
 end
