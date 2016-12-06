@@ -24,7 +24,9 @@
         %td= deck.id
         %td= link_to 'Edit', edit_deck_path(deck.id)
         %td= button_to 'Delete', deck_path(deck), :method => :delete, :id => 'btn_delete'
-        
+
+= link_to 'New Deck', new_deck_path
+%br
 -#= will_paginate @decks        
 = form_tag users_path, method: 'get' do
   = text_field_tag :search, params[:search], placeholder: "search"
@@ -39,6 +41,5 @@
     - @groups.each do |group|
       %tr
         %td= link_to group.title , group_display_path(group.id)
-
-= link_to 'Public Decks', decks_path
-= link_to 'Groups', groups_path
+%br
+= link_to 'Create New Group', new_group_path

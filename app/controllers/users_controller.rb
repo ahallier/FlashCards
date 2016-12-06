@@ -72,9 +72,4 @@ class UsersController < ApplicationController
     flash[:notice] = "Account was edited sucessfully "
     redirect_to decks_path
   end
- 
-  def is_group_member?(group)
-    User.find_by_session_token(session[:session_token])
-  end
- 
 end

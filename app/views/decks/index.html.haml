@@ -1,8 +1,5 @@
 -#  This file is app/views/decks/index.html.haml
 
--if @current_user
-  = link_to 'User Page', users_path
-
 %h1 Decks
 
 %table#decks
@@ -35,6 +32,5 @@
   = submit_tag "Search", :name => nil
 
 = link_to 'New Deck', new_deck_path
-= link_to 'Groups', groups_path
 
 

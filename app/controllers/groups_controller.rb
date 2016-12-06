@@ -46,15 +46,19 @@ class GroupsController < ApplicationController
             redirect_to decks_path and return
         end
         
-        unless group.public
+        #unless @current_user.id = group.users.find_by_id(@current_user.id)
             # this will need to take into account users that have access
             # to private groups later.
-            flash[:notice] = "Group is private!"
-            redirect_to decks_path and return
-        end
+        #    flash[:notice] = "Group is private!"
+        #    redirect_to decks_path and return
+        #end
         decks_to_display = Deck.where(:public => true, :user_id =>[nil, user.id])
+        user_decks_to_display = Deck.where(:user_id => @current_user)
         group = Group.find_by_id group_id
-        @decks = decks_to_display.select { |d| group.decks.all? { |gd| gd.id != d.id } }
+        decks1 = decks_to_display.select { |d| group.decks.all? { |gd| gd.id != d.id } }
+        decks2 = user_decks_to_display.select { |d| group.decks.all? { |gd| gd.id != d.id } }
+        alldecks = decks1+decks2
+        @decks = alldecks.uniq{|x| x.id}
         if @decks == nil or @decks.length == 0
             flash[:notice] = "No decks to add."
             redirect_to group_display_path(group_id) and return
@@ -72,12 +76,12 @@ class GroupsController < ApplicationController
             flash[:notice] = "Group does not exist."
             redirect_to decks_path and return
         end
-        unless group.public
+        #unless group.public
             # this will need to take into account users that have access
             # to private groups later.
-            flash[:notice] = "Group is private!"
-            redirect_to decks_path and return
-        end
+        #    flash[:notice] = "Group is private!"
+        #    redirect_to decks_path and return
+        #end
         
 
         deck_ids = params[:decks].keys
@@ -113,12 +117,12 @@ class GroupsController < ApplicationController
             redirect_to decks_path and return
         end
         
-        unless group.public
+        #unless group.public
             # this will need to take into account users that have access
             # to private groups later.
-            flash[:notice] = "Group is private!"
-            redirect_to decks_path and return
-        end
+        #    flash[:notice] = "Group is private!"
+        #    redirect_to decks_path and return
+        #end
         
         users_to_display = User.all
         group = Group.find_by_id group_id
@@ -140,12 +144,12 @@ class GroupsController < ApplicationController
             flash[:notice] = "Group does not exist."
             redirect_to decks_path and return
         end
-        unless group.public
+        #unless group.public
             # this will need to take into account users that have access
             # to private groups later.
-            flash[:notice] = "Group is private!"
-            redirect_to decks_path and return
-        end
+        #    flash[:notice] = "Group is private!"
+        #    redirect_to decks_path and return
+        #end
         
 
         user_ids = params[:users].keys
@@ -189,7 +193,8 @@ class GroupsController < ApplicationController
             group_params[:public]=false
         end
         group_params[:owner_id]=@current_user.id
-        Group.create!(group_params)
+        newGroup = Group.create!(group_params)
+        newGroup.users << @current_user
         flash[:notice] = "Successfully created group."
         redirect_to groups_path
     end

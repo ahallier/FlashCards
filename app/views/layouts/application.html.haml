@@ -11,12 +11,18 @@
     
     #main
      
-      
+      = link_to "Public Decks", decks_path
+      = link_to "Public Groups", groups_path
       -if !@current_user
+        %br
         = button_to 'Sign up/Login', login_path, {method: :get, :id=>'signuplogin'}
       -else
-        you are logged in as #{@current_user[:email]}
+        = link_to "User Home", users_path
         = link_to "Edit User Info", edit_user_path(@current_user)
+        %br
+        %br 
+        Welcome #{@current_user[:email]}!
+        %br
         = button_to 'Logout', logout_path, {method: :delete,:id=> 'logout'}
         
       - if flash[:notice]
