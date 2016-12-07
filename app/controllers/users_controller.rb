@@ -82,4 +82,5 @@ class UsersController < ApplicationController
     flash[:notice] = "Account was edited sucessfully "
     redirect_to decks_path
   end
+  
 end
