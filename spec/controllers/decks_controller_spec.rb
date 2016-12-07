@@ -28,6 +28,9 @@ describe DecksController, :type => :controller do
     describe 'Adding new deck' do
         it 'should call the Deck.create! method' do
             @request.session[:session_token] = @user.session_token
+            deck_spy = spy(Deck)
+            expect(Deck).to receive(:create!).and_return(deck_spy)
+            expect(dekc_spy).to receive(:users)
             expect(Deck).to receive(:create!)
             post :create, {:deck =>{:title => 'Test',  :category => 'TestCat', :public => true}}
         end

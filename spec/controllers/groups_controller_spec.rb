@@ -151,7 +151,7 @@ describe GroupsController, :type => :controller do
             @request.session[:session_token] = @user.session_token
             Group.stub(:current_user) { @user }
             group_spy = spy(Group)
-            expect(Group).to receive(:create!)
+            expect(Group).to receive(:create!).and_return(group_spy)
             expect(group_spy).to receive(:users)
             post :create, {:group =>{:title => 'Test', :public => 'Yes'}}
         end
@@ -166,7 +166,9 @@ describe GroupsController, :type => :controller do
     describe 'Adding new private group' do
         it 'should call the Group.create! method' do
             @request.session[:session_token] = @user.session_token
-            expect(Group).to receive(:create!)
+            group_spy = spy(Group)
+            expect(Group).to receive(:create!).and_return(group_spy)
+            expect(group_spy).to receive(:users)
             post :create, {:group =>{:title => 'Test', :public => 'No'}}
         end
     end
@@ -231,7 +233,8 @@ describe GroupsController, :type => :controller do
             post :add_user_to_group, {:id => 99123492}
             expect(@request).to redirect_to(decks_path)
         end
-        it 'should redirect to decks page if not logged in' do
+        
+    it 'should redirect to decks page if not logged in' do
             @request.session[:session_token] = 0
             get :add_user_to_group, {:id => 99123492}
             expect(@request).to redirect_to(decks_path)
@@ -246,9 +249,9 @@ describe GroupsController, :type => :controller do
         it 'should add users on success' do
             @request.session[:session_token] = @userPriGrp2Owner.session_token
             post :add_user_to_group, {:id => @pri_group2.id, :users => {@user.id.to_s => '1'}}
-            expect(@request).to redirect_to(groups_path)
-            #g = Group.find_by_id(@pri_group2.id)
-            #expect(g.users.any? {|d| d.id == @user.id}).to be true
+            #expect(@request).to redirect_to(groups_path)
+            g = Group.find_by_id(@pri_group2.id)
+            expect(g.users.any? {|d| d.id == @user.id}).to be true
         end
     end
     
