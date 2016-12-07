@@ -56,10 +56,10 @@ describe GroupsController, :type => :controller do
             expect(@request).to redirect_to(group_display_path(@pub_group.id))
         end
         
-        it 'should redirect to decks page for private group' do
+        it 'should redirect to groups page for private group' do
             @request.session[:session_token] = @user.session_token
             get :show_add_deck_to_group, {:id => @pri_group.id}
-            expect(@request).to redirect_to(decks_path)
+            expect(@request).to redirect_to(groups_path)
         end
         
         it 'should render add-deck on success' do
@@ -78,10 +78,10 @@ describe GroupsController, :type => :controller do
         
 
         
-        it 'should redirect to decks page for private group' do
+        it 'should redirect to groups page for private group' do
             @request.session[:session_token] = @user.session_token
             post :add_deck_to_group, {:id => @pri_group.id}
-            expect(@request).to redirect_to(decks_path)
+            expect(@request).to redirect_to(groups_path)
         end
         
         it 'should add decks on success' do
