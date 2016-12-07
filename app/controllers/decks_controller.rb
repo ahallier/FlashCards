@@ -143,4 +143,18 @@ class DecksController < ApplicationController
         @random = SecureRandom.uuid
         session[:random] = @random
     end
+    def addAsFavorite
+        puts "favoritng"
+        @deck = Deck.find params[:id]
+        puts "fav deck"+@deck.title
+        user = User.find_by_session_token(session[:session_token])
+        if user == nil
+            flash[:notice] = "You must be logged in to favorite a deck."
+            redirect_to decks_path and return
+        end
+        Favorite.create(:user_id => user.id, :deck_id => @deck.id)
+        flash[:notice] = "#{user.email} favorited #{@deck.title}."
+        redirect_to decks_path and return
+    end
+    
 end

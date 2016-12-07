@@ -17,9 +17,10 @@ Rails.application.routes.draw do
   resources :movies
   # map '/' to be a redirect to 'decks'
   root :to => redirect('/decks')
-
+  
   resources :decks
-  match '/decks/:id/edit/addCard', to: 'decks#addCard', via: :get, as: 'add_card'
+  match '/decks/addAsFavorite/:id', to: 'decks#addAsFavorite', via: :get, as: 'add_favorite'
+  match '/decks/:id/edit/addCard',  to: 'decks#addCard', via: :get, as: 'add_card'
   match '/decks/:id/edit/writecard', to: 'decks#writecard', via: :get, as: 'write_card'
   resources :cards
   match '/cards/:id/display', to: 'cards#index', via: :get, as: 'card_display'
