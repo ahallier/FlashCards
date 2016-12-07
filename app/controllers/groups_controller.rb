@@ -206,8 +206,8 @@ class GroupsController < ApplicationController
             group_params[:public]=false
         end
         group_params[:owner_id]=@current_user.id
-        newGroup = Group.create!(group_params)
-        newGroup.users << @current_user
+        newg = Group.create!(group_params)
+        newg.users << @current_user
         flash[:notice] = "Successfully created group."
         redirect_to groups_path
     end

@@ -3,10 +3,12 @@ require 'rails_helper'
 
 describe GroupsController, :type => :controller do
     before :each do
+        
 ############################### | ########################################################## | #########################################
 ############################### V Do not change these! Use them as they are or add your own. V #########################################
         @pub_group = Group.create!({:title => 'Test', :public => true, :created_at => DateTime.now, :updated_at => DateTime.now})
         @pri_group = Group.create!({:title => 'Test', :public => false, :created_at => DateTime.now, :updated_at => DateTime.now})
+        @pri_group2 = Group.create!({:title => 'Test', :public => false, :created_at => DateTime.now, :updated_at => DateTime.now})
         @user = User.create!({
             :email => 'albert@gmail.com', 
             :password => "albert", 
@@ -23,9 +25,25 @@ describe GroupsController, :type => :controller do
             :created_at => DateTime.now,
             :updated_at => DateTime.now
         })
+        @userA = User.create!({
+            :email => 'A@gmail.com', 
+            :password => "A", 
+            :session_token => 'abcde',
+            :created_at => DateTime.now,
+            :updated_at => DateTime.now
+        })
+        @userPriGrp2Owner = User.create!({
+            :email => 'B@gmail.com', 
+            :password => "B", 
+            :session_token => 'abcde',
+            :created_at => DateTime.now,
+            :updated_at => DateTime.now
+        })
+        
         @deck = Deck.create!({:title => 'Test',  :category => 'TestCat', :public => true, :user_id => @user.id})
         @deck2 = Deck.create!({:title => 'Test',  :category => 'TestCat', :public => true, :user_id => @user.id})
         @pub_group.decks << @deck
+        
 ###############################^ Do not change these! Use them as they are or add your own. ^ #####################################
 ############################## | ########################################################## | #####################################
     end
@@ -70,13 +88,16 @@ describe GroupsController, :type => :controller do
     end
     
     describe 'Adding decks to groups' do
+        it 'should redirect to decks page if not logged in' do
+            @request.session[:session_token] = 0
+            get :show_add_deck_to_group, {:id => 99123492}
+            expect(@request).to redirect_to(decks_path)
+        end
         it 'should redirect to decks page for non-existent group' do
             @request.session[:session_token] = @user.session_token
             post :add_deck_to_group, {:id => 99123492}
             expect(@request).to redirect_to(decks_path)
         end
-        
-
         
         it 'should redirect to groups page for private group' do
             @request.session[:session_token] = @user.session_token
@@ -127,12 +148,24 @@ describe GroupsController, :type => :controller do
     end
     describe 'Adding new public group' do
         it 'should call the Group.create! method' do
+            @request.session[:session_token] = @user.session_token
+            Group.stub(:current_user) { @user }
+            group_spy = spy(Group)
             expect(Group).to receive(:create!)
+            expect(group_spy).to receive(:users)
             post :create, {:group =>{:title => 'Test', :public => 'Yes'}}
+        end
+    end
+    describe 'Adding new group without login' do
+        it 'should redirect to decks' do
+            @request.session[:session_token] = nil
+            post :create, {:group =>{:title => 'Test', :public => 'Yes'}}
+            expect(@request).to redirect_to(decks_path)
         end
     end
     describe 'Adding new private group' do
         it 'should call the Group.create! method' do
+            @request.session[:session_token] = @user.session_token
             expect(Group).to receive(:create!)
             post :create, {:group =>{:title => 'Test', :public => 'No'}}
         end
@@ -143,5 +176,81 @@ describe GroupsController, :type => :controller do
             get :display, {:id => 1}
         end
     end
+    
+    describe 'Visit add user page' do 
+        
+        it 'should redirect to decks page if not logged in' do
+            @request.session[:session_token] = 0
+            get :show_add_user_to_group, {:id => 99123492}
+            expect(@request).to redirect_to(decks_path)
+        end
+        
+        it 'should redirect to decks page for non-existent group' do
+            @request.session[:session_token] = @user.session_token
+            get :show_add_user_to_group, {:id => 99123492}
+            expect(@request).to redirect_to(decks_path)
+        end 
+        
+        it 'should redirect to group path if there are no users available' do
+            @request.session[:session_token] = @user.session_token
+            allow(Deck).to receive(:where).and_return Deck.none
+            get :show_add_user_to_group, {:id => @pub_group.id}
+            expect(@request).to redirect_to(groups_path)
+        end
+        
+        it 'should redirect to groups page for private group' do
+            @request.session[:session_token] = @user.session_token
+            get :show_add_user_to_group, {:id => @pri_group.id}
+            expect(@request).to redirect_to(groups_path)
+        end
+        
+        it 'should redirect to groups page for private group where user is not owner' do
+            @request.session[:session_token] = @user.session_token
+            get :show_add_user_to_group, {:id => @pri_group.id}
+            expect(@request).to redirect_to(groups_path)
+        end
+        
+        it 'should redirect to groups page for public group' do
+            @request.session[:session_token] = @user.session_token
+            get :show_add_user_to_group, {:id => @pub_group.id}
+            expect(@request).to redirect_to(groups_path)
+        end
+        
+        it 'should render add-user on success when current_user is owner and deck is private' do
+            @request.session[:session_token] = nil
+            #current_user will be nil, havnt been able to mock....
+            @pri_group2.owner_id = nil
+            get :show_add_user_to_group, {:id => @pri_group2.id}
+            expect(@request).to render_template('add-user')
+        end
+    end
+    
+    describe 'Adding users to groups' do
+        it 'should redirect to decks page for non-existent group' do
+            @request.session[:session_token] = @user.session_token
+            post :add_user_to_group, {:id => 99123492}
+            expect(@request).to redirect_to(decks_path)
+        end
+        it 'should redirect to decks page if not logged in' do
+            @request.session[:session_token] = 0
+            get :add_user_to_group, {:id => 99123492}
+            expect(@request).to redirect_to(decks_path)
+        end
+        
+        it 'should redirect to groups page for private group' do
+            @request.session[:session_token] = @user.session_token
+            post :add_user_to_group, {:id => @pri_group2.id}
+            expect(@request).to redirect_to(groups_path)
+        end
+        
+        it 'should add users on success' do
+            @request.session[:session_token] = @userPriGrp2Owner.session_token
+            post :add_user_to_group, {:id => @pri_group2.id, :users => {@user.id.to_s => '1'}}
+            expect(@request).to redirect_to(groups_path)
+            #g = Group.find_by_id(@pri_group2.id)
+            #expect(g.users.any? {|d| d.id == @user.id}).to be true
+        end
+    end
+    
 end
 
