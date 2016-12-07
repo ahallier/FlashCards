@@ -121,8 +121,10 @@ class GroupsController < ApplicationController
             flash[:notice] = "Group does not exist."
             redirect_to decks_path and return
         end
-        
-        unless (!group.public && group.owner_id == @current_user.id)
+        puts 'Current user: '
+        puts @current_user.id
+        puts group.owner_id
+        if !group.public || group.owner_id != @current_user.id
             # add users if group is private and user is owner
             flash[:notice] = "You must be a owner to add members to a private group."
             redirect_to groups_path and return
