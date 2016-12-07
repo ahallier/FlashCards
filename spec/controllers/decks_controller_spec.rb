@@ -4,6 +4,20 @@ require 'rails_helper'
 describe DecksController, :type => :controller do
     before :each do
       @deck = Deck.create!({:title => 'Test',  :category => 'TestCat', :public => true})
+
+############################### | ########################################################## | #########################################
+############################### V Do not change these! Use them as they are or add your own. V #########################################
+        
+        @user = User.create!({
+            :email => 'albert@gmail.com', 
+            :password => "albert", 
+            :session_token => 'abcde',
+            :created_at => DateTime.now,
+            :updated_at => DateTime.now
+        })
+
+###############################^ Do not change these! Use them as they are or add your own. ^ #####################################
+############################## | ########################################################## | #####################################
     end
     describe 'Visiting index' do 
         it 'should call Deck.all' do
@@ -13,6 +27,7 @@ describe DecksController, :type => :controller do
     end
     describe 'Adding new deck' do
         it 'should call the Deck.create! method' do
+            @request.session[:session_token] = @user.session_token
             expect(Deck).to receive(:create!)
             post :create, {:deck =>{:title => 'Test',  :category => 'TestCat', :public => true}}
         end

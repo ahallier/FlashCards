@@ -46,12 +46,12 @@ class GroupsController < ApplicationController
             redirect_to decks_path and return
         end
         
-        #unless @current_user.id = group.users.find_by_id(@current_user.id)
-            # this will need to take into account users that have access
-            # to private groups later.
-        #    flash[:notice] = "Group is private!"
-        #    redirect_to decks_path and return
-        #end
+        unless @current_user.id == group.users.find_by_id(@current_user.id) || group.public == true
+            # Unless user is a memeber of the group, or the group is public
+            flash[:notice] = "Group is private or you are not a member"
+            redirect_to groups_path and return
+        end
+        
         decks_to_display = Deck.where(:public => true, :user_id =>[nil, user.id])
         user_decks_to_display = Deck.where(:user_id => @current_user)
         group = Group.find_by_id group_id
@@ -69,6 +69,11 @@ class GroupsController < ApplicationController
     
     def add_deck_to_group
         puts "Got request to add deck to group"
+        user = User.find_by_session_token(session[:session_token])
+        if user == nil
+            flash[:notice] = "You must be logged in to view this page."
+            redirect_to decks_path and return
+        end
         group_id = params[:id]
         
         group = Group.find_by_id(group_id)
@@ -76,12 +81,12 @@ class GroupsController < ApplicationController
             flash[:notice] = "Group does not exist."
             redirect_to decks_path and return
         end
-        #unless group.public
-            # this will need to take into account users that have access
-            # to private groups later.
-        #    flash[:notice] = "Group is private!"
-        #    redirect_to decks_path and return
-        #end
+        
+        unless @current_user.id == group.users.find_by_id(@current_user.id) || group.public == true
+            # Unless user is a memeber of the group, or the group is public
+            flash[:notice] = "Group is private or you are not a member"
+            redirect_to groups_path and return
+        end
         
 
         deck_ids = params[:decks].keys
@@ -105,7 +110,7 @@ class GroupsController < ApplicationController
     def show_add_user_to_group
         user = User.find_by_session_token(session[:session_token])
         if user == nil
-            flash[:notice] = "You must be logged in to add decks to a group."
+            flash[:notice] = "You must be logged in to add users to a group."
             redirect_to decks_path and return
         end
         
@@ -117,12 +122,11 @@ class GroupsController < ApplicationController
             redirect_to decks_path and return
         end
         
-        #unless group.public
-            # this will need to take into account users that have access
-            # to private groups later.
-        #    flash[:notice] = "Group is private!"
-        #    redirect_to decks_path and return
-        #end
+        unless (!group.public && group.owner_id == @current_user.id)
+            # add users if group is private and user is owner
+            flash[:notice] = "You must be a owner to add members to a private group."
+            redirect_to groups_path and return
+        end
         
         users_to_display = User.all
         group = Group.find_by_id group_id
@@ -136,6 +140,11 @@ class GroupsController < ApplicationController
     end
     
     def add_user_to_group
+        user = User.find_by_session_token(session[:session_token])
+        if user == nil
+            flash[:notice] = "You must be logged in to view this page."
+            redirect_to decks_path and return
+        end
         puts "Got request to add user to group"
         group_id = params[:id]
         
@@ -144,13 +153,12 @@ class GroupsController < ApplicationController
             flash[:notice] = "Group does not exist."
             redirect_to decks_path and return
         end
-        #unless group.public
-            # this will need to take into account users that have access
-            # to private groups later.
-        #    flash[:notice] = "Group is private!"
-        #    redirect_to decks_path and return
-        #end
         
+        unless (!group.public && group.owner_id == @current_user.id)
+            #add users if group is private and user is owner
+            flash[:notice] = "You must be a owner to add members to a private group."
+            redirect_to groups_path and return
+        end
 
         user_ids = params[:users].keys
         
@@ -183,6 +191,11 @@ class GroupsController < ApplicationController
     end
     
     def create
+        user = User.find_by_session_token(session[:session_token])
+        if user == nil
+            flash[:notice] = "You must be logged in to create a group."
+            redirect_to decks_path and return
+        end
         group_params = create_params
         # TODO: Make constants somewhere (config/constanst file?) that represent default deck values.
         group_params[:created_at] = DateTime.now

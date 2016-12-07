@@ -59,7 +59,7 @@ class DecksController < ApplicationController
     def create
         if @current_user == nil
             flash[:notice] = "You must be logged in to create a deck."
-            redirect_to decks_path
+            redirect_to decks_path and return
         end
         deck_params = create_params
         # TODO: Make constants somewhere (config/constanst file?) that represent default deck values.

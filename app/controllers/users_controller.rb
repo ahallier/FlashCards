@@ -6,6 +6,11 @@ class UsersController < ApplicationController
   end
 
   def index
+    user = User.find_by_session_token(session[:session_token])
+    if user == nil
+      flash[:notice] = "You must be logged in to view this page."
+      redirect_to decks_path and return
+    end
     sort = params[:sort] || session[:sort]
     if sort == nil
       #asc_or_desc = session[:ascending] ? 'asc' : 'desc'
@@ -55,7 +60,7 @@ class UsersController < ApplicationController
     @user = User.create_user!(params) 
     if @user == "user exists"
       flash[:notice] = "This email is already being used. Please use another ID"
-      redirect_to new_user_path
+      redirect_to new_user_path and return
     else
       flash[:notice] = "Account was created sucessfully "
        redirect_to login_path
@@ -67,6 +72,11 @@ class UsersController < ApplicationController
   end
  
   def update
+    user = User.find_by_session_token(session[:session_token])
+    if user == nil
+      flash[:notice] = "You must be logged in to view this page."
+      redirect_to decks_path and return
+    end
     @user = User.find_by_id(params[:id])
     @user.update_attributes(users_params)
     flash[:notice] = "Account was edited sucessfully "

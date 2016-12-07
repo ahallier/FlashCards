@@ -46,5 +46,4 @@ class CardsController < ApplicationController
         flash[:notice] = "Card was deleted."
         redirect_to card_display_path(@card.deck_id)
     end
-    
 end
