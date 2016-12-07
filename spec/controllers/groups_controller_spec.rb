@@ -9,10 +9,12 @@ describe GroupsController, :type => :controller do
         @pub_group = Group.create!({:title => 'Test', :public => true, :created_at => DateTime.now, :updated_at => DateTime.now})
         @pri_group = Group.create!({:title => 'Test', :public => false, :created_at => DateTime.now, :updated_at => DateTime.now})
         @pri_group2 = Group.create!({:title => 'Test', :public => false, :created_at => DateTime.now, :updated_at => DateTime.now})
+        @pri_group2.public = false
+        @pri_group2.save
         @user = User.create!({
             :email => 'albert@gmail.com', 
             :password => "albert", 
-            :session_token => 'abcde',
+            :session_token => 'user',
             :created_at => DateTime.now,
             :updated_at => DateTime.now
         })
@@ -21,24 +23,26 @@ describe GroupsController, :type => :controller do
         @user_not_in_group = User.create!({
             :email => 'johncena@gmail.com', 
             :password => "johncena", 
-            :session_token => 'abcdeeee',
+            :session_token => 'user_not_in_group',
             :created_at => DateTime.now,
             :updated_at => DateTime.now
         })
         @userA = User.create!({
             :email => 'A@gmail.com', 
             :password => "A", 
-            :session_token => 'abcde',
+            :session_token => 'userA',
             :created_at => DateTime.now,
             :updated_at => DateTime.now
         })
         @userPriGrp2Owner = User.create!({
             :email => 'B@gmail.com', 
             :password => "B", 
-            :session_token => 'abcde',
+            :session_token => 'userPriGrp2Owner',
             :created_at => DateTime.now,
             :updated_at => DateTime.now
         })
+        @pri_group2.owner_id = @userPriGrp2Owner.id
+        @pri_group2.save
         
         @deck = Deck.create!({:title => 'Test',  :category => 'TestCat', :public => true, :user_id => @user.id})
         @deck2 = Deck.create!({:title => 'Test',  :category => 'TestCat', :public => true, :user_id => @user.id})
@@ -220,8 +224,6 @@ describe GroupsController, :type => :controller do
         
         it 'should render add-user on success when current_user is owner and deck is private' do
             @request.session[:session_token] = @userPriGrp2Owner.session_token
-            @pri_group2.public = false
-            @pri_group2.owner_id = @userPriGrp2Owner.id
             get :show_add_user_to_group, {:id => @pri_group2.id}
             expect(@request).to render_template('add-user')
         end
