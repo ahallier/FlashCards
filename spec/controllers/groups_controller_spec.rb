@@ -220,8 +220,6 @@ describe GroupsController, :type => :controller do
         
         it 'should render add-user on success when current_user is owner and deck is private' do
             @request.session[:session_token] = @userPriGrp2Owner.session_token
-            #Group.stub(:current_user).and_return(@userPriGrp2Owner)
-            Group.stub(:set_current_user).and_return(@userPriGrp2Owner)
             @pri_group2.public = false
             @pri_group2.owner_id = @userPriGrp2Owner.id
             get :show_add_user_to_group, {:id => @pri_group2.id}
