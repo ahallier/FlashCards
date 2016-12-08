@@ -4,8 +4,16 @@ class SessionsController < ApplicationController
   end
 
   def create
+    if(User.exists?(params[:session][:email]))
+      user = User.find_by(email: params[:session][:email])
+      puts("user exists")
+    
+    else
+      puts "not user exists"
+      redirect_to new_user_path and return 
+      
+    end
   
-    user = User.find_by(email: params[:session][:email])
     session[:session_token] = user.session_token
       if user && params[:session][:email] == user.email && params[:session][:password] == user.password
           redirect_to decks_path
