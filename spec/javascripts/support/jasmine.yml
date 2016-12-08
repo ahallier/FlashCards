@@ -119,7 +119,8 @@ boot_files:
 #
 # EXAMPLE
 #
-# rack_options:
+rack_options:
+    Host: '0.0.0.0'
 #   server: 'thin'
 
 # random
