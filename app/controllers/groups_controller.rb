@@ -9,7 +9,6 @@ class GroupsController < ApplicationController
     end
     
     def remove_deck_from_group
-        puts 'Got call to remove deck from group.'
         user = User.find_by_session_token(session[:session_token])
         if user == nil
             flash[:notice] = "You must be logged in to remove decks from a group."
@@ -68,7 +67,6 @@ class GroupsController < ApplicationController
     end
     
     def add_deck_to_group
-        puts "Got request to add deck to group"
         user = User.find_by_session_token(session[:session_token])
         if user == nil
             flash[:notice] = "You must be logged in to view this page."
@@ -91,8 +89,7 @@ class GroupsController < ApplicationController
 
         deck_ids = params[:decks].keys
         
-        puts "Got group id: #{group_id}"
-        
+
 
         
         deck_ids.each do |d_id|
@@ -121,14 +118,23 @@ class GroupsController < ApplicationController
             flash[:notice] = "Group does not exist."
             redirect_to decks_path and return
         end
-        puts 'Current user: '
-        puts @current_user.id
-        puts group.owner_id
-        if !group.public || group.owner_id != @current_user.id
+        
+        puts "\tGroupsController - Group is public? #{group.public}"
+        puts "\tGroupsController - Group owner Id: #{group.owner_id}"
+        puts "\tGroupsController - Current User Id: #{@current_user.id}"
+
+        if group.public
+            flash[:notice] = "Users may join a public group themselves."
+            redirect_to groups_path and return
+        end
+        
+        if group.owner_id != @current_user.id
             # add users if group is private and user is owner
             flash[:notice] = "You must be a owner to add members to a private group."
             redirect_to groups_path and return
         end
+        
+        puts "\tGot this far!"
         
         users_to_display = User.all
         group = Group.find_by_id group_id
@@ -147,7 +153,6 @@ class GroupsController < ApplicationController
             flash[:notice] = "You must be logged in to view this page."
             redirect_to decks_path and return
         end
-        puts "Got request to add user to group"
         group_id = params[:id]
         
         group = Group.find_by_id(group_id)
@@ -164,8 +169,7 @@ class GroupsController < ApplicationController
 
         user_ids = params[:users].keys
         
-        puts "Got group id: #{group_id}"
-        
+
         user_ids.each do |u_id|
             # Add any decks to the group that were not already in the group
             unless group.users.any? { |u| u.id == u_id.to_i }

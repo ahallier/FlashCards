@@ -223,6 +223,10 @@ describe GroupsController, :type => :controller do
         end
         
         it 'should render add-user on success when current_user is owner and deck is private' do
+            puts 'should render add-user on success when current_user is owner and deck is private'
+            puts "\tTest - Group is public? #{@pri_group2.public}"
+            puts "\tTest - Group owner Id: #{@pri_group2.owner_id}"
+            puts "\tTest - User Id: #{@userPriGrp2Owner.id}"
             @request.session[:session_token] = @userPriGrp2Owner.session_token
             get :show_add_user_to_group, {:id => @pri_group2.id}
             expect(@request).to render_template('add-user')
