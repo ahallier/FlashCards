@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+   has_secure_password
   has_and_belongs_to_many :groups
   has_many :decks
   
@@ -10,6 +11,7 @@ class User < ActiveRecord::Base
              
             return "user exists"
         elsif
+            
             user = create!(parameters.require(:user).permit(:email, :password, :session_token))
         
             return user.email
