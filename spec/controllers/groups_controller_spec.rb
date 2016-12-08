@@ -7,6 +7,7 @@ describe GroupsController, :type => :controller do
 ############################### | ########################################################## | #########################################
 ############################### V Do not change these! Use them as they are or add your own. V #########################################
         @pub_group = Group.create!({:title => 'Test', :public => true, :created_at => DateTime.now, :updated_at => DateTime.now})
+        @pub_group2 = Group.create!({:title => 'Test', :public => true, :created_at => DateTime.now, :updated_at => DateTime.now})
         @pri_group = Group.create!({:title => 'Test', :public => false, :created_at => DateTime.now, :updated_at => DateTime.now})
         @pri_group2 = Group.create!({:title => 'Test', :public => false, :created_at => DateTime.now, :updated_at => DateTime.now})
         @pri_group2.public = false
@@ -42,6 +43,11 @@ describe GroupsController, :type => :controller do
             :updated_at => DateTime.now
         })
         @pri_group2.owner_id = @userPriGrp2Owner.id
+        @pub_group2.users << @user
+        @pub_group2.users << @userPriGrp2Owner
+        @pub_group2.users << @userA
+        @pub_group2.users << @user_not_in_group
+        @pub_group2.save
         @pri_group2.save
         
         @deck = Deck.create!({:title => 'Test',  :category => 'TestCat', :public => true, :user_id => @user.id})
@@ -204,8 +210,9 @@ describe GroupsController, :type => :controller do
         
         it 'should redirect to group path if there are no users available' do
             @request.session[:session_token] = @user.session_token
-            allow(Deck).to receive(:where).and_return Deck.none
-            get :show_add_user_to_group, {:id => @pub_group.id}
+            #pub group 2 has all users added already
+            allow(User).to receive(:all).and_return(nil)
+            get :show_add_user_to_group, {:id => @pub_group2.id}
             expect(@request).to redirect_to(groups_path)
         end
         
