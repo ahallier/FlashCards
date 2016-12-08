@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161207035809) do
+ActiveRecord::Schema.define(version: 20161208170850) do
 
   create_table "cards", force: :cascade do |t|
     t.integer  "deck_id"
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20161207035809) do
 
   create_table "users", force: :cascade do |t|
     t.text     "email"
-    t.text     "password"
+    t.text     "password_digest"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "session_token"
