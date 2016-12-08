@@ -53,9 +53,22 @@ Given /^I am on the FlashCards home page$/ do
      page.should have_content("joined #{title}")
  end
  
+ Then /^The group with title "(.*?)" should be in user group table$/ do |title|
+     visit users_path
+     page.should have_content("#{title}")
+ end
+ 
+ And /^The current user logs out.$/ do
+    visit decks_path
+    click_button("logout")
+ end
  
  Given /^I am on the add deck to group page for group id "(.*?")$/ do |group_id|
      visit add_deck_to_group_path(group_id)
+ end
+ 
+ And /^I am on the add user to group page for group id "(.*?")$/ do |group_id|
+     visit add_user_to_group_path(group_id)
  end
  
  Given /^I am on the edit deck page for deck with title "(.*?)"$/ do |title|
@@ -113,6 +126,11 @@ When /^I have added a card with front "(.*?)" and back "(.*?)" to deck "(.*?)"$/
  Given /the following decks have been added to FlashCards:/ do |decks_table|
   decks_table.hashes.each do |deck|
     Deck.create!(deck)
+  end
+end
+Given /the following users have been added to FlashCards:/ do |users_table|
+  users_table.hashes.each do |user|
+    User.create!(user)
   end
 end
 Given /the following cards have been added to FlashCards:/ do |cards_table|

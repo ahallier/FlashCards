@@ -122,13 +122,14 @@ class GroupsController < ApplicationController
         puts "\tGroupsController - Group is public? #{group.public}"
         puts "\tGroupsController - Group owner Id: #{group.owner_id}"
         puts "\tGroupsController - Current User Id: #{@current_user.id}"
+        puts "\tGroupsController - Group Id: #{group.id}"
 
         if group.public
             flash[:notice] = "Users may join a public group themselves."
             redirect_to groups_path and return
         end
         
-        if group.owner_id != @current_user.id
+        if group.owner_id.to_i != @current_user.id.to_i
             # add users if group is private and user is owner
             flash[:notice] = "You must be a owner to add members to a private group."
             redirect_to groups_path and return
@@ -139,6 +140,7 @@ class GroupsController < ApplicationController
         users_to_display = User.all
         group = Group.find_by_id group_id
         @users = users_to_display.select { |u| group.users.all? { |gu| gu.id != u.id } }
+        puts "\n users are #{@users} \n #{users_to_display.length}"
         if @users == nil or @users.length == 0
             flash[:notice] = "No users to add."
             redirect_to group_display_path(group_id) and return
