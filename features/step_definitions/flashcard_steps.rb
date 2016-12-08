@@ -21,14 +21,30 @@ Given /^I am on the FlashCards home page$/ do
     page.execute_script("PC.currentCard = '#{id}'"); 
  end
  
+ Given /^I am on the practice cards page for deck "(.*?)"$/ do |id|
+     visit card_display_path(id)
+ end
+ 
  When /^I have set title to "(.*?)", public to "(.*?)"$/ do |title, pub|
    fill_in('Title', :with => title)
    select "Yes", :from => "public_select"
  end
  
+ When /^I have clicked next$/ do
+     click('Next')
+ end
+ 
+  When /^I have clicked cat$/ do
+     find('#word').click('Next')
+ end
+ 
  Then /^The group with title "(.*?)" should be in the groups table$/ do |title|
      visit groups_path
      page.should have_content(title)
+ end
+ 
+ Then /^definition should contain retractile$/ do
+    page.should have_content('retractile')
  end
   
  Then /^I should see join group "(.*?)" success message on group page$/ do |title|
