@@ -92,9 +92,14 @@ describe GroupsController, :type => :controller do
     end
     
     describe 'Adding decks to groups' do
-        it 'should redirect to decks page if not logged in' do
+        it 'should redirect to decks page if not logged in for get' do
             @request.session[:session_token] = 0
             get :show_add_deck_to_group, {:id => 99123492}
+            expect(@request).to redirect_to(decks_path)
+        end
+        it 'should redirect to decks page if not logged in for post' do
+            @request.session[:session_token] = 0
+            post :add_deck_to_group, {:id => 99123492}
             expect(@request).to redirect_to(decks_path)
         end
         it 'should redirect to decks page for non-existent group' do
