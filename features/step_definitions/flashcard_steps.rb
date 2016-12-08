@@ -2,6 +2,10 @@ Given /^I am on the FlashCards home page$/ do
   visit decks_path
  end
  
+ Given /^I am on the FlashCards user page$/ do
+  visit users_path
+ end
+ 
  Given /^I am on the new deck page$/ do
    visit new_deck_path
  end
