@@ -23,7 +23,7 @@
         %br 
         Welcome #{@current_user[:email]}!
         %br
-        = button_to 'Logout', logout_path, {method: :delete,:id=> 'logout'}
+        = button_to 'Logout', logout_path, {method: :delete, :id=> 'logout'}
         
       - if flash[:notice]
         #notice.flash_message= flash[:notice]

@@ -211,7 +211,7 @@ describe GroupsController, :type => :controller do
         it 'should redirect to group path if there are no users available' do
             @request.session[:session_token] = @user.session_token
             #pub group 2 has all users added already
-            allow(User).to receive(:all).and_return(nil)
+            allow(User).to receive(:all).and_return(User.none)
             get :show_add_user_to_group, {:id => @pub_group2.id}
             expect(@request).to redirect_to(groups_path)
         end
