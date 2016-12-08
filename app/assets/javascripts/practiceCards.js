@@ -89,7 +89,6 @@ var PC = {
     }),
     backFirst: function(){
       PC.frontfirst = !$("#sideButton").is(':checked');  
-      console.log($("#sideButton").checked);
     },
     nextCard: function() {
         if(typeof PC.cards[PC.currentCard+1] != "undefined"){

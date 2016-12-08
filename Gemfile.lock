@@ -105,13 +105,13 @@ GEM
     httparty (0.14.0)
       multi_xml (>= 0.5.2)
     i18n (0.7.0)
-    jasmine (2.5.1)
-      jasmine-core (>= 2.5.1, < 3.0.0)
-      phantomjs
-      rack (>= 1.2.1)
-      rake
     jasmine-core (2.5.2)
     jasmine-jquery-rails (2.0.3)
+    jasmine-rails (0.14.1)
+      jasmine-core (>= 1.3, < 3.0)
+      phantomjs (>= 1.9)
+      railties (>= 3.2.0)
+      sprockets-rails
     jbuilder (2.6.0)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -269,8 +269,8 @@ DEPENDENCIES
   database_cleaner
   guard-rspec
   haml
-  jasmine
   jasmine-jquery-rails
+  jasmine-rails
   jbuilder (~> 2.0)
   jquery-rails
   pg

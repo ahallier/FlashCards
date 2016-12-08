@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
         elsif
             
             user = create!(parameters.require(:user).permit(:email, :password, :session_token))
-        
+            
             return user.email
         end
     end

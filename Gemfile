@@ -40,7 +40,7 @@ group :development do
   gem 'web-console' 
 end
 group :development, :test do
-  gem 'jasmine'
+  gem 'jasmine-rails'
   gem 'jasmine-jquery-rails'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
