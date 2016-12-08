@@ -21,8 +21,8 @@ Given /^I am on the FlashCards home page$/ do
     page.execute_script("PC.currentCard = '#{id}'"); 
  end
  
- Given /^I am on the practice cards page for deck "(.*?)"$/ do |id|
-     visit card_display_path(id)
+ Given /^I am on the practice cards page for deck 1$/ do
+     visit card_display_path(1)
  end
  
  When /^I have set title to "(.*?)", public to "(.*?)"$/ do |title, pub|
@@ -31,11 +31,13 @@ Given /^I am on the FlashCards home page$/ do
  end
  
  When /^I have clicked next$/ do
-     click('Next')
+        click_button('Next')
  end
  
   When /^I have clicked cat$/ do
-     find('#word').click('Next')
+      sleep 2
+      puts page.html
+    find('.card-word').click
  end
  
  Then /^The group with title "(.*?)" should be in the groups table$/ do |title|
