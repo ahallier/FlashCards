@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if(User.exists?(params[:session][:email]))
+    if(User.exists?(:email => params[:session][:email]))
       user = User.find_by(email: params[:session][:email])
       puts("user exists")
     
@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
         flash[:warning] = "incorrect Password"
         redirect_to login_path
       end
-    end
+  end
   def destroy
     reset_session
     redirect_to decks_path
