@@ -49,10 +49,10 @@ class GroupsController < ApplicationController
         if group.users.find_by_id(@current_user.id)
             puts "group user is truthy"
         end
-        if !group.users.find_by_id(@current_user.id) || !group.public
+        unless group.public || group.users.find_by_id(@current_user.id)
             puts "we pass the criteria of user is member or group is public"
         end
-        if !group.users.find_by_id(@current_user.id) || !group.public
+        unless group.public || group.users.find_by_id(@current_user.id)
             # Unless user is a memeber of the group, or the group is public
             flash[:notice] = "Group is private or you are not a member"
             redirect_to groups_path and return
@@ -87,18 +87,19 @@ class GroupsController < ApplicationController
             redirect_to decks_path and return
         end
         
-        if !group.users.find_by_id(@current_user.id) || !group.public
+        unless group.public || group.users.find_by_id(@current_user.id)
             # Unless user is a memeber of the group, or the group is public
             flash[:notice] = "Group is private or you are not a member"
             redirect_to groups_path and return
         end
         
-        deck_ids = params[:decks].keys
-        
-        deck_ids.each do |d_id|
-            # Add any decks to the group that were not already in the group
-            unless group.decks.any? { |d| d.id == d_id.to_i }
-                group.decks << Deck.find_by_id(d_id)
+        if params[:decks]
+            deck_ids = params[:decks].keys
+            deck_ids.each do |d_id|
+                # Add any decks to the group that were not already in the group
+                unless group.decks.any? { |d| d.id == d_id.to_i }
+                    group.decks << Deck.find_by_id(d_id)
+                end
             end
         end
         group.save
@@ -176,13 +177,13 @@ class GroupsController < ApplicationController
             redirect_to groups_path and return
         end
 
-        user_ids = params[:users].keys
-        
-
-        user_ids.each do |u_id|
-            # Add any decks to the group that were not already in the group
-            unless group.users.any? { |u| u.id == u_id.to_i }
-                group.users << User.find_by_id(u_id)
+        if params[:users]
+            user_ids = params[:users].keys
+            user_ids.each do |u_id|
+                # Add any decks to the group that were not already in the group
+                unless group.users.any? { |u| u.id == u_id.to_i }
+                    group.users << User.find_by_id(u_id)
+                end
             end
         end
         group.save

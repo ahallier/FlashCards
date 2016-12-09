@@ -80,8 +80,8 @@ describe GroupsController, :type => :controller do
             expect(@request).to redirect_to(group_display_path(@pub_group.id))
         end
         
-        it 'should redirect to groups page for private group' do
-            @request.session[:session_token] = @user.session_token
+        it 'should redirect to groups page for private group if user is not a member' do
+            @request.session[:session_token] = @userA.session_token
             get :show_add_deck_to_group, {:id => @pri_group.id}
             expect(@request).to redirect_to(groups_path)
         end
@@ -110,8 +110,8 @@ describe GroupsController, :type => :controller do
             expect(@request).to redirect_to(decks_path)
         end
         
-        it 'should redirect to groups page for private group' do
-            @request.session[:session_token] = @user.session_token
+        it 'should redirect to groups page for private group if user is not a member' do
+            @request.session[:session_token] = @userA.session_token
             post :add_deck_to_group, {:id => @pri_group.id}
             expect(@request).to redirect_to(groups_path)
         end
