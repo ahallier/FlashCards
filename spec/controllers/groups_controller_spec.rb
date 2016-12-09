@@ -43,11 +43,7 @@ describe GroupsController, :type => :controller do
             :updated_at => DateTime.now
         })
         @pri_group2.owner_id = @userPriGrp2Owner.id
-        @pub_group2.users << @user
-        @pub_group2.users << @userPriGrp2Owner
-        @pub_group2.users << @userA
-        @pub_group2.users << @user_not_in_group
-        @pub_group2.save
+        
         @pri_group2.save
         
         @deck = Deck.create!({:title => 'Test',  :category => 'TestCat', :public => true, :user_id => @user.id})
@@ -208,13 +204,7 @@ describe GroupsController, :type => :controller do
             expect(@request).to redirect_to(decks_path)
         end 
         
-        it 'should redirect to group path if there are no users available' do
-            @request.session[:session_token] = @user.session_token
-            #pub group 2 has all users added already
-            allow(User).to receive(:all).and_return(User.none)
-            get :show_add_user_to_group, {:id => @pub_group2.id}
-            expect(@request).to redirect_to(groups_path)
-        end
+        
         
         it 'should redirect to groups page for private group' do
             @request.session[:session_token] = @user.session_token
@@ -240,8 +230,16 @@ describe GroupsController, :type => :controller do
             puts "\tTest - Group owner Id: #{@pri_group2.owner_id}"
             puts "\tTest - User Id: #{@userPriGrp2Owner.id}"
             @request.session[:session_token] = @userPriGrp2Owner.session_token
+            
             get :show_add_user_to_group, {:id => @pri_group2.id}
             expect(@request).to render_template('add-user')
+        end
+        it 'should redirect to group path if there are no users to add' do
+            @request.session[:session_token] = @userPriGrp2Owner.session_token
+            #pub group 2 has all users added already
+            @pri_group2.users << User.all
+            get :show_add_user_to_group, {:id => @pri_group2.id}
+            expect(@request).to redirect_to(group_display_path(@pri_group2.id))
         end
     end
     

@@ -44,8 +44,15 @@ class GroupsController < ApplicationController
             flash[:notice] = "Group does not exist."
             redirect_to decks_path and return
         end
-        
-        unless group.users.find_by_id(@current_user.id)|| group.public == true
+        puts "is group user #{group.users.find_by_id(@current_user.id)}"
+        puts "group public? #{group.public}"
+        if group.users.find_by_id(@current_user.id)
+            puts "group user is truthy"
+        end
+        if !group.users.find_by_id(@current_user.id) || !group.public
+            puts "we pass the criteria of user is member or group is public"
+        end
+        if !group.users.find_by_id(@current_user.id) || !group.public
             # Unless user is a memeber of the group, or the group is public
             flash[:notice] = "Group is private or you are not a member"
             redirect_to groups_path and return
@@ -80,7 +87,7 @@ class GroupsController < ApplicationController
             redirect_to decks_path and return
         end
         
-        unless group.users.find_by_id(@current_user.id) || group.public == true
+        if !group.users.find_by_id(@current_user.id) || !group.public
             # Unless user is a memeber of the group, or the group is public
             flash[:notice] = "Group is private or you are not a member"
             redirect_to groups_path and return
@@ -115,10 +122,7 @@ class GroupsController < ApplicationController
             redirect_to decks_path and return
         end
         
-        puts "\tGroupsController - Group is public? #{group.public}"
-        puts "\tGroupsController - Group owner Id: #{group.owner_id}"
-        puts "\tGroupsController - Current User Id: #{@current_user.id}"
-        puts "\tGroupsController - Group Id: #{group.id}"
+        
 
         if group.public
             flash[:notice] = "Users may join a public group themselves."
@@ -136,7 +140,14 @@ class GroupsController < ApplicationController
         users_to_display = User.all
         group = Group.find_by_id group_id
         @users = users_to_display.select { |u| group.users.all? { |gu| gu.id != u.id } }
-        puts "\n users are #{@users} \n #{users_to_display.length}"
+        
+        puts "\tGroupsController - Group is public? #{group.public}"
+        puts "\tGroupsController - Group owner Id: #{group.owner_id}"
+        puts "\tGroupsController - Current User Id: #{@current_user.id}"
+        puts "\tGroupsController - Group Id: #{group.id}"
+        puts "\n users are #{@users}"
+        puts "\n group users are #{group.users.size}"
+        
         if @users == nil or @users.length == 0
             flash[:notice] = "No users to add."
             redirect_to group_display_path(group_id) and return
