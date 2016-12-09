@@ -16,6 +16,7 @@ Background:
     When I have checked box with id "#users_2"
     And I have clicked button "Add Users to Group"
     And The current user logs out.
-    And I have logged in as user with email "a@gmail.com" and password "password"
+  Scenario: Check user was added
+    When I have logged in as user with email "a@gmail.com" and password "password"
     And I am on the FlashCards user page
     Then The group with title "TestGroup" should be in user group table 

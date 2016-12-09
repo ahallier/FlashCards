@@ -6,27 +6,18 @@
   %thead
     %tr
       %th= link_to 'Title', decks_path(:sort => 'title', :random => @random)
-      %th= link_to 'Score', decks_path(:sort => 'score', :random => @random)
       %th= link_to 'Category', decks_path(:sort => 'category', :random => @random)
-      %th Public
       %th= link_to 'Created At', decks_path(:sort => 'created_at', :random => @random)
       %th= link_to 'Updated At', decks_path(:sort => 'updated_at', :random => @random)
-      %th= link_to 'Deck ID', decks_path(:sort => 'id', :random => @random)
       %th favorite
   %tbody
     - @decks.each do |deck|
       %tr
         %td= link_to deck.title, card_display_path(deck.id)
-        %td= deck.score
         %td= deck.category
-        %td= deck.public
         %td= deck.created_at
         %td= deck.updated_at
-        %td= deck.id
         %td= link_to "add to favorites", add_favorite_path(deck)
-     
-        
-        
         
 -#= will_paginate @decks        
 = form_tag decks_path, method: 'get' do
