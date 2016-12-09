@@ -41,6 +41,14 @@ ActiveRecord::Schema.define(version: 20161208170850) do
   add_index "decks_groups", ["deck_id"], name: "index_decks_groups_on_deck_id"
   add_index "decks_groups", ["group_id"], name: "index_decks_groups_on_group_id"
 
+  create_table "favorites", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "deck_id"
+  end
+
+  add_index "favorites", ["deck_id"], name: "index_favorites_on_deck_id"
+  add_index "favorites", ["user_id"], name: "index_favorites_on_user_id"
+
   create_table "groups", force: :cascade do |t|
     t.text     "title"
     t.datetime "created_at"
@@ -64,13 +72,5 @@ ActiveRecord::Schema.define(version: 20161208170850) do
     t.datetime "updated_at"
     t.string   "session_token"
   end
-
-  create_table "users_fav_decks", id: false, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "deck_id"
-  end
-
-  add_index "users_fav_decks", ["deck_id"], name: "index_users_fav_decks_on_deck_id"
-  add_index "users_fav_decks", ["user_id"], name: "index_users_fav_decks_on_user_id"
 
 end

@@ -6,7 +6,11 @@ class UsersController < ApplicationController
   end
 
   def index
+   
+    
     user = User.find_by_session_token(session[:session_token])
+    @favorites = Favorite.all
+    @users_favorites = Favorite.find_by user_id: user.id
     if user == nil
       flash[:notice] = "You must be logged in to view this page."
       redirect_to decks_path and return
@@ -51,6 +55,9 @@ class UsersController < ApplicationController
     @random = SecureRandom.uuid
     session[:random] = @random
     render 'index' and return
+    
+     
+    
   end
   
   def new

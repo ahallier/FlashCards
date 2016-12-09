@@ -139,13 +139,6 @@ Given /the following cards have been added to FlashCards:/ do |cards_table|
   end
 end
 
-Given /^I have logged in as user with email "(.*?)" and password "(.*?)"$/ do |email, password|
-    visit login_path
-    fill_in 'Email', :with => email
-    fill_in 'Password', :with => password
-    click_button 'Login to my account'
-end
-
 Given /^user exists with email "(.*?)", password "(.*?)", session token, "(.*?)"$/ do |email, password, st|
     user_params = {
         :email => email,
@@ -154,6 +147,7 @@ Given /^user exists with email "(.*?)", password "(.*?)", session token, "(.*?)"
     }
     User.create!(user_params)
 end
+
 
 Given /^the deck with id "(.*?)" is in the group with id "(.*?)"$/ do |did, gid|
     d = Deck.find_by_id(did)
