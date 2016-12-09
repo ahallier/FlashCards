@@ -144,9 +144,9 @@ class DecksController < ApplicationController
         session[:random] = @random
     end
     def addAsFavorite
-        puts "favoritng"
+       
         @deck = Deck.find params[:id]
-        puts "fav deck"+@deck.title
+        
         user = User.find_by_session_token(session[:session_token])
         if user == nil
             flash[:notice] = "You must be logged in to favorite a deck."

@@ -85,4 +85,22 @@ describe DecksController, :type => :controller do
 
         end
     end
+    describe 'Favoriting a Deck' do
+        it 'should select the deck of the page it is on' do
+            deck_spy = spy(Deck)
+            expect(Deck).to receive(:find).with("1").and_return(deck_spy)
+            get :addAsFavorite, {"id" => "1"}
+        end
+        it 'should call the favorite create method' do
+            deck_spy = spy(Deck)
+            @request.session[:session_token] = @user.session_token
+            expect(Favorite).to receive(:create).with({:user_id=>@user.id,:deck_id=>1})
+            get :addAsFavorite, {"id" => "1"}
+        end
+        it 'should redirect to decks_path' do
+            get :addAsFavorite, {"id" => "1"}
+            expect(response).to redirect_to('/decks')
+            
+        end
+    end
 end
