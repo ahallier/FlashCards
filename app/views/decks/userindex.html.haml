@@ -24,9 +24,6 @@
         %td= deck.id
         %td= link_to 'Edit', edit_deck_path(deck.id)
         %td= button_to 'Delete', deck_path(deck), :method => :delete, :id => 'btn_delete'
-     
-        
-        
         
 -#= will_paginate @decks        
 = form_tag decks_path, method: 'get' do
