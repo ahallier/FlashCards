@@ -45,7 +45,7 @@ class GroupsController < ApplicationController
             redirect_to decks_path and return
         end
         
-        unless @current_user.id == group.users.find_by_id(@current_user.id) || group.public == true
+        unless group.users.find_by_id(@current_user.id)|| group.public == true
             # Unless user is a memeber of the group, or the group is public
             flash[:notice] = "Group is private or you are not a member"
             redirect_to groups_path and return
@@ -80,17 +80,13 @@ class GroupsController < ApplicationController
             redirect_to decks_path and return
         end
         
-        unless @current_user.id == group.users.find_by_id(@current_user.id) || group.public == true
+        unless group.users.find_by_id(@current_user.id) || group.public == true
             # Unless user is a memeber of the group, or the group is public
             flash[:notice] = "Group is private or you are not a member"
             redirect_to groups_path and return
         end
         
-
         deck_ids = params[:decks].keys
-        
-
-
         
         deck_ids.each do |d_id|
             # Add any decks to the group that were not already in the group
