@@ -39,6 +39,18 @@ Given /^I am on the FlashCards home page$/ do
  #   click_button('login_submit')
  #end
  
+When /^I am adding a card with front "(.*?)" and back "(.*?)" to deck "(.*?)"$/ do |front,back,deck|
+  visit '/decks/'+deck+'/edit/writecard'
+  fill_in 'Front', :with => front
+  fill_in 'Back', :with => back     
+ end 
+Then(/^The card with front "([^"]*)", back "([^"]*)" should be in the cards table for deck "([^"]*)"$/) do |arg1, arg2, arg3|
+  visit '/cards/'+arg3+'/display'
+      page.should have_content(arg1)
+      page.should have_content(arg2)
+end
+
+ 
  When /^I have clicked next$/ do
         click_button('Next')
  end
@@ -89,6 +101,11 @@ Given /^I am on the FlashCards home page$/ do
  
  end
  
+ Given /^I am on the create card page for card with deck_id "(.*?)"$/ do |deck_id|
+    deck = Deck.find_by id: deck_id
+    visit write_card_path(id: deck.id)
+ end
+ 
  Given /^I am on the group page for group id "(.*?")$/ do |group_id|
      visit group_display_path(group_id.to_i)
  end
@@ -133,7 +150,7 @@ When /^I have added a card with front "(.*?)" and back "(.*?)" to deck "(.*?)"$/
   visit '/decks/'+deck+'/edit/writecard'
   fill_in 'Front', :with => front
   fill_in 'Back', :with => back
-
+  
   click_button 'Save Changes'     
  end   
  Given /the following decks have been added to FlashCards:/ do |decks_table|
