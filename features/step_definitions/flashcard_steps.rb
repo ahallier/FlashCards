@@ -17,6 +17,7 @@ Given /^I am on the FlashCards home page$/ do
  
  Given /^I am on the group page$/ do
    visit groups_path
+   page.should have_content("Public Groups")
  end
  Given /^I am viewing card with id "(.*?)"$/ do |id|
     page.execute_script("PC.currentCard = '#{id}'"); 
@@ -50,8 +51,8 @@ Given /^I am on the FlashCards home page$/ do
  
  Then /^The group with title "(.*?)" should be in the groups table$/ do |title|
      visit groups_path
-     find(:xpath, "//table/tbody/tr[.//td[contains('#{title}')]]")
-     #page.should have_content(title)
+     #find(:xpath, "//table/tbody/tr[.//td[contains('#{title}')]]")
+     page.should have_content(title)
  end
  
  Then /^definition should contain retractile$/ do
