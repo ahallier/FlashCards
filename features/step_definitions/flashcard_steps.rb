@@ -79,6 +79,10 @@ end
      page.should have_content("joined #{title}")
  end
  
+ Then /^I should notsee "(.*?)"$/ do |text|
+     page.should have_no_content(text)
+ end
+ 
  Then /^The group with title "(.*?)" should be in user group table$/ do |title|
     visit users_path
     #find(:xpath, "//table/tbody/tr[.//td[contains('#{title}')]]")
