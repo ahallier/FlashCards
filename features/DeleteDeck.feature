@@ -7,7 +7,7 @@ Background: decks have been added to FlashCards
   | Test1                 | 5     | true   | 1
   And user exists with email "agieg", password "spagett", session token, "abcde"
   And I have logged in as user with email "agieg" and password "spagett"
-  Given I am on the FlashCards user page
+  And I am on the FlashCards user page
   
   
 Scenario:  Delete a deck (Declarative)
