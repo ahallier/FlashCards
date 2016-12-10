@@ -31,6 +31,10 @@ Given /^I am on the FlashCards home page$/ do
    fill_in('Title', :with => title)
    find('#deck_public').find(:xpath, 'option[1]').select_option
  end
+ When /^I have set title to "(.*?)", public to "(.*?)" in add group$/ do |title, pub|
+   fill_in('Title', :with => title)
+   select "Yes", :from => "public_select"
+ end
  
  #And /^I have logged in as user with email "(.*?)" and password "(.*?)"$/ do |email, password|
  #   visit login_path
