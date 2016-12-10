@@ -2,6 +2,7 @@ Feature: Allow FlashCards users to edit a card
 
 Background:
     Given the following cards have been added to FlashCards:
+  |id|front|back|
   | 1                 | front | back |
   | 2                 | front | back   |
   And I am on the edit card page for card with deck_id "1"

@@ -101,6 +101,7 @@ Given /^I am on the FlashCards home page$/ do
  When /^I have set title to "(.*?)", category "(.*?)"$/ do |title, cat|
    fill_in('Title', :with => title)
    fill_in('Category', :with => cat)
+   select "Yes", :from => "public_select"
  end
 When /^I have deleted a deck with title "(.*?)"/ do |deckTitle|
   page.all(:xpath, '//table/tr[.//td[contains("#{deckTitle}")]]').each do |tr|
