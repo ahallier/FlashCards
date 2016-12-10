@@ -50,11 +50,6 @@ class DecksController < ApplicationController
         # the random token is used to ensure that the ordering doesn't get reversed on page refresh.
         @random = SecureRandom.uuid
         session[:random] = @random
-        
-       
-        
-        
-        
     end
     
     def new
