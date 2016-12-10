@@ -63,8 +63,8 @@ end
  
  Then /^The group with title "(.*?)" should be in the groups table$/ do |title|
      visit groups_path
-     #find(:xpath, "//table/tbody/tr[.//td[contains('#{title}')]]")
-     page.should have_content(title)
+     find(:xpath, "//table/tbody/tr[.//td[contains('#{title}')]]")
+     #page.should have_content(title)
  end
  
  Then /^definition should contain retractile$/ do
@@ -77,7 +77,8 @@ end
  
  Then /^The group with title "(.*?)" should be in user group table$/ do |title|
     visit users_path
-    find(:xpath, "//table/tbody/tr[.//td[contains('#{title}')]]")
+    #find(:xpath, "//table/tbody/tr[.//td[contains('#{title}')]]")
+    page.should have_content(title)
  end
  
  Given /^The current user logs out.$/ do
