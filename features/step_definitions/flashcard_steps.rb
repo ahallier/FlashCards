@@ -258,7 +258,8 @@ Given /^I have logged in as user with email "(.*?)" and password "(.*?)"$/ do |e
  end
  
   Then(/^I should notsee "([^"]*)"$/) do |text|
-  page.should_not have_content(text)
+    visit card_display_path(1)
+    page.should_not have_content(text)
     end
   
   Then /^I should see a card with front "(.*?)" and back "(.*?)"$/ do |front, back| 
