@@ -5,5 +5,4 @@ Background:
   
   Scenario: Create a User
       When I have set email to "ryan@email.com", password "password"
-      And I have clicked button "Create Account"
       Then the user with email "ryan@email.com" should be in the users table

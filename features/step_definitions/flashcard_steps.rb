@@ -184,13 +184,17 @@ end
 
 Given /^I am on the create new user page$/ do
     visit new_user_path
+    page.should have_content("Create New User")
 end
 
 When /^I have set email to "(.*?)", password "(.*?)"$/ do |email, password|
-    visit '/users/new'
-    fill_in 'Email', :with => email
-    fill_in 'Password', :with => password
-    click_button "Create Account"
+    visit new_user_path
+    page.should have_content("Create New User")
+    page.should have_content("Email")
+
+    fill_in("signup_user", :with => email)
+    fill_in("signup_email", :with => password)
+    click_button "signup_create"
 end
 
 Then /^the user with email "(.*?)" should be in the users table$/ do |email|
