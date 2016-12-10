@@ -3,12 +3,12 @@
 %table#favorites
   %thead
     %tr
-      %th= link_to 'Title', users_path(:sort => 'title', :random => @random)
-      %th= link_to 'Score', users_path(:sort => 'score', :random => @random)
-      %th= link_to 'Category', users_path(:sort => 'category', :random => @random)
+      %th Title
+      %th Score
+      %th Category
       %th Public
-      %th= link_to 'Created At', users_path(:sort => 'created_at', :random => @random)
-      %th= link_to 'Updated At', users_path(:sort => 'updated_at', :random => @random)
+      %th Created At
+      %th Updated At
   %tbody
     - @users_favorites.each do |deck|
       %tr
@@ -23,11 +23,11 @@
   %thead
     %tr
       %th= link_to 'Title', users_path(:sort => 'title', :random => @random)
-      %th= link_to 'Score', users_path(:sort => 'score', :random => @random)
+      %th Score
       %th= link_to 'Category', users_path(:sort => 'category', :random => @random)
       %th Public
-      %th= link_to 'Created At', users_path(:sort => 'created_at', :random => @random)
-      %th= link_to 'Updated At', users_path(:sort => 'updated_at', :random => @random)
+      %th Created At
+      %th Updated At
       %th Edit
       %th Delete
   %tbody

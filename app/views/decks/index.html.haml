@@ -7,8 +7,8 @@
     %tr
       %th= link_to 'Title', decks_path(:sort => 'title', :random => @random)
       %th= link_to 'Category', decks_path(:sort => 'category', :random => @random)
-      %th= link_to 'Created At', decks_path(:sort => 'created_at', :random => @random)
-      %th= link_to 'Updated At', decks_path(:sort => 'updated_at', :random => @random)
+      %th Created At
+      %th Updated At
       %th favorite
   %tbody
     - @decks.each do |deck|
