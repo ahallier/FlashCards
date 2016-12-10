@@ -31,12 +31,12 @@ Given /^I am on the FlashCards home page$/ do
    select "Yes", :from => "public_select"
  end
  
- And /^I have logged in as user with email "(.*?)" and password "(.*?)"$/ do |email, password|
-    visit login_path
-    fill_in('Email', :with => email)
-    fill_in('Password', :with => password)
-    click_button('login_submit')
- end
+ #And /^I have logged in as user with email "(.*?)" and password "(.*?)"$/ do |email, password|
+ #   visit login_path
+ #   fill_in('Email', :with => email)
+ #   fill_in('Password', :with => password)
+ #   click_button('login_submit')
+ #end
  
  When /^I have clicked next$/ do
         click_button('Next')
@@ -67,7 +67,7 @@ Given /^I am on the FlashCards home page$/ do
     find(:xpath, "//table/tbody/tr[.//td[contains('#{title}')]]")
  end
  
- And /^The current user logs out.$/ do
+ Given /^The current user logs out.$/ do
     visit decks_path
     click_button("logout")
  end
@@ -76,7 +76,7 @@ Given /^I am on the FlashCards home page$/ do
      visit add_deck_to_group_path(group_id)
  end
  
- And /^I am on the add user to group page for group id "(.*?")$/ do |group_id|
+ Given /^I am on the add user to group page for group id "(.*?")$/ do |group_id|
      visit add_user_to_group_path(group_id)
  end
  
