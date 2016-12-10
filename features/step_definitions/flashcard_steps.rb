@@ -17,6 +17,7 @@ Given /^I am on the FlashCards home page$/ do
  
  Given /^I am on the group page$/ do
    visit groups_path
+   page.should have_content("Public Groups")
  end
  Given /^I am viewing card with id "(.*?)"$/ do |id|
     page.execute_script("PC.currentCard = '#{id}'"); 
