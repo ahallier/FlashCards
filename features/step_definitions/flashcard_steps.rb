@@ -43,6 +43,18 @@ Given /^I am on the FlashCards home page$/ do
  #   click_button('login_submit')
  #end
  
+When /^I am adding a card with front "(.*?)" and back "(.*?)" to deck "(.*?)"$/ do |front,back,deck|
+  visit '/decks/'+deck+'/edit/writecard'
+  fill_in 'Front', :with => front
+  fill_in 'Back', :with => back     
+ end 
+Then(/^The card with front "([^"]*)", back "([^"]*)" should be in the cards table for deck "([^"]*)"$/) do |arg1, arg2, arg3|
+  visit '/cards/'+arg3+'/display'
+      page.should have_content(arg1)
+      page.should have_content(arg2)
+end
+
+ 
  When /^I have clicked next$/ do
         click_button('Next')
  end
@@ -55,8 +67,8 @@ Given /^I am on the FlashCards home page$/ do
  
  Then /^The group with title "(.*?)" should be in the groups table$/ do |title|
      visit groups_path
-     #find(:xpath, "//table/tbody/tr[.//td[contains('#{title}')]]")
-     page.should have_content(title)
+     find(:xpath, "//table/tbody/tr[.//td[contains('#{title}')]]")
+     #page.should have_content(title)
  end
  
  Then /^definition should contain retractile$/ do
@@ -69,7 +81,8 @@ Given /^I am on the FlashCards home page$/ do
  
  Then /^The group with title "(.*?)" should be in user group table$/ do |title|
     visit users_path
-    find(:xpath, "//table/tbody/tr[.//td[contains('#{title}')]]")
+    #find(:xpath, "//table/tbody/tr[.//td[contains('#{title}')]]")
+    page.should have_content(title)
  end
  
  Given /^The current user logs out.$/ do
@@ -90,6 +103,11 @@ Given /^I am on the FlashCards home page$/ do
    visit edit_deck_path(id: deck.id)
  
  
+ end
+ 
+ Given /^I am on the create card page for card with deck_id "(.*?)"$/ do |deck_id|
+    deck = Deck.find_by id: deck_id
+    visit write_card_path(id: deck.id)
  end
  
  Given /^I am on the group page for group id "(.*?")$/ do |group_id|
@@ -136,7 +154,7 @@ When /^I have added a card with front "(.*?)" and back "(.*?)" to deck "(.*?)"$/
   visit '/decks/'+deck+'/edit/writecard'
   fill_in 'Front', :with => front
   fill_in 'Back', :with => back
-
+  
   click_button 'Save Changes'     
  end   
  Given /the following decks have been added to FlashCards:/ do |decks_table|
@@ -238,12 +256,11 @@ Given /^I have logged in as user with email "(.*?)" and password "(.*?)"$/ do |e
      fill_in 'Password', :with => password
     click_button 'Login to my account'
  end
-
-
   
-  Then /^(?:|I )should notsee "([^"]*)"$/ do |text|
+  Then (/^Ishould notsee "([^"]*)"$/) do |text|
     page.should have_no_content(text)
   end
+  
   Then /^I should see a card with front "(.*?)" and back "(.*?)"$/ do |front, back| 
    result=false
    all("tr").each do |tr|
