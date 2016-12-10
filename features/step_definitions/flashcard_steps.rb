@@ -29,7 +29,7 @@ Given /^I am on the FlashCards home page$/ do
  
  When /^I have set title to "(.*?)", public to "(.*?)"$/ do |title, pub|
    fill_in('Title', :with => title)
-   select "Yes", :from => "public_select"
+   find('#deck_public').find(:xpath, 'option[1]').select_option
  end
  
  #And /^I have logged in as user with email "(.*?)" and password "(.*?)"$/ do |email, password|
@@ -102,7 +102,8 @@ Given /^I am on the FlashCards home page$/ do
  When /^I have set title to "(.*?)", category "(.*?)"$/ do |title, cat|
    fill_in('Title', :with => title)
    fill_in('Category', :with => cat)
-   select "Yes", :from => "public_select"
+   #select "Yes", :from => "public_select"
+   find('#deck_public').find(:xpath, 'option[1]').select_option
  end
 When /^I have deleted a deck with title "(.*?)"/ do |deckTitle|
   page.all(:xpath, '//table/tr[.//td[contains("#{deckTitle}")]]').each do |tr|
@@ -158,6 +159,16 @@ Given /^user exists with email "(.*?)", password "(.*?)", session token, "(.*?)"
     }
     User.create!(user_params)
 end
+
+Given /^user exists with email "(.*?)", password "(.*?)", id, "(.*?)"$/ do |email, password, id|
+    user_params = {
+        :email => email,
+        :password => password,
+        :id => id
+    }
+    User.create!(user_params)
+end
+
 
 
 Given /^the deck with id "(.*?)" is in the group with id "(.*?)"$/ do |did, gid|
