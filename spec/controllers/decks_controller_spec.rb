@@ -4,6 +4,7 @@ require 'rails_helper'
 describe DecksController, :type => :controller do
     before :each do
       @deck = Deck.create!({:title => 'Test',  :category => 'TestCat', :public => true})
+      @deck2 = Deck.create!({:title => 'Test',  :category => 'TestCat', :public => true})
 
 ############################### | ########################################################## | #########################################
 ############################### V Do not change these! Use them as they are or add your own. V #########################################
@@ -15,6 +16,7 @@ describe DecksController, :type => :controller do
             :created_at => DateTime.now,
             :updated_at => DateTime.now
         })
+        
 
 ###############################^ Do not change these! Use them as they are or add your own. ^ #####################################
 ############################## | ########################################################## | #####################################
@@ -92,7 +94,6 @@ describe DecksController, :type => :controller do
             get :addAsFavorite, {"id" => "1"}
         end
         it 'should call the favorite create method' do
-            deck_spy = spy(Deck)
             @request.session[:session_token] = @user.session_token
             expect(Favorite).to receive(:create).with({:user_id=>@user.id,:deck_id=>1})
             get :addAsFavorite, {"id" => "1"}
@@ -100,7 +101,17 @@ describe DecksController, :type => :controller do
         it 'should redirect to decks_path' do
             get :addAsFavorite, {"id" => "1"}
             expect(response).to redirect_to('/decks')
+        end
+        it 'should redirect if you have favorited it already' do
+            @request.session[:session_token] = @user.session_token
+            @favorite = Favorite.create({
+                :user_id => @user.id,
+                :deck_id => 1
+            })
+            @favorite.save
             
+            get :addAsFavorite, {"id" => "1"}
+            expect(response).to redirect_to(decks_path)
         end
     end
 end
