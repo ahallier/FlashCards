@@ -5,4 +5,6 @@ Background:
   
   Scenario: Create a User
       When I have set email to "ryan@email.com", password "password"
-      Then the user with email "ryan@email.com" should be in the users table
+      And I have logged in as user with email "ryan@email.com" and password "password"
+      And I am on the FlashCards home page
+      Then the user with email "ryan@email.com" should be in the welcome message

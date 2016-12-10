@@ -197,8 +197,7 @@ When /^I have set email to "(.*?)", password "(.*?)"$/ do |email, password|
     click_button "signup_create"
 end
 
-Then /^the user with email "(.*?)" should be in the users table$/ do |email|
-      visit users_path
+Then /^the user with email "(.*?)" should be in the welcome message$/ do |email|
       page.should have_content(email)
  end
 
