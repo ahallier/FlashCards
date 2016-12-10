@@ -158,6 +158,16 @@ Given /^user exists with email "(.*?)", password "(.*?)", session token, "(.*?)"
     User.create!(user_params)
 end
 
+Given /^user exists with email "(.*?)", password "(.*?)", id, "(.*?)"$/ do |email, password, id|
+    user_params = {
+        :email => email,
+        :password => password,
+        :id => id
+    }
+    User.create!(user_params)
+end
+
+
 
 Given /^the deck with id "(.*?)" is in the group with id "(.*?)"$/ do |did, gid|
     d = Deck.find_by_id(did)
