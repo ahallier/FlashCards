@@ -4,6 +4,7 @@ Given /^I am on the FlashCards home page$/ do
  
  Given /^I am on the FlashCards user page$/ do
   visit users_path
+  page.should have_content("User Page")
  end
  
  Given /^I am on the new deck page$/ do
@@ -30,6 +31,13 @@ Given /^I am on the FlashCards home page$/ do
    select "Yes", :from => "public_select"
  end
  
+ And /^I have logged in as user with email "(.*?)" and password "(.*?)"$/ do |email, password|
+    visit login_path
+    fill_in('Email', :with => email)
+    fill_in('Password', :with => password)
+    click_button('login_submit')
+ end
+ 
  When /^I have clicked next$/ do
         click_button('Next')
  end
@@ -42,7 +50,8 @@ Given /^I am on the FlashCards home page$/ do
  
  Then /^The group with title "(.*?)" should be in the groups table$/ do |title|
      visit groups_path
-     page.should have_content(title)
+     find(:xpath, "//table/tbody/tr[.//td[contains('#{title}')]]")
+     #page.should have_content(title)
  end
  
  Then /^definition should contain retractile$/ do
@@ -54,8 +63,8 @@ Given /^I am on the FlashCards home page$/ do
  end
  
  Then /^The group with title "(.*?)" should be in user group table$/ do |title|
-     visit users_path
-     page.should have_content("#{title}")
+    visit users_path
+    find(:xpath, "//table/tbody/tr[.//td[contains('#{title}')]]")
  end
  
  And /^The current user logs out.$/ do

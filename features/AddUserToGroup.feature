@@ -5,10 +5,12 @@ Background:
   |id| title                 | public | owner_id|
   |1 | TestGroup             | false   | 3 |
   Given the following users have been added to FlashCards:
-  |id| email                 | password|
-  |2 | a@gmail.com           | password|
+  |id| email                 | password| session_token|
+  |2 | a@gmail.com           | password|abcde          |
+  |3 | agieg                | spagett  |asdfasiguw8t7t439857 |
    
   And user exists with email "agieg", password "spagett", session token, "abcde"
+  And user exists with email "a@gmail.com", password "password", session token, "asdfasiguw8t7t439857"
   And I have logged in as user with email "agieg" and password "spagett"
   And I am on the add user to group page for group id "1" 
 
