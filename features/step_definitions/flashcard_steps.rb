@@ -107,7 +107,7 @@ When /^I have deleted a deck with title "(.*?)"/ do |deckTitle|
   page.all(:xpath, '//table/tr[.//td[contains("#{deckTitle}")]]').each do |tr|
     find("#btn_delete").click
   end
-  find("#btn_delete").click
+  #find("#btn_delete").click
 end
 
 When /^I have clicked on the card$/ do
