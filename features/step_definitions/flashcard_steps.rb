@@ -252,10 +252,10 @@ Given /^I have logged in as user with email "(.*?)" and password "(.*?)"$/ do |e
      fill_in 'Password', :with => password
     click_button 'Login to my account'
  end
-  
-  Then (/^Ishould notsee "([^"]*)"$/) do |text|
-    page.should have_no_content(text)
-  end
+ 
+  Then(/^I should notsee "([^"]*)"$/) do |text|
+  page.should_not have_content(text)
+    end
   
   Then /^I should see a card with front "(.*?)" and back "(.*?)"$/ do |front, back| 
    result=false
