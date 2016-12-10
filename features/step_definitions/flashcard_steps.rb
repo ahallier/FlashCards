@@ -182,6 +182,24 @@ Given /^user exists with email "(.*?)", password "(.*?)", session token, "(.*?)"
     User.create!(user_params)
 end
 
+Given /^I am on the create new user page$/ do
+    visit new_user_path
+end
+
+When /^I have set email to "(.*?)", password "(.*?)"$/ do |email, password|
+    visit '/users/new'
+    fill_in 'Email', :with => email
+    fill_in 'Password', :with => password
+    click_button "Create Account"
+end
+
+Then /^the user with email "(.*?)" should be in the users table$/ do |email|
+      visit users_path
+      page.should have_content(email)
+ end
+
+
+
 Given /^user exists with email "(.*?)", password "(.*?)", id, "(.*?)"$/ do |email, password, id|
     user_params = {
         :email => email,

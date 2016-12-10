@@ -1,10 +1,9 @@
 Feature: Allow User to create an account
 
 Background:
-    Given I am on the New User page 
+    Given I am on the create new user page
   
   Scenario: Create a User
-      When I have set email to "ryan@email.com"
-      And I have set password to "password"
+      When I have set email to "ryan@email.com", password "password"
       And I have clicked button "Create Account"
-      Then The user with email "ryan@email.com", password "password" should be in the cards table
+      Then the user with email "ryan@email.com" should be in the users table
