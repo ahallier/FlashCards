@@ -50,8 +50,8 @@ Given /^I am on the FlashCards home page$/ do
  
  Then /^The group with title "(.*?)" should be in the groups table$/ do |title|
      visit groups_path
-     find(:xpath, "//table/tbody/tr[.//td[contains('#{title}')]]")
-     #page.should have_content(title)
+     #find(:xpath, "//table/tbody/tr[.//td[contains('#{title}')]]")
+     page.should have_content(title)
  end
  
  Then /^definition should contain retractile$/ do
