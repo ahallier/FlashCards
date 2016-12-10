@@ -19,7 +19,6 @@
         %td= deck.updated_at
         %td= link_to "add to favorites", add_favorite_path(deck)
         
--#= will_paginate @decks        
 = form_tag decks_path, method: 'get' do
   = text_field_tag :search, params[:search], placeholder: "search"
   = submit_tag "Search", :name => nil

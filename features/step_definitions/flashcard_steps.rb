@@ -215,6 +215,13 @@ Given /^a valid user$/ do
            })
 end
 
+Given /^I have logged in as user with email "(.*?)" and password "(.*?)"$/ do |email, password|
+     visit login_path
+     fill_in 'Email', :with => email
+     fill_in 'Password', :with => password
+    click_button 'Login to my account'
+ end
+
 
   
   Then /^(?:|I )should notsee "([^"]*)"$/ do |text|

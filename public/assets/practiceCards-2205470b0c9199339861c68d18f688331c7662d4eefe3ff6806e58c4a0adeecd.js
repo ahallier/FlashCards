@@ -1,5 +1,6 @@
 /* global $ */
 /* global responsiveVoice */
+
 var PC = {
     currentCard: -1,
     cards: [],
