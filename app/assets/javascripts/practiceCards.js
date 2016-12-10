@@ -4,31 +4,30 @@ var PC = {
     currentCard: -1,
     cards: [],
     frontfirst: true,
+    surroundWord: function(word) {
+        return '<span id = "word", class="card-word">'+word+'</span>';
+    },
+    surroundAllWords: function(text) {
+        return text.trim().split(/\s+/).map(PC.surroundWord).join(' ');
+    },
     setup: (function(){
         $.support.cors = true;
         console.log("in setup");
         $(".flip").flip({
             trigger: 'click'
         });
-        
         $('.definition-dialog').hide(); 
         $('.definition-dialog button').click(function() {
             $('.definition-dialog').hide(); 
         });
         
-        var surroundWord = function(word) {
-            return '<span id = "word", class="card-word">'+word+'</span>';
-        };
-     
         $("table tbody").find('tr').each(function (i, el) {
             var hash = {};
             var $tds = $(this).find('td');
             
-
-            hash["front"] = $tds.eq(2).text().trim().split(/\s+/).map(surroundWord).join(' ');
-            hash["back"] =  $tds.eq(3).text().trim().split(/\s+/).map(surroundWord).join(' ');
+            hash["front"] = PC.surroundAllWords($tds.eq(2).text());
+            hash["back"] =  PC.surroundAllWords($tds.eq(3).text());
             PC.cards[i] = hash;
-            
         });
         
         $('.front, .back').on('click', '.card-word', function(event) {
