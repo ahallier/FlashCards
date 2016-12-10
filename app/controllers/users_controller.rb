@@ -9,8 +9,18 @@ class UsersController < ApplicationController
    
     
     user = User.find_by_session_token(session[:session_token])
-    @favorites = Favorite.all
-    @users_favorites = Favorite.find_by user_id: user.id
+    puts "favs"+@favorites.to_s
+    @favorites = Favorite.where(:user_id => user.id)
+    @users_favorites = Array.new
+    i = 0
+    @favorites.each do |fave|
+      if(!@users_favorites.include? Deck.find_by_id(fave.deck_id) )
+        @users_favorites.push(Deck.find_by_id(fave.deck_id))
+        i = i+1
+      end
+    end
+    
+    puts "favorites" + @users_favorites.to_s
     if user == nil
       flash[:notice] = "You must be logged in to view this page."
       redirect_to decks_path and return

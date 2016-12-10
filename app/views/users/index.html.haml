@@ -1,5 +1,24 @@
 %h1 User Page
-
+%h1 My Favorites
+%table#favorites
+  %thead
+    %tr
+      %th= link_to 'Title', users_path(:sort => 'title', :random => @random)
+      %th= link_to 'Score', users_path(:sort => 'score', :random => @random)
+      %th= link_to 'Category', users_path(:sort => 'category', :random => @random)
+      %th Public
+      %th= link_to 'Created At', users_path(:sort => 'created_at', :random => @random)
+      %th= link_to 'Updated At', users_path(:sort => 'updated_at', :random => @random)
+  %tbody
+    - @users_favorites.each do |deck|
+      %tr
+        %td= link_to deck.title, card_display_path(deck.id)
+        %td= deck.score
+        %td= deck.category
+        %td= deck.public
+        %td= deck.created_at
+        %td= deck.updated_at
+%h1 my decks
 %table#decks
   %thead
     %tr
@@ -34,7 +53,7 @@
 = link_to 'New Deck', new_deck_path
 %br
 
-  
+%h1 Groups  
 %table#groups
   %thead
     %tr
@@ -46,23 +65,5 @@
 %br
 = link_to 'Create New Group', new_group_path
 
-%table#favorites
-  %thead
-    %tr
-      %th= link_to 'Title', users_path(:sort => 'title', :random => @random)
-      %th= link_to 'Score', users_path(:sort => 'score', :random => @random)
-      %th= link_to 'Category', users_path(:sort => 'category', :random => @random)
-      %th Public
-      %th= link_to 'Created At', users_path(:sort => 'created_at', :random => @random)
-      %th= link_to 'Updated At', users_path(:sort => 'updated_at', :random => @random)
-  %tbody
-    - @users_favorites.each do |deck|
-      %tr
-        %td= link_to deck.title, card_display_path(deck.id)
-        %td= deck.score
-        %td= deck.category
-        %td= deck.public
-        %td= deck.created_at
-        %td= deck.updated_at
   
         

@@ -17,5 +17,6 @@ describe User do
             expect(User).to receive(:create!).and_return(spy(User))
             User.create_user!(s)
         end
+        
     end
 end
