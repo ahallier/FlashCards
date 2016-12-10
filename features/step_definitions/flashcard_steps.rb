@@ -67,8 +67,8 @@ end
  
  Then /^The group with title "(.*?)" should be in the groups table$/ do |title|
      visit groups_path
-     find(:xpath, "//table/tbody/tr[.//td[contains('#{title}')]]")
-     #page.should have_content(title)
+     #find(:xpath, "//table/tbody/tr[.//td[contains('#{title}')]]")
+     page.should have_content(title)
  end
  
  Then /^definition should contain retractile$/ do
@@ -77,10 +77,6 @@ end
   
  Then /^I should see join group "(.*?)" success message on group page$/ do |title|
      page.should have_content("joined #{title}")
- end
- 
- Then /^I should notsee "(.*?)"$/ do |text|
-     page.should have_no_content(text)
  end
  
  Then /^The group with title "(.*?)" should be in user group table$/ do |title|
